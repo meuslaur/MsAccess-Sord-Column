@@ -1,4 +1,4 @@
-# Création automatique d'un formulaire en continu.
+# Création automatique d'un formulaire en continu
 
 ## Création du formulaire
 
@@ -12,6 +12,7 @@
 
 - ...
 
+![img](Csord-Source/assets/ic_1ASC.png/assets/images/ic_Code.png)
 <!---
 meuslaur/meuslaur is a ✨ special ✨ repository because its `README.md` (this file) appears on your GitHub profile.
 You can click the Preview link to take a look at your changes.
