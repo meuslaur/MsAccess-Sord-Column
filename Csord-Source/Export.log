@@ -1,0 +1,129 @@
+﻿-------------------------------------
+Beginning Export of all Source
+CSord.accdb
+VCS Version 3.4.21
+Using Fast Save
+08/05/2022 09:57:20
+-------------------------------------
+-------------------------------------
+Exporting project...          
+  CSord.accdb
+[1] project processed.
+-------------------------------------
+Exporting vb project...       
+  CSord
+[1] vb project processed.
+-------------------------------------
+Exporting vbe references...   
+  DAO
+[2] vbe references processed.
+-------------------------------------
+No modified vbe forms found in this database.
+-------------------------------------
+Exporting proj properties...  
+  Current Project Properties (Access)
+[2] proj properties processed.
+-------------------------------------
+No modified saved specs found in this database.
+-------------------------------------
+Exporting db properties...    
+  Database Properties (DAO)
+[50] db properties processed.
+-------------------------------------
+No modified shared images found in this database.
+-------------------------------------
+Exporting themes...           
+  Thème Office
+[1] themes processed.
+-------------------------------------
+No modified imex specs found in this database.
+-------------------------------------
+No modified tables found in this database.
+-------------------------------------
+No modified queries found in this database.
+-------------------------------------
+Exporting forms...            
+  F_Test
+    Sanitized in 0,010 seconds.
+  F_CreateForm
+Source: modSanitize.SanitizeFile
+    Sanitized in 0,022 seconds.
+[2] forms processed.
+-------------------------------------
+No modified macros found in this database.
+-------------------------------------
+No modified reports found in this database.
+-------------------------------------
+No modified table data found in this database.
+-------------------------------------
+Exporting modules...          
+  CCreateFormContinu
+  CsordFormColumn
+[2] modules processed.
+-------------------------------------
+No modified table data macros found in this database.
+-------------------------------------
+No modified relations found in this database.
+-------------------------------------
+Exporting doc properties...   
+  Database Documents
+[2] doc properties processed.
+-------------------------------------
+Exporting nav pane groups...  
+  Groups
+[1] nav pane groups processed.
+-------------------------------------
+Exporting hidden attributes...
+  Database hidden attributes
+[1] hidden attributes processed.
+-------------------------------------
+Done. (0,66 seconds)
+
+--------------------------------------------------
+                PERFORMANCE REPORTS
+--------------------------------------------------
+Object Type                   Count     Seconds
+--------------------------------------------------
+Project                       1         0,02
+VB Project                    1         0,02
+VBE References                2         0,02
+Proj Properties               2         0,01
+DB Properties                 50        0,16
+Themes                        1         0,00
+Forms                         2         0,13
+Modules                       2         0,05
+Doc Properties                2         0,02
+Nav Pane Groups               1         0,02
+Hidden Attributes             1         0,01
+--------------------------------------------------
+TOTALS:                       65        0,47
+--------------------------------------------------
+
+--------------------------------------------------
+Operations                    Count     Seconds
+--------------------------------------------------
+Read File                     11        0,05
+Parse JSON                    9         0,01
+Convert to JSON               447       0,20
+Compute SHA256                22        0,00
+Console Updates               2         0,03
+Compare Dictionary            7         0,00
+Get Modified Date             7         0,00
+Get File Property Hash        7         0,00
+Verify Path                   8         0,00
+Create Folder                 1         0,00
+Export Theme                  1         0,00
+Clear Orphaned                3         0,01
+Get VBA Hash                  12        0,01
+App.SaveAsText()              2         0,04
+Delete File                   4         0,00
+Read File Bytes               2         0,02
+Sanitize File                 2         0,03
+Write File                    3         0,00
+Export VBE Module             2         0,03
+Enc. Windows-1252 as utf-8    2         0,02
+--------------------------------------------------
+Other Operations                        0,23
+--------------------------------------------------
+
+

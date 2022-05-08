@@ -1,0 +1,11 @@
+﻿{
+  "Info": {
+    "Class": "clsDbHiddenAttribute",
+    "Description": "Database objects hidden attribute"
+  },
+  "Items": {
+    "Forms": [
+      "~F_InfoTmp"
+    ]
+  }
+}
