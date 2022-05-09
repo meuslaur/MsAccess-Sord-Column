@@ -1,9 +1,9 @@
 ﻿Version =20
 VersionRequired =20
-PublishOption =1
 Begin Form
     AutoCenter = NotDefault
     DividingLines = NotDefault
+    OrderByOn = NotDefault
     AllowDesignChanges = NotDefault
     ScrollBars =2
     ViewsAllowed =1
@@ -16,13 +16,13 @@ Begin Form
     ItemSuffix =28
     Left =7035
     Top =270
-    Right =18345
+    Right =18090
     Bottom =11325
     OrderBy ="Job_Title DESC"
     RecSrcDt = Begin
-        0x0cf6d64132d0e540
+        0x05ad72ec58d2e540
     End
-    RecordSource ="T_Test"
+    RecordSource ="Customers"
     Caption ="Suppliers"
     OnClose ="[Event Procedure]"
     DatasheetFontName ="Calibri"
@@ -149,7 +149,7 @@ Begin Form
                     Top =907
                     Width =1140
                     Height =405
-                    Name ="Prefix_ID_Supplier_Suffix"
+                    Name ="Prefix_ID_Suffix"
                     Caption ="ID"
                     OnClick ="[Event Procedure]"
                     GridlineColor =10921638
@@ -226,7 +226,7 @@ Begin Form
                     Width =2265
                     Height =405
                     TabIndex =1
-                    Name ="Prefix_Company_Name_Suffix"
+                    Name ="Prefix_Company_Suffix"
                     Caption ="Company"
                     OnClick ="[Event Procedure]"
                     GridlineColor =10921638
@@ -267,9 +267,10 @@ Begin Form
                     Width =2265
                     Height =405
                     TabIndex =2
-                    Name ="Prefix_Last_Name_Suffix"
-                    Caption ="Last_Name"
+                    Name ="Prefix_Last_Name Suffix"
+                    Caption ="Last Name"
                     OnClick ="[Event Procedure]"
+                    EventProcPrefix ="Prefix_Last_Name_Suffix"
                     GridlineColor =10921638
 
                     LayoutCachedLeft =3401
@@ -400,7 +401,7 @@ Begin Form
                     BorderColor =10921638
                     ForeColor =4210752
                     Name ="ID Supplier"
-                    ControlSource ="ID_Supplier"
+                    ControlSource ="ID"
                     EventProcPrefix ="ID_Supplier"
                     GridlineColor =10921638
 
@@ -417,7 +418,7 @@ Begin Form
                     BorderColor =10921638
                     ForeColor =4210752
                     Name ="Company Name"
-                    ControlSource ="Company_Name"
+                    ControlSource ="Company"
                     EventProcPrefix ="Company_Name"
                     GridlineColor =10921638
 
@@ -434,9 +435,8 @@ Begin Form
                     TabIndex =2
                     BorderColor =10921638
                     ForeColor =4210752
-                    Name ="Last Name"
+                    Name ="Last_Name"
                     ControlSource ="Last_Name"
-                    EventProcPrefix ="Last_Name"
                     GridlineColor =10921638
 
                     LayoutCachedLeft =3401
@@ -540,19 +540,22 @@ Private Sub Form_Close()
     Set CSordForm = Nothing      '// Recommended, clean mem.
 End Sub
 
-Private Sub Prefix_ID_Supplier_Suffix_Click()
+Private Sub Prefix_ID_Suffix_Click()
     SordColumn OptionOff, OptionOff
 End Sub
-Private Sub Prefix_Company_Name_Suffix_Click()
+
+Private Sub Prefix_Company_Suffix_Click()
     SordColumn OptionOn, OptionOff
 End Sub
 
 Private Sub Prefix_Last_Name_Suffix_Click()
     SordColumn OptionOn, , "ic_1ASC.png", "ic_1DESC.png"
 End Sub
+
 Private Sub Prefix_First_Name_Suffix_Click()
     SordColumn
 End Sub
+
 Private Sub CommandButton1_Click()
     SordColumn OptionOff, OptionOff, , , "Job_Title"
 End Sub

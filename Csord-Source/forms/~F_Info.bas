@@ -1,6 +1,5 @@
 ﻿Version =20
 VersionRequired =20
-PublishOption =1
 Begin Form
     AllowFilters = NotDefault
     RecordSelectors = NotDefault

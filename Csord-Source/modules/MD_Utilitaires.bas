@@ -351,14 +351,14 @@ On Error GoTo ERR_OuvreBoite
     Dim vSelectedItem   As Variant
     Dim sTmp            As String
     Dim sValRet         As String
-    Dim ltmp            As Long
+    Dim lTmp            As Long
 
     Set ofd = Application.FileDialog(eDialogType)
 
     '// Defini le sous-dossier de départ, se place sur le dossier de l'app, ou sur la valeur indiquer.
     If (sInitialPath = vbNullString) Then
-        ltmp = Len(CurrentProject.Path)
-        sTmp = Left$(ofd.InitialFileName, ltmp)
+        lTmp = Len(CurrentProject.Path)
+        sTmp = Left$(ofd.InitialFileName, lTmp)
         If (sTmp <> CurrentProject.Path) Then ofd.InitialFileName = sTmp
     Else
         ofd.InitialFileName = sInitialPath
@@ -387,8 +387,8 @@ On Error GoTo ERR_OuvreBoite
             '// Renvoi chemin\fichier ou que le fichier si demander dans bReturnFullPath.
             If (bReturnFullPath = False) Then
                 '// Retourne que le fichier / dossier.
-                ltmp = Len(sTmp) - InStrRev(sTmp, "\")
-                sValRet = Right$(sTmp, ltmp)
+                lTmp = Len(sTmp) - InStrRev(sTmp, "\")
+                sValRet = Right$(sTmp, lTmp)
                 '// Ajoute le préfix si un dossier.
                 If (eDialogType = FD_TypeFolderPicker) Then sValRet = "\" & sValRet
             Else

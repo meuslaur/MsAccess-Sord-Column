@@ -3,7 +3,7 @@ Beginning Export of all Source
 CSord.accdb
 VCS Version 3.4.21
 Using Fast Save
-08/05/2022 09:57:20
+09/05/2022 22:11:20
 -------------------------------------
 -------------------------------------
 Exporting project...          
@@ -42,24 +42,20 @@ No modified tables found in this database.
 -------------------------------------
 No modified queries found in this database.
 -------------------------------------
-Exporting forms...            
-  F_Test
-    Sanitized in 0,010 seconds.
-  F_CreateForm
-Source: modSanitize.SanitizeFile
-    Sanitized in 0,022 seconds.
-[2] forms processed.
+No modified forms found in this database.
 -------------------------------------
 No modified macros found in this database.
 -------------------------------------
 No modified reports found in this database.
 -------------------------------------
-No modified table data found in this database.
+Exporting table data...       
+  Customers
+    Sanitized in 0,005 seconds.
+[1] table data processed.
 -------------------------------------
 Exporting modules...          
   CCreateFormContinu
-  CsordFormColumn
-[2] modules processed.
+[1] modules processed.
 -------------------------------------
 No modified table data macros found in this database.
 -------------------------------------
@@ -77,7 +73,7 @@ Exporting hidden attributes...
   Database hidden attributes
 [1] hidden attributes processed.
 -------------------------------------
-Done. (0,66 seconds)
+Done. (0,49 seconds)
 
 --------------------------------------------------
                 PERFORMANCE REPORTS
@@ -85,45 +81,45 @@ Done. (0,66 seconds)
 Object Type                   Count     Seconds
 --------------------------------------------------
 Project                       1         0,02
-VB Project                    1         0,02
+VB Project                    1         0,01
 VBE References                2         0,02
 Proj Properties               2         0,01
-DB Properties                 50        0,16
+DB Properties                 50        0,15
 Themes                        1         0,00
-Forms                         2         0,13
-Modules                       2         0,05
+Table Data                    1         0,08
+Modules                       1         0,03
 Doc Properties                2         0,02
-Nav Pane Groups               1         0,02
+Nav Pane Groups               1         0,01
 Hidden Attributes             1         0,01
 --------------------------------------------------
-TOTALS:                       65        0,47
+TOTALS:                       63        0,36
 --------------------------------------------------
 
 --------------------------------------------------
 Operations                    Count     Seconds
 --------------------------------------------------
-Read File                     11        0,05
+Read File                     10        0,04
 Parse JSON                    9         0,01
-Convert to JSON               447       0,20
-Compute SHA256                22        0,00
+Convert to JSON               449       0,19
+Compute SHA256                18        0,00
 Console Updates               2         0,03
 Compare Dictionary            7         0,00
-Get Modified Date             7         0,00
-Get File Property Hash        7         0,00
-Verify Path                   8         0,00
+Get Modified Date             4         0,00
+Get File Property Hash        4         0,00
+Verify Path                   5         0,00
 Create Folder                 1         0,00
 Export Theme                  1         0,00
-Clear Orphaned                3         0,01
-Get VBA Hash                  12        0,01
-App.SaveAsText()              2         0,04
-Delete File                   4         0,00
-Read File Bytes               2         0,02
-Sanitize File                 2         0,03
-Write File                    3         0,00
-Export VBE Module             2         0,03
-Enc. Windows-1252 as utf-8    2         0,02
+Clear Orphaned                4         0,01
+Get VBA Hash                  11        0,01
+Delete File                   2         0,00
+App.ExportXML()               1         0,06
+Sanitize XML                  1         0,00
+Format XML                    1         0,00
+Write File                    2         0,00
+Export VBE Module             1         0,01
+Enc. Windows-1252 as utf-8    1         0,01
 --------------------------------------------------
-Other Operations                        0,23
+Other Operations                        0,14
 --------------------------------------------------
 
 

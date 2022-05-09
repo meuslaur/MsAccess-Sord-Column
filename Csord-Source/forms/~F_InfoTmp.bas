@@ -1,6 +1,5 @@
 ﻿Version =20
 VersionRequired =20
-PublishOption =1
 Begin Form
     RecordSelectors = NotDefault
     DividingLines = NotDefault

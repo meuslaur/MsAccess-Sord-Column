@@ -73,7 +73,7 @@ Option Explicit
     Private Const DEF_TxtFontWeight As Long = 700               '// Bold
     Private Const DEF_TxtCOLOR      As Long = 1137349           '// Couleur with sord  (m_objButton)
 
-    Private Const DEF_ImgFOLDER     As String = "\Res\"             '// Default folder for picture (currentProject.path + DEF_IMGFOLDER)
+    Private Const DEF_ImgFOLDER     As String = "\assets\"             '// Default folder for picture (currentProject.path + DEF_IMGFOLDER)
     Private Const DEF_ImgASC        As String = "ic_SordASC16.png"  '// (m_objButton)
     Private Const DEF_ImgDESC       As String = "ic_SordDESC16.png" '// (m_objButton)
 
@@ -131,7 +131,7 @@ Private Sub Class_Initialize()
     m_bCheckOk = True
     m_sFieldName = "*"
 
-    m_sPicturePath = CurrentProject.Parent & DEF_ImgFOLDER
+    m_sPicturePath = CurrentProject.Path & DEF_ImgFOLDER
     m_sPictureAsc = DEF_ImgASC
     m_sPictureDesc = DEF_ImgDESC
     

@@ -20,13 +20,16 @@ Option Explicit
 
 '//::::::::::::::::::::::::::::::::::    VARIABLES      ::::::::::::::::::::::::::::::::::
 '// Options defaut.
-    Const CLS_VAR       As String = "CSordForm"     '// Name variable for create class 'CsordFormColumn'
-    Const PROC_NAME     As String = "SordColumn"    '// Nom de la function pour lancer le tri.
+    Private Const CLS_VAR       As String = "CSordForm"     '// Name variable for create class 'CsordFormColumn'
+    Private Const PROC_NAME     As String = "SordColumn"    '// Nom de la function pour lancer le tri.
     
-    Const PREF_CMB      As String = "cmb_"      '// Préfixe pour le commandbutton.
-    Const SUF_CMB       As String = "_cmb"      '// Suffixe pour le commandbutton.
-    Const PREF_TXTBOX   As String = "txt_"      '// Préfixe pour la textebox.
-    Const SUF_TXTBOX    As String = "_txt"      '// Suffixe pour la textebox.
+    Private Const FileCodeFrm   As String = "CodeForm.cls"
+    Private Const FileCodeClass As String = "CodeClasse.cls"
+
+    Private Const PREF_CMB      As String = "cmb_"      '// Préfixe pour le commandbutton.
+    Private Const SUF_CMB       As String = "_cmb"      '// Suffixe pour le commandbutton.
+    Private Const PREF_TXTBOX   As String = "txt_"      '// Préfixe pour la textebox.
+    Private Const SUF_TXTBOX    As String = "_txt"      '// Suffixe pour la textebox.
 
     Private m_oMsApp            As Access.Application
 
@@ -385,14 +388,14 @@ Public Function LanceCreation() As Boolean
     Dim sFileMod    As String
     Dim bRep        As Boolean
     Dim sRep        As String
-    
+
     '// Extraire le code de la table dans des fichiers temp...
     sDos = Environ("Temp") & "\"
     bRep = ExtrairePiecesJointes("~T_Info", "pjCode", sDos)
     If (bRep = False) Then Exit Function
 
     '// Modification des valeurs dans le code...
-    sFile = sDos & "CodeClasse.cls"
+    sFile = sDos & FileCodeClass
     sFileMod = RemplaceCode(sFile)
     If (sFileMod = vbNullString) Then Exit Function
 
@@ -404,11 +407,8 @@ Public Function LanceCreation() As Boolean
         Exit Function
     End If
 
-    DoEvents
-
     '// Création du formulaire...
     LanceCreation = CreateForm
-'TODO:    m_oMsApp.DoCmd.Save acModule, "CsordFormColumn"
 
 End Function
 '// \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ END PUB. SUB/FUNC \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -488,13 +488,6 @@ Private Function CreateForm() As Boolean
     Set oForm = m_oMsApp.Forms(Me.OptFormName)
     Set oModule = oForm.Module
 
-    '// Insertion du code Function dans le form pour utilisation de la classe 'CsordFormColumn'...
-    sDos = Environ("Temp") & "\"
-    sFile = sDos & "CodeForm.cls"
-    sFileMod = RemplaceCode(sFile, sFirstField)
-    If (sFileMod = vbNullString) Then Exit Function
-    oModule.AddFromFile sFileMod
-
     '// Ouvre la source du form, pour définir le nom des commandButton et TextBox.
     Set oDb = m_oMsApp.CurrentDb
     Set oRst = oDb.OpenRecordset(Me.OptFormSource, dbOpenDynaset, dbReadOnly + dbForwardOnly)
@@ -533,12 +526,21 @@ Private Function CreateForm() As Boolean
         End If
     Next
 
+    '// Insertion du code Function dans le form pour utilisation de la classe 'CsordFormColumn'...
+    sDos = Environ("Temp") & "\"
+    sFile = sDos & FileCodeFrm
+    sFileMod = RemplaceCode(sFile, sFirstField)
+    If (sFileMod = vbNullString) Then Exit Function
+    oModule.AddFromFile sFileMod
+
     oRst.Close
     oDb.Close
 '// --------- FIN Création Form, TextBox, CommandButton ---------
 
+    '// Enregistre le module.
+    m_oMsApp.DoCmd.RunCommand acCmdCompileAndSaveAllModules
+    DoEvents
     '// Enregistrement du form.
-    m_oMsApp.DoCmd.Save acModule, "CsordFormColumn"
     m_oMsApp.DoCmd.Close acForm, Me.OptFormName, acSaveYes
 
     CreateForm = True
@@ -580,26 +582,38 @@ On Error GoTo ERR_RemplaceCode
     Set oStreamOut = oFSO.CreateTextFile(sFile & "tmp", 2)  '// Ecriture
 
     '// Boucle, modif texte, enregistre ligne.
-    Do While Not oStreamIn.AtEndOfStream
-        sLigne = oStreamIn.ReadLine
-
+    If InStr(sFile, FileCodeFrm) Then
+    
         '// Code Form : VARCLS FUNCNAME
-        sRemp = Replace(sLigne, "VARCLS", Me.OptVarClasse): sLigne = sRemp
-        sRemp = Replace(sLigne, "FUNCNAME", Me.OptFunctionName): sLigne = sRemp
-        sRemp = Replace(sLigne, "CTRFOCUS", sCtrFocus): sLigne = sRemp
+        Do While Not oStreamIn.AtEndOfStream
+            sLigne = oStreamIn.ReadLine
 
-        '// Module de classe : PICDEFFOLDER PICDEFIMGASC PICDEFIMGDESC
-        sRemp = Replace(sLigne, "PICDEFFOLDER", Me.OptPictureFolder): sLigne = sRemp
-        sRemp = Replace(sLigne, "PICDEFIMGASC", Me.OptPictureAsc): sLigne = sRemp
-        sRemp = Replace(sLigne, "PICDEFIMGDESC", Me.OptPictureDesc): sLigne = sRemp
+            sRemp = Replace(sLigne, "VARCLS", Me.OptVarClasse): sLigne = sRemp
+            sRemp = Replace(sLigne, "FUNCNAME", Me.OptFunctionName): sLigne = sRemp
+            sRemp = Replace(sLigne, "CTRFOCUS", sCtrFocus): sLigne = sRemp
+            sRemp = Replace(sLigne, "LENPREF", Len(Me.OptTextBoxPrefix)): sLigne = sRemp
+            sRemp = Replace(sLigne, "LENSUFF", Len(Me.OptTextBoxSuffix)): sLigne = sRemp
+            oStreamOut.WriteLine sLigne
+        Loop
 
-        oStreamOut.WriteLine sLigne
-    Loop
-
-'TODO:    oFSO.DeleteFile sFile & "tmp"
+     End If
+    If InStr(sFile, FileCodeClass) Then
+     
+        '// Module de classe : PICDEFFOLDER PICDEFIMGASC PICDEFIMGDESC LENPREF LENSUFF
+        Do While Not oStreamIn.AtEndOfStream
+            sLigne = oStreamIn.ReadLine
+    
+            sRemp = Replace(sLigne, "PICDEFFOLDER", Me.OptPictureFolder): sLigne = sRemp
+            sRemp = Replace(sLigne, "PICDEFIMGASC", Me.OptPictureAsc): sLigne = sRemp
+            sRemp = Replace(sLigne, "PICDEFIMGDESC", Me.OptPictureDesc): sLigne = sRemp
+            oStreamOut.WriteLine sLigne
+        Loop
+    End If
 
     oStreamIn.Close
     oStreamOut.Close
+
+    '// Remvoie le nom du fichier modifié.
     RemplaceCode = sFile & "tmp"
     
 SORTIE_RemplaceCode:

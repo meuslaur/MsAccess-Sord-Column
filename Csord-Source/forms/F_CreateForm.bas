@@ -1,6 +1,5 @@
 ﻿Version =20
 VersionRequired =20
-PublishOption =1
 Begin Form
     AllowFilters = NotDefault
     RecordSelectors = NotDefault
@@ -18,10 +17,10 @@ Begin Form
     Width =14173
     DatasheetFontHeight =11
     ItemSuffix =88
-    Left =5610
-    Top =255
-    Right =19785
-    Bottom =11580
+    Left =2400
+    Top =405
+    Right =16830
+    Bottom =11985
     DatasheetGridlinesColor =15132391
     RecSrcDt = Begin
         0x80c066f2cdd0e540
@@ -516,6 +515,8 @@ Begin Form
                     End
                 End
                 Begin TextBox
+                    Enabled = NotDefault
+                    Locked = NotDefault
                     AllowAutoCorrect = NotDefault
                     OverlapFlags =223
                     TextAlign =1
@@ -556,6 +557,8 @@ Begin Form
                     End
                 End
                 Begin TextBox
+                    Enabled = NotDefault
+                    Locked = NotDefault
                     AllowAutoCorrect = NotDefault
                     OverlapFlags =223
                     IMESentenceMode =3
@@ -748,12 +751,14 @@ Begin Form
                     ForeTint =100.0
                 End
                 Begin TextBox
+                    Enabled = NotDefault
+                    Locked = NotDefault
                     AllowAutoCorrect = NotDefault
                     OverlapFlags =223
                     IMESentenceMode =3
                     Left =8796
                     Top =9411
-                    Width =2886
+                    Width =3951
                     Height =345
                     TabIndex =10
                     BorderColor =10921638
@@ -764,7 +769,7 @@ Begin Form
 
                     LayoutCachedLeft =8796
                     LayoutCachedTop =9411
-                    LayoutCachedWidth =11682
+                    LayoutCachedWidth =12747
                     LayoutCachedHeight =9756
                     Begin
                         Begin Label
@@ -822,7 +827,7 @@ Begin Form
                 Begin CommandButton
                     TabStop = NotDefault
                     OverlapFlags =247
-                    Left =11743
+                    Left =12812
                     Top =9467
                     Width =345
                     Height =285
@@ -834,9 +839,9 @@ Begin Form
                     ControlTipText ="Sélection du dossier..."
                     GridlineColor =10921638
 
-                    LayoutCachedLeft =11743
+                    LayoutCachedLeft =12812
                     LayoutCachedTop =9467
-                    LayoutCachedWidth =12088
+                    LayoutCachedWidth =13157
                     LayoutCachedHeight =9752
                     UseTheme =0
                     BackColor =14461583
@@ -1761,23 +1766,28 @@ End Sub
 Private Sub cmbSelectFolder_Click()
     '// Sélection du dossier img pour commandButton.
     Dim sRet As String
+    Dim sDos As String
+
     sRet = OuvreBoite("Dossier des images...", , , , FD_TypeFolderPicker, False)
 
-    If (sRet <> vbNullString) Then Me.txtPicFolder = sRet
+    If (sRet = vbNullString) Then Exit Sub
+
+    '// On vérifie que le dossier est bien un sous-dossier de l'application...
+    If (VerifDossierImage(sRet)) Then Me.txtPicFolder = sDos
 
 End Sub
 
 Private Sub cmbSelectPicAsc_Click()
     '// Sélection de l'image ASC.
     Dim sRet As String
-    sRet = OuvreBoite("Image...", "*.png,*.jpg,*.bmp", "Sélectionnez l'image ASC", , FD_TypeFilePicker, False)
+    sRet = OuvreBoite("Image...", "*.png,*.jpg,*.bmp", "Sélectionnez l'image ASC", Me.txtPicFolder, FD_TypeFilePicker, False)
     If (sRet <> vbNullString) Then Me.txtPicAsc = sRet
 End Sub
 
 Private Sub cmbSelectPicDesc_Click()
     '// Sélection de l'image DESC.
     Dim sRet As String
-    sRet = OuvreBoite("Image...", "*.png,*.jpg,*.bmp", "Sélectionnez l'image DESC", , FD_TypeFilePicker, False)
+    sRet = OuvreBoite("Image...", "*.png,*.jpg,*.bmp", "Sélectionnez l'image DESC", Me.txtPicFolder, FD_TypeFilePicker, False)
     If (sRet <> vbNullString) Then Me.txtPicDesc = sRet
 End Sub
 
@@ -2032,6 +2042,35 @@ Private Function VerifSaisie() As Boolean
     End If
 
     Set oCtr = Nothing
+
+End Function
+
+' ----------------------------------------------------------------
+' Procedure Nom:    VerifDossierImage
+' Sujet:            Vérifier le dossier des images. Le dossier doit être un sous-dossier de l'application.
+' Procedure Kind:   Function
+' Procedure Access: Private
+' Références:       Vérifier le dossier des images.
+'
+'=== Paramètres ===
+' sPath (String): Dossier a vérifier
+'==================
+'
+' Return Type: String True si bien un sous-dossier de l'application.
+'
+' Author:  Laurent
+' Date:    09/05/2022 - 06:18
+' DateMod:
+'
+' ----------------------------------------------------------------
+Private Function VerifDossierImage(sPath As String) As Boolean
+
+    If (InStr(sPath, cCreate.GetBaseFullName) = 0) Then
+        MsgBox "Le dossier des images doit être un sous-dossier de l'application", vbExclamation, "Vérification dossier images"
+        Exit Function
+    End If
+
+    VerifDossierImage = True
 
 End Function
 

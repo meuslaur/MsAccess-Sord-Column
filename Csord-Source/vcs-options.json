@@ -34,11 +34,14 @@
     "SaveQuerySQL": true,
     "ForceImportOriginalQuerySQL": false,
     "SaveTableSQL": true,
-    "StripPublishOption": false,
+    "StripPublishOption": true,
     "SanitizeColors": 1,
     "SanitizeLevel": 2,
     "ExtractThemeFiles": false,
     "TablesToExportData": {
+      "Customers": {
+        "Format": "XML Format"
+      },
       "USysRegInfo": {
         "Format": "Tab Delimited"
       },
@@ -53,7 +56,7 @@
     "ShowVCSLegacy": true,
     "HashAlgorithm": "SHA256",
     "UseShortHash": true,
-    "BreakOnError": true,
+    "BreakOnError": false,
     "PreserveRubberDuckID": false
   }
 }

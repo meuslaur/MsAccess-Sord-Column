@@ -65,13 +65,17 @@ End Sub
 
 
 
-Public Sub test5()
-Dim sTmp As String
-    sTmp = "Private Function FUNCNAME(Optional eActiveImage As T_OnOff = OptionOff, " & vbCrLf & _
-                            "Optional eActiveTexte As T_OnOff = OptionOn, " & vbCrLf & _
-                            "Optional sPicAsc As String = vbNullString, " & vbCrLf & _
-                            "Optional sPicDesc As String = vbNullString, " & vbCrLf & _
-                            "Optional sFieldName As String = vbNullString) As Boolean"
-Debug.Print Replace(sTmp, "FUNCNAME", "foncname")
+Public Function ttre(sPath As String) As String
+    Dim sTmp As String
+    Dim lTmp As Long
+    Dim sDos As String
+    sDos = "E:\Access365\_Encours" 'cCreate.GetBaseFullName
+    If (InStr(sPath, sDos) = 0) Then
+        MsgBox "Le dossier des images doit être un sous-dossier de l'application", vbExclamation, "Vérification dossier images"
+        Exit Function
+    End If
+    lTmp = Len(sDos)
+    sTmp = Right$(sPath, Len(sPath) - lTmp)
+    ttre = sTmp
+End Function
 
-End Sub
