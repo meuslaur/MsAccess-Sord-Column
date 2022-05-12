@@ -36,11 +36,11 @@ Public Property Get GetoFSO() As Object
 #End If
 
 
-    #If FSO_EarlyBind = True Then
-    Static pFSO               As Scripting.FileSystemObject
-    #Else
-    Static pFSO               As Object
-    #End If
+#If FSO_EarlyBind = True Then
+Static pFSO               As Scripting.FileSystemObject
+#Else
+Static pFSO               As Object
+#End If
     
     If pFSO Is Nothing Then
         #If FSO_EarlyBind = True Then

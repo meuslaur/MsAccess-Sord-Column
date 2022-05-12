@@ -44,7 +44,7 @@ Public Enum T_FileDialogView
     FD_ViewWebView = 8
 End Enum
 
-Private cUtil As New CUtilitaires
+Private m_cUtil As New CUtilitaires
 '//:::::::::::::::::::::::::::::::::: END VARIABLES ::::::::::::::::::::::::::::::::::::::
 
 
@@ -156,8 +156,7 @@ End Function
 ' Author:       Laurent
 ' Date:         28/04/2022 - 16:49
 ' ----------------------------------------------------------------
-Public Function ObjectFieldsToListVal(sObjectName As String, lType As T_ObjectType, _
-                                      Optional ByRef oAutreBd As DAO.Database) As String
+Public Function ObjectFieldsToListVal(sObjectName As String, lType As T_ObjectType, Optional ByRef oAutreBd As DAO.Database) As String
     On Error GoTo ERR_ObjectFieldsToListVal
 
     Dim obd     As DAO.Database
@@ -213,7 +212,7 @@ Public Function CheckFolderExists(ByVal PathToFolder As String) As Boolean
     Dim oFSO As Object
     Dim bRes As Boolean
 
-    Set oFSO = cUtil.GetoFSO
+    Set oFSO = m_cUtil.GetoFSO
     bRes = oFSO.FolderExists(PathToFolder)
 
     Set oFSO = Nothing
@@ -223,12 +222,12 @@ Public Function CheckFolderExists(ByVal PathToFolder As String) As Boolean
 End Function
 
 Public Function CreateNewFolder(ByVal sPathToFolder As String) As Boolean
-On Error GoTo ERR_CreateNewFolder
+    On Error GoTo ERR_CreateNewFolder
 
     Dim oFSO As Object
     Dim bRes As Boolean
 
-    Set oFSO = cUtil.GetoFSO
+    Set oFSO = m_cUtil.GetoFSO
     bRes = oFSO.FolderExists(sPathToFolder)
 
     If (bRes = False) Then
@@ -288,9 +287,9 @@ End Function
 ' Date:         20/04/2022 - 06:21
 ' DateMod:      04/05/2022 - 17:5
 '
-' !Use! :   CUtil
+' !Use! :   m_cUtil
 ' ----------------------------------------------------------------
-Public Function CheckFileExist(ByVal sFullPathFile As String, Optional ByVal sExtFile As String, Optional ByVal ProcedureName As String) As Boolean
+Public Function CheckFileExist(ByVal sFullPathFile As String, Optional ByVal sExtFile As String) As Boolean
 
     Dim oFSO            As Object
     Dim sFolder         As String
@@ -298,7 +297,7 @@ Public Function CheckFileExist(ByVal sFullPathFile As String, Optional ByVal sEx
     Dim sBase           As String
     Dim bRes            As Boolean
 
-    Set oFSO = cUtil.GetoFSO
+    Set oFSO = m_cUtil.GetoFSO
 
     '// Utilise l'extension de fichier indiquer.
     If (sExtFile <> vbNullString) Then
@@ -347,26 +346,26 @@ Public Function OuvreBoite(Optional sFltDes As String = "Tous fichiers", _
                            Optional bReturnFullPath As Boolean = True) As String
 On Error GoTo ERR_OuvreBoite
 
-    Dim ofd             As Object
+    Dim oFd             As Object
     Dim vSelectedItem   As Variant
     Dim sTmp            As String
     Dim sValRet         As String
     Dim lTmp            As Long
 
-    Set ofd = Application.FileDialog(eDialogType)
+    Set oFd = Application.FileDialog(eDialogType)
 
     '// Defini le sous-dossier de départ, se place sur le dossier de l'app, ou sur la valeur indiquer.
     If (sInitialPath = vbNullString) Then
         lTmp = Len(CurrentProject.Path)
-        sTmp = Left$(ofd.InitialFileName, lTmp)
-        If (sTmp <> CurrentProject.Path) Then ofd.InitialFileName = sTmp
+        sTmp = Left$(oFd.InitialFileName, lTmp)
+        If (sTmp <> CurrentProject.Path) Then oFd.InitialFileName = sTmp
     Else
-        ofd.InitialFileName = sInitialPath
+        oFd.InitialFileName = sInitialPath
     End If
     
     If (sTitre = vbNullString) Then sTitre = "Sélectionnez un dossier /  fichier"
 
-    With ofd
+    With oFd
 
         .Title = sTitre
         .AllowMultiSelect = False
@@ -384,7 +383,7 @@ On Error GoTo ERR_OuvreBoite
                 sTmp = vSelectedItem
             Next vSelectedItem
 
-            '// Renvoi chemin\fichier ou que le fichier si demander dans bReturnFullPath.
+            '// Renvoi chemin/fichier ou que le dossier/fichier si demander dans bReturnFullPath.
             If (bReturnFullPath = False) Then
                 '// Retourne que le fichier / dossier.
                 lTmp = Len(sTmp) - InStrRev(sTmp, "\")
@@ -400,7 +399,7 @@ On Error GoTo ERR_OuvreBoite
     End With
 
 SORTIE_OuvreBoite:
-    Set ofd = Nothing
+    Set oFd = Nothing
 Exit Function
 
 ERR_OuvreBoite:
@@ -417,7 +416,7 @@ End Function
 '---------------------------------------------------------------------------------------
 Public Function GetBackupFileName(sFullPath As String) As String
 
-    Const sSUFFIX   As String = "_BackUp("
+    Const SUFFIX    As String = "_BackUp("
     Dim oFSO        As Object
 
     Dim sFolder     As String
@@ -425,12 +424,11 @@ Public Function GetBackupFileName(sFullPath As String) As String
     Dim sBase       As String
     Dim sBaseBackUp As String
     Dim sExt        As String
-    Dim iCnt        As Integer
+    Dim iFor        As Integer
     Dim sTest       As String
     Dim sIncrement  As String
-    Dim sInfo       As String   '// Stock les informations pour affichage.
 
-    Set oFSO = cUtil.GetoFSO
+    Set oFSO = m_cUtil.GetoFSO
 
     sFolder = oFSO.GetParentFolderName(sFullPath) & "\"
     sFile = oFSO.GetFileName(sFullPath)
@@ -439,17 +437,17 @@ Public Function GetBackupFileName(sFullPath As String) As String
     sIncrement = "00"
 
     ' Attempt up to 100 versions of the file name. (i.e. Database_VSBackup45.accdb)
-    For iCnt = 1 To 50
-        sBaseBackUp = sBase & sSUFFIX & sIncrement & ")" & sExt
+    For iFor = 1 To 50
+        sBaseBackUp = sBase & SUFFIX & sIncrement & ")" & sExt
         sTest = sFolder & sBaseBackUp
         If oFSO.FileExists(sTest) Then
             ' Try next number.
-            sIncrement = CStr(iCnt)
+            sIncrement = CStr(iFor)
             If (Len(sIncrement) < 2) Then sIncrement = "0" & sIncrement
         Else
             Exit For
         End If
-    Next iCnt
+    Next iFor
 
     ' Return file name
     GetBackupFileName = sFolder & ";" & sBaseBackUp & ";" & sFile
@@ -477,28 +475,28 @@ End Function
 ' 1 2007-Apr-01 Initial Release
 '---------------------------------------------------------------------------------------
 Public Function CopyFile(sSource As String, sDest As String) As Boolean
-   On Error GoTo CopyFile_Error
-   
-   FileCopy sSource, sDest
-   CopyFile = True
-   Exit Function
+    On Error GoTo CopyFile_Error
+
+    FileCopy sSource, sDest
+    CopyFile = True
+    Exit Function
 
 CopyFile_Error:
-   If Err.Number = 0 Then
-   ElseIf Err.Number = 70 Then
-      MsgBox "The file is currently in use and therfore is locked and cannot be copied at this" & _
-             " time. Please ensure that no one is using the file and try again.", vbOKOnly, _
-             "File Currently in Use"
-   ElseIf Err.Number = 53 Then
-      MsgBox "The Source File '" & sSource & "' could not be found. Please validate the" & _
-             " location and name of the specifed Source File and try again", vbOKOnly, _
-             "File Currently in Use"
-    Else
-        MsgBox "MS Access has generated the following error" & vbCrLf & vbCrLf & "Error Number: " & _
-                Err.Number & vbCrLf & "Error Source: CopyFile" & vbCrLf & _
-                "Error Description: " & Err.Description, vbCritical, "An Error has Occurred!"
-   End If
-   Exit Function
+    If Err.Number = 0 Then
+    ElseIf Err.Number = 70 Then
+        MsgBox "The file is currently in use and therfore is locked and cannot be copied at this" & _
+                " time. Please ensure that no one is using the file and try again.", vbOKOnly, _
+                "File Currently in Use"
+    ElseIf Err.Number = 53 Then
+        MsgBox "The Source File '" & sSource & "' could not be found. Please validate the" & _
+                " location and name of the specifed Source File and try again", vbOKOnly, _
+                "File Currently in Use"
+        Else
+            MsgBox "MS Access has generated the following error" & vbCrLf & vbCrLf & "Error Number: " & _
+                    Err.Number & vbCrLf & "Error Source: CopyFile" & vbCrLf & _
+                    "Error Description: " & Err.Description, vbCritical, "An Error has Occurred!"
+    End If
+    Exit Function
 End Function
 
 ' ----------------------------------------------------------------
@@ -529,9 +527,8 @@ On Error GoTo ERR_ExtrairePiecesJointes
     
     Dim oDb         As DAO.Database
     Dim oRst        As DAO.Recordset
-    Dim oRstPJ      As DAO.Recordset    ' variable recordset pour faire référence au jeu d'enregistrements du champ de type pièce jointe
-    Dim sFichier    As String           ' chemin complet du fichier sur le disque
-    Dim sSql        As String
+    Dim oRstPJ      As DAO.Recordset    '// variable recordset pour faire référence au jeu d'enregistrements du champ de type pièce jointe
+    Dim sFichier    As String           '// chemin complet du fichier sur le disque
     Dim bRep        As Boolean
 
     '// Utiliser le dossier Temp ?
@@ -623,8 +620,8 @@ End Function
 '// \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ END PUB. SUB/FUNC \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
 '// ################################ PRIVATE SUB/FUNC ####################################
-Private Function ObjectTypeName(eType As T_ObjectType) As String
 '// Retourne en clair le type de l'objet.
+Private Function ObjectTypeName(eType As T_ObjectType) As String
     Dim sType As String
 
     Select Case eType

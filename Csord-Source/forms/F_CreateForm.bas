@@ -17,10 +17,10 @@ Begin Form
     Width =14173
     DatasheetFontHeight =11
     ItemSuffix =88
-    Left =2400
-    Top =405
-    Right =16830
-    Bottom =11985
+    Left =5610
+    Top =255
+    Right =19785
+    Bottom =11580
     DatasheetGridlinesColor =15132391
     RecSrcDt = Begin
         0x80c066f2cdd0e540
@@ -1619,7 +1619,7 @@ Attribute VB_Exposed = False
 ' ------------------------------------------------------
 ' Name:     Form_F_CreateForm
 ' Kind:     Document VBA
-' Purpose:  Formulaire de définition des options pour la création d'un formulaire pour la classe CsordFormColumn
+' Purpose:  Formulaire de définition des options pour la création d'un formulaire pour la classe CSordFormColumn
 ' Author:   Laurent
 ' Date:     28/04/2022
 ' DateMod:  30/04/2022-11:38
@@ -1632,25 +1632,25 @@ Option Explicit
 
     Private Const C_COULDEF As Long = 16777215
     Private Const C_COULSEL As Long = 14610923
-    Private sCtrPrec        As String
+    Private m_sCtrPrec      As String
 
-    Private cCreate      As CCreateFormContinu
+    Private m_cCreate       As CCreateFormContinu
 
      '// Rst pour affichage des infos sur le ctr sélectionné.
-    Private oRst         As DAO.Recordset
-    Private Const ID_INF As String = "[ID_Info]='"
+    Private m_oRst          As DAO.Recordset
+    Private Const ID_INF    As String = "[ID_Info]='"
     
-    Private bErrSaisie   As Boolean     '// Indique erreur de saisie.
+    Private m_bErrSaisie    As Boolean  '// Indique erreur de saisie.
 '//---------------------------------------------------------------------------------------
 
 '//==================================       EVENT       ==================================
 Private Sub Form_Load()
 
     '// Initialisation de la classe.
-    Set cCreate = New CCreateFormContinu
+    Set m_cCreate = New CCreateFormContinu
 
     '// Table info controles.
-    Set oRst = CurrentDb.OpenRecordset(TAB_INFO, dbOpenSnapshot, dbReadOnly)
+    Set m_oRst = CurrentDb.OpenRecordset(TAB_INFO, dbOpenSnapshot, dbReadOnly)
 
     '// Applique les valeurs par défaut...
     RazForm
@@ -1658,17 +1658,17 @@ Private Sub Form_Load()
 End Sub
 
 Private Sub Form_Close()
-On Error GoTo ERR_Form_Close
+    On Error GoTo ERR_Form_Close
 
     Screen.MousePointer = 11    '// Hourglass.
 
-    If (Not oRst Is Nothing) Then
-        oRst.Close
-        Set oRst = Nothing
+    If (Not m_oRst Is Nothing) Then
+        m_oRst.Close
+        Set m_oRst = Nothing
     End If
 
     '// Déclenche class_Terminate()
-    Set cCreate = Nothing
+    Set m_cCreate = Nothing
 
 SORTIE_Form_Close:
     DoCmd.Echo True
@@ -1683,7 +1683,7 @@ ERR_Form_Close:
 End Sub
 
 Private Sub cmbSelectBdd_Click()
-On Error GoTo ERR_cmbSelectBdd
+    On Error GoTo ERR_cmbSelectBdd
 
     Dim bRet     As Boolean
     Dim sBaseSel As String
@@ -1692,24 +1692,24 @@ On Error GoTo ERR_cmbSelectBdd
     Screen.MousePointer = 11       '// Hourglass.
 
     '// Création Access.Application, si pas déjà fait.
-    If (cCreate.MsAppIsUp = False) Then
-        bRet = cCreate.OpenMsApp()
+    If (m_cCreate.MsAppIsUp = False) Then
+        bRet = m_cCreate.OpenMsApp()
         If (bRet = False) Then GoTo SORTIE_cmbSelectBdd
     End If
 
     Screen.MousePointer = 0
 
     '// Séléction de la base à utiliser.
-    sBaseSel = OuvreBoite("MS Access", "*.accdb")
+    sBaseSel = OuvreBoite("MS Access", "*.accdb", , CurrentProject.Path)
     If (sBaseSel = vbNullString) Then GoTo SORTIE_cmbSelectBdd
 
     Screen.MousePointer = 11            '// Hourglass.
 
-    bRet = cCreate.OpenMsBase(sBaseSel) '// Ouverture de la base.
+    bRet = m_cCreate.OpenMsBase(sBaseSel) '// Ouverture de la base.
 
     If (bRet = False) Then
         '// Problème détecter, on ferme tout, RaZ et on sort.
-        cCreate.CloseMsBase True
+        m_cCreate.CloseMsBase True
         RazForm
         Screen.MousePointer = 0
         DoCmd.Echo True
@@ -1737,24 +1737,24 @@ Private Sub cmdCloseBd_Click()
 
     Screen.MousePointer = 11    '// Hourglass.
     '// Ferme la base en cours, réinitialise les champs par défaut...
-    cCreate.CloseMsBase
+    m_cCreate.CloseMsBase
     RazForm
     Screen.MousePointer = 0
     DoCmd.Echo True
 
 End Sub
 
-Private Sub lstObjets_AfterUpdate()
 '// MàJ de la liste des champs de l'objet sélectionné.
+Private Sub lstObjets_AfterUpdate()
 
-'TODO:    If (Me.lstObjets = Null) Then Exit Sub
+    If (Me.lstObjets = Null) Then Exit Sub
 
-    If ((cCreate.MsAppIsUp = False) Or (cCreate.MsBaseIsOpen = False)) Then Exit Sub
+    If ((m_cCreate.MsAppIsUp = False) Or (m_cCreate.MsBaseIsOpen = False)) Then Exit Sub
 
     Dim sListeVal As String
 
     '// Rempli(liste de valeurs) la liste lstFields...
-    sListeVal = ObjectFieldsToListVal(Me.lstObjets, Me.lstObjets.Column(0), cCreate.objMsBase)
+    sListeVal = ObjectFieldsToListVal(Me.lstObjets, Me.lstObjets.Column(0), m_cCreate.objMsBase)
     Me.lstFields.RowSource = sListeVal
 
     Me.txtFormName = "F_" & Me.lstObjets
@@ -1766,14 +1766,14 @@ End Sub
 Private Sub cmbSelectFolder_Click()
     '// Sélection du dossier img pour commandButton.
     Dim sRet As String
-    Dim sDos As String
 
-    sRet = OuvreBoite("Dossier des images...", , , , FD_TypeFolderPicker, False)
+    sRet = OuvreBoite("Dossier des images...", , , , FD_TypeFolderPicker)
 
     If (sRet = vbNullString) Then Exit Sub
 
+    sRet = sRet & "\"
     '// On vérifie que le dossier est bien un sous-dossier de l'application...
-    If (VerifDossierImage(sRet)) Then Me.txtPicFolder = sDos
+    If (VerifDossierImage(sRet)) Then Me.txtPicFolder = sRet
 
 End Sub
 
@@ -1815,38 +1815,39 @@ Private Sub cmbLanceCreation_Click()
     Dim vTmp    As Variant  '// Pour Split de sBackup.
     Dim sArg    As String
     
-    VerifSaisie                                         '// Contrôle des saisies...
-    If bErrSaisie Then Exit Sub
+    VerifSaisie                                             '// Contrôle des saisies...
+    If m_bErrSaisie Then Exit Sub
 
-    AfficheResume                                       '// Affiche résumé de qu'il vas être fait.
+    AfficheResume                                           '// Affiche résumé de qu'il vas être fait.
 
-    bRet = cCreate.CloseMsBase                          '// Fermeture de la base pour sauvegarde...
+    bRet = m_cCreate.CloseMsBase                            '// Fermeture de la base pour sauvegarde...
     If (bRet = False) Then Exit Sub
 
-    sArg = GetBackupFileName(cCreate.GetBaseFullName)   '// Création de la sauvegarde...
+    sArg = GetBackupFileName(m_cCreate.GetBaseFullName)     '// Création de la sauvegarde...
     '// NOTE retourne folder;backup;base
     vTmp = Split(sArg, ";")
     sBackUp = vTmp(0) & vTmp(1) '// folder + backup.
 
-    bRet = CopyFile(cCreate.GetBaseFullName, sBackUp)   '// Sauvegarde sous le nom sBackUp.
+    bRet = CopyFile(m_cCreate.GetBaseFullName, sBackUp)     '// Sauvegarde sous le nom sBackUp.
     If (bRet = False) Then Exit Sub
 
-    bRet = cCreate.OpenMsBase(cCreate.GetBaseFullName)  '// Réouverture de la base...
+    bRet = m_cCreate.OpenMsBase(m_cCreate.GetBaseFullName)  '// Réouverture de la base...
     If (bRet = False) Then Exit Sub
 
-    '// Affiche le message d'information.
-    DoCmd.OpenForm "~F_Info", , , , , acDialog, "SV;" & sArg
 
-    bRet = ActualiseOptionsClass()                      '// MàJ des propriétés de la classe...
+    DoCmd.OpenForm "~F_Info", , , , , acDialog, "SV;" & sArg    '// Affiche le message d'information.
+
+    bRet = ActualiseOptionsClass()                          '// MàJ des propriétés de la classe...
     If (bRet = False) Then Exit Sub
 
-    bRet = cCreate.LanceCreation()                       '// Lance la création du formulaire...
+    bRet = m_cCreate.LanceCreation()                        '// Lance la création du formulaire...
 
     If bRet Then
         MsgBox "Opération terminée avec succès", vbInformation, "Création du Formulaire"
-        Me.txtBdd.SetFocus
-        Me.cmbLanceCreation.Enabled = False
     End If
+    
+    Me.txtBdd.SetFocus
+    Me.cmbLanceCreation.Enabled = False
 
 End Sub
 
@@ -1854,34 +1855,34 @@ End Sub
 
 '// ################################ PRIVATE SUB/FUNC ####################################
 
-Private Sub MaJlisteObjets()
 '// Rempli la liste des objets, avec ceux trouver dans la BdD.
+Private Sub MaJlisteObjets()
 
     '// Rempli la liste des objets de la base (Tables-Requêtes)
     Dim sListVal As String
-    sListVal = ListObjects(Tables_Local, True, Tables_Linked, QueriesType, cCreate.objMsBase)
+    sListVal = ListObjects(Tables_Local, True, Tables_Linked, QueriesType, m_cCreate.objMsBase)
 
     Me.lstObjets.RowSource = sListVal
     Me.lstObjets = vbNullString
 
 End Sub
 
-Private Sub RazForm(Optional bActive As Boolean)
 '// Applique les valeurs par défaut.
+Private Sub RazForm(Optional bActive As Boolean)
 
     Me.txtBdd.SetFocus
     Me.txtBdd = vbNullString
 
     Me.txtFormName = "F_"
-    Me.txtClasseName = cCreate.OptVarClasse
-    Me.txtFunctionName = cCreate.OptFunctionName
+    Me.txtClasseName = m_cCreate.OptVarClasse
+    Me.txtFunctionName = m_cCreate.OptFunctionName
 
-    Me.txtTbSuffix = cCreate.OptTextBoxSuffix
-    Me.txtCmbSuffix = cCreate.OptCmbSuffix
+    Me.txtTbSuffix = m_cCreate.OptTextBoxSuffix
+    Me.txtCmbSuffix = m_cCreate.OptCmbSuffix
     
-    Me.txtPicFolder = cCreate.OptPictureFolder
-    Me.txtPicAsc = cCreate.OptPictureAsc
-    Me.txtPicDesc = cCreate.OptPictureDesc
+    Me.txtPicFolder = m_cCreate.OptPictureFolder
+    Me.txtPicAsc = m_cCreate.OptPictureAsc
+    Me.txtPicDesc = m_cCreate.OptPictureDesc
 
     Me.lstObjets.RowSource = vbNullString
     Me.lstFields.RowSource = vbNullString
@@ -1894,15 +1895,14 @@ Private Sub RazForm(Optional bActive As Boolean)
 
 End Sub
 
-Private Function ActualiseOptionsClass() As Boolean
 '// Stock les options pour la création du formulaire.
+Private Function ActualiseOptionsClass() As Boolean
 
-    Dim sInfo   As String
     Dim sVerif  As String
 
     sVerif = Nz(Me.lstObjets, vbNullString)
     
-    With cCreate
+    With m_cCreate
         .OptFormName = Me.txtFormName
         .OptFormSource = Me.lstObjets
         .OptVarClasse = Me.txtClasseName
@@ -1919,39 +1919,39 @@ Private Function ActualiseOptionsClass() As Boolean
     '// Stock les champs sélectionés de la liste lstFields.
     Dim vItem As Variant
     For Each vItem In lstFields.ItemsSelected
-        cCreate.AddField = lstFields.ItemData(vItem)
+        m_cCreate.AddField = lstFields.ItemData(vItem)
     Next vItem
 
     ActualiseOptionsClass = True
 
 End Function
 
-Private Function AfficheInfo(Optional sID As String = vbNullString)
 '// Affiche des infos contenu dans la table '~T_Info', suivant le controle en cours.
 '//
 '// si sID est indiquer on utilise pas ActiveControl.Name, mais la valeur de sID.
 '//
 '// AfficheInfo est défini sur OnGotFocus du controle avec =AfficheInfo("")
 '//
+Private Function AfficheInfo(Optional sID As String = vbNullString)
 
-    If bErrSaisie Then Exit Function        '// Erreur de saisie, laisse les infos erreur afficher.
+    If m_bErrSaisie Then Exit Function      '// Erreur de saisie, laisse les infos erreur afficher.
 
 
     '// Restaure le ctr précedent, applique la backColor.
-    If (sCtrPrec <> vbNullString) Then Me(sCtrPrec).BackColor = C_COULDEF
-    sCtrPrec = Me.ActiveControl.Name
-    Me(sCtrPrec).BackColor = C_COULSEL
+    If (m_sCtrPrec <> vbNullString) Then Me(m_sCtrPrec).BackColor = C_COULDEF
+    m_sCtrPrec = Me.ActiveControl.Name
+    Me(m_sCtrPrec).BackColor = C_COULSEL
 
     Dim sFind As String
 
     '// Pour les préfixe/suffixe on affiche les mêmes infos (TextBox et CommandButton)
-    sFind = IIf(sID <> vbNullString, ID_INF & sID & "'", ID_INF & sCtrPrec & "'")
+    sFind = IIf(sID <> vbNullString, ID_INF & sID & "'", ID_INF & m_sCtrPrec & "'")
 
-    oRst.FindFirst sFind
-    If (oRst.NoMatch) Then Exit Function
+    m_oRst.FindFirst sFind
+    If (m_oRst.NoMatch) Then Exit Function
 
-    txtInfoTitre = oRst.Fields("InfoTitre")
-    txtInfoTxt = oRst.Fields("InfoTexte")
+    txtInfoTitre = m_oRst.Fields("InfoTitre")
+    txtInfoTxt = m_oRst.Fields("InfoTexte")
 
 End Function
 
@@ -2031,14 +2031,14 @@ Private Function VerifSaisie() As Boolean
         Me.txtInfoTitre.BorderColor = 2366701   '// Rouge
         Me.txtInfoTitre = "Erreurs de saisie :"
         Me.txtInfoTxt = sInfo
-        bErrSaisie = True
+        m_bErrSaisie = True
     Else
         Me.txtInfoTitre.BorderColor = 10921638
         Me.txtInfoTitre.BorderStyle = 0
         Me.txtInfoTitre = vbNullString
         Me.txtInfoTxt.BorderStyle = 0
         Me.txtInfoTxt = vbNullString
-       bErrSaisie = False
+        m_bErrSaisie = False
     End If
 
     Set oCtr = Nothing
@@ -2065,7 +2065,15 @@ End Function
 ' ----------------------------------------------------------------
 Private Function VerifDossierImage(sPath As String) As Boolean
 
-    If (InStr(sPath, cCreate.GetBaseFullName) = 0) Then
+    Dim lTmp    As Long
+    Dim sTemp   As String
+    Dim sDosA   As String
+
+    sTemp = m_cCreate.GetBaseFullName
+    lTmp = Len(sTemp) - InStrRev(sTemp, "\")
+    sDosA = Left$(sTemp, Len(sTemp) - lTmp)
+
+    If (InStr(sPath, sDosA) = 0) Then
         MsgBox "Le dossier des images doit être un sous-dossier de l'application", vbExclamation, "Vérification dossier images"
         Exit Function
     End If
@@ -2082,27 +2090,27 @@ Private Sub AfficheResume()
     Dim lInd        As Long
     Dim lFor        As Long
 
-    sFields = cCreate.GetFields
+    sFields = m_cCreate.GetFields
     lInd = UBound(sFields)
     For lFor = 0 To lInd
         sFld = sFld & "!!" & sFields(lFor) & ";"
     Next lFor
 
-    sMsg = "Base de données : " & cCreate.GetBaseFullName & ";" & _
+    sMsg = "Base de données : " & m_cCreate.GetBaseFullName & ";" & _
             "Créations : " & ";" & _
-            "!Formulaire : " & cCreate.OptFormName & ";" & _
-            "!Source formulaire : " & cCreate.OptFormSource & ";" & _
+            "!Formulaire : " & m_cCreate.OptFormName & ";" & _
+            "!Source formulaire : " & m_cCreate.OptFormSource & ";" & _
             "!Champs utiliser : " & ";" & _
             sFld & ";" & _
-            "!Variable pour la classe : " & cCreate.OptVarClasse & ";" & _
-            "!Function d'appel de la classe : " & cCreate.OptFunctionName & ";" & _
-            "!TexteBox préfixe : " & cCreate.OptTextBoxPrefix & ";" & _
-            "!TexteBox suffixe : " & cCreate.OptTextBoxSuffix & ";" & _
-            "!CommandButton préfixe : " & cCreate.OptCmbPrefix & ";" & _
-            "!CommandButton suffixe : " & cCreate.OptCmbSuffix & ";" & _
-            "!Sous-Dossier images : " & cCreate.OptPictureFolder & ";" & _
-            "!Image tri ASC : " & cCreate.OptPictureAsc & ";" & _
-            "!Image tri DESC : " & cCreate.OptPictureDesc & ";"
+            "!Variable pour la classe : " & m_cCreate.OptVarClasse & ";" & _
+            "!Function d'appel de la classe : " & m_cCreate.OptFunctionName & ";" & _
+            "!TexteBox préfixe : " & m_cCreate.OptTextBoxPrefix & ";" & _
+            "!TexteBox suffixe : " & m_cCreate.OptTextBoxSuffix & ";" & _
+            "!CommandButton préfixe : " & m_cCreate.OptCmbPrefix & ";" & _
+            "!CommandButton suffixe : " & m_cCreate.OptCmbSuffix & ";" & _
+            "!Sous-Dossier images : " & m_cCreate.OptPictureFolder & ";" & _
+            "!Image tri ASC : " & m_cCreate.OptPictureAsc & ";" & _
+            "!Image tri DESC : " & m_cCreate.OptPictureDesc & ";"
 
     DoCmd.OpenForm "~F_Info", , , , , acDialog, sMsg
     
