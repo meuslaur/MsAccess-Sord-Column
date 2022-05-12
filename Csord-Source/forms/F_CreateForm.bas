@@ -16,11 +16,19 @@ Begin Form
     GridY =10
     Width =14173
     DatasheetFontHeight =11
+<<<<<<< HEAD
     ItemSuffix =89
     Left =5220
     Top =255
     Right =19140
     Bottom =11325
+=======
+    ItemSuffix =88
+    Left =5610
+    Top =255
+    Right =19785
+    Bottom =11580
+>>>>>>> 90b235b329fe03c39da9bc499914478247f26c39
     DatasheetGridlinesColor =15132391
     RecSrcDt = Begin
         0x80c066f2cdd0e540
@@ -1769,6 +1777,17 @@ Private Sub cmbSelectBdd_Click()
         If (bRet = False) Then GoTo SORTIE_cmbSelectBdd
     End If
 
+<<<<<<< HEAD
+=======
+    Screen.MousePointer = 0
+
+    '// Séléction de la base à utiliser.
+    sBaseSel = OuvreBoite("MS Access", "*.accdb", , CurrentProject.Path)
+    If (sBaseSel = vbNullString) Then GoTo SORTIE_cmbSelectBdd
+
+    Screen.MousePointer = 11            '// Hourglass.
+
+>>>>>>> 90b235b329fe03c39da9bc499914478247f26c39
     bRet = m_cCreate.OpenMsBase(sBaseSel) '// Ouverture de la base.
 
     If (bRet = False) Then
@@ -1807,6 +1826,7 @@ Private Sub cmdCloseBd_Click()
 
 End Sub
 
+<<<<<<< HEAD
 Private Sub cmbOuvreBase_Click()
     On Error GoTo ERR_cmbOuvreBase_Click
 
@@ -1823,6 +1843,8 @@ ERR_cmbOuvreBase_Click:
     Resume SORTIE_cmbOuvreBase_Click
 End Sub
 
+=======
+>>>>>>> 90b235b329fe03c39da9bc499914478247f26c39
 '// MàJ de la liste des champs de l'objet sélectionné.
 Private Sub lstObjets_AfterUpdate()
 
@@ -1845,20 +1867,28 @@ End Sub
 Private Sub cmbSelectFolder_Click()
     '// Sélection du dossier img pour commandButton.
     Dim sRet As String
+<<<<<<< HEAD
     Dim lLen As Long
     Dim lTmp As Long
     Dim sDos As String
 
 
+=======
+
+>>>>>>> 90b235b329fe03c39da9bc499914478247f26c39
     sRet = OuvreBoite("Dossier des images...", , , , FD_TypeFolderPicker)
 
     If (sRet = vbNullString) Then Exit Sub
 
     sRet = sRet & "\"
     '// On vérifie que le dossier est bien un sous-dossier de l'application...
+<<<<<<< HEAD
     If (VerifDossierImage(sRet)) Then
         Me.txtPicFolder = sRet
     End If
+=======
+    If (VerifDossierImage(sRet)) Then Me.txtPicFolder = sRet
+>>>>>>> 90b235b329fe03c39da9bc499914478247f26c39
 
 End Sub
 
@@ -1933,6 +1963,7 @@ Private Sub cmbLanceCreation_Click()
     
     Me.txtBdd.SetFocus
     Me.cmbLanceCreation.Enabled = False
+<<<<<<< HEAD
 
     '// On ferme tout, base et application.
     m_cCreate.CloseMsBase True
@@ -1941,6 +1972,8 @@ Private Sub cmbLanceCreation_Click()
     '// Permet d'ouvrir la base.
     Me.cmbOuvreBase.Enabled = True
     Me.txtBdd = m_cCreate.GetBaseFullName
+=======
+>>>>>>> 90b235b329fe03c39da9bc499914478247f26c39
 
 End Sub
 
@@ -2127,7 +2160,10 @@ Private Function VerifSaisie() As Boolean
         Me.txtInfoTitre = "Erreurs de saisie :"
         Me.txtInfoTxt = sInfo
         m_bErrSaisie = True
+<<<<<<< HEAD
         Me.TimerInterval = 10000                '// Affiche l'erruer 10 secondes.
+=======
+>>>>>>> 90b235b329fe03c39da9bc499914478247f26c39
     Else
         Me.txtInfoTitre.BorderColor = 10921638
         Me.txtInfoTitre.BorderStyle = 0
@@ -2161,6 +2197,7 @@ End Function
 ' ----------------------------------------------------------------
 Private Function VerifDossierImage(sPath As String) As String
 
+<<<<<<< HEAD
     Dim oFSO        As Object
     Dim sDosBase    As String
 
@@ -2168,6 +2205,17 @@ Private Function VerifDossierImage(sPath As String) As String
     sDosBase = oFSO.GetParentFolderName(m_cCreate.GetBaseFullName)
 
     If (InStr(sPath, sDosBase) = 0) Then
+=======
+    Dim lTmp    As Long
+    Dim sTemp   As String
+    Dim sDosA   As String
+
+    sTemp = m_cCreate.GetBaseFullName
+    lTmp = Len(sTemp) - InStrRev(sTemp, "\")
+    sDosA = Left$(sTemp, Len(sTemp) - lTmp)
+
+    If (InStr(sPath, sDosA) = 0) Then
+>>>>>>> 90b235b329fe03c39da9bc499914478247f26c39
         MsgBox "Le dossier des images doit être un sous-dossier de l'application", vbExclamation, "Vérification dossier images"
         Exit Function
     End If

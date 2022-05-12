@@ -6,7 +6,11 @@
   "Items": {
     "MergeBuildDate": null,
     "FullBuildDate": null,
+<<<<<<< HEAD
     "ExportDate": "12/05/2022 21:20:02",
+=======
+    "ExportDate": "12/05/2022 06:50:28",
+>>>>>>> 90b235b329fe03c39da9bc499914478247f26c39
     "FullExportDate": "09/05/2022 20:27:14",
     "OptionsHash": "c4de49a",
     "LastMergedCommit": "",
@@ -24,10 +28,17 @@
           "FilePropertiesHash": "35ab3e0"
         },
         "F_CreateForm.bas": {
+<<<<<<< HEAD
           "Hash": "c516858",
           "ExportDate": "12/05/2022 21:20:02",
           "SourceModified": "12/05/2022 21:20:02",
           "FilePropertiesHash": "470ab29"
+=======
+          "Hash": "fbccb8c",
+          "ExportDate": "12/05/2022 06:50:27",
+          "SourceModified": "12/05/2022 06:50:27",
+          "FilePropertiesHash": "0394fb5"
+>>>>>>> 90b235b329fe03c39da9bc499914478247f26c39
         },
         "F_Test.bas": {
           "Hash": "c89dcf7",
@@ -38,10 +49,23 @@
       },
       "Modules": {
         "CCreateFormContinu.cls": {
+<<<<<<< HEAD
           "Hash": "b62d96c",
           "ExportDate": "12/05/2022 21:20:02",
           "SourceModified": "12/05/2022 21:20:02",
           "FilePropertiesHash": "1f3691d"
+=======
+          "Hash": "543fa99",
+          "ExportDate": "12/05/2022 06:50:27",
+          "SourceModified": "12/05/2022 06:50:27",
+          "FilePropertiesHash": "aa22d72"
+        },
+        "CSordFormColumn.cls": {
+          "Hash": "4e52aee",
+          "ExportDate": "12/05/2022 06:50:27",
+          "SourceModified": "12/05/2022 06:50:27",
+          "FilePropertiesHash": "840ce71"
+>>>>>>> 90b235b329fe03c39da9bc499914478247f26c39
         },
         "CsordFormColumn.cls": {
           "Hash": "927126b",
@@ -83,7 +107,11 @@
       "Project": {
         "project.json": {
           "Hash": "19c3478",
+<<<<<<< HEAD
           "ExportDate": "12/05/2022 21:20:02",
+=======
+          "ExportDate": "12/05/2022 06:50:27",
+>>>>>>> 90b235b329fe03c39da9bc499914478247f26c39
           "SourceModified": "09/05/2022 20:27:13",
           "FilePropertiesHash": "e4e827e"
         }
@@ -98,7 +126,11 @@
       "VB Project": {
         "vbe-project.json": {
           "Hash": "e22e844",
+<<<<<<< HEAD
           "ExportDate": "12/05/2022 21:20:02",
+=======
+          "ExportDate": "12/05/2022 06:50:27",
+>>>>>>> 90b235b329fe03c39da9bc499914478247f26c39
           "SourceModified": "12/05/2022 06:50:27",
           "FilePropertiesHash": "16b1a50"
         }
@@ -106,7 +138,11 @@
       "VBE References": {
         "vbe-references.json": {
           "Hash": "c0a336b",
+<<<<<<< HEAD
           "ExportDate": "12/05/2022 21:20:02",
+=======
+          "ExportDate": "12/05/2022 06:50:27",
+>>>>>>> 90b235b329fe03c39da9bc499914478247f26c39
           "SourceModified": "09/05/2022 20:27:13",
           "FilePropertiesHash": "0c55839"
         }

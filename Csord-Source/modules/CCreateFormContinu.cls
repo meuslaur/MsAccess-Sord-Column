@@ -59,7 +59,11 @@ Option Explicit
     Private m_sOptTextBoxSuffix As String
     Private m_sOptTextBoxPrefix As String
 
+<<<<<<< HEAD
     Public m_cUtils As New CUtilitaires     '// FSO
+=======
+    Private m_cUtils As New CUtilitaires
+>>>>>>> 90b235b329fe03c39da9bc499914478247f26c39
 '//:::::::::::::::::::::::::::::::::: END VARIABLES ::::::::::::::::::::::::::::::::::::::
     
 '//----------------------------------       INIT/TERM       ----------------------------------
@@ -236,6 +240,11 @@ Public Function OpenMsApp() As Boolean
 
     '// Création de l'objet Access.Application.
     Set m_oMsApp = New Access.Application
+<<<<<<< HEAD
+=======
+'TODO:
+    m_oMsApp.Visible = False
+>>>>>>> 90b235b329fe03c39da9bc499914478247f26c39
     DoEvents
     m_oMsApp.Visible = False
     m_bMsAppIsUp = True

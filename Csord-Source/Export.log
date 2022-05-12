@@ -3,7 +3,11 @@ Beginning Export of all Source
 CSord.accdb
 VCS Version 3.4.21
 Using Fast Save
+<<<<<<< HEAD
 12/05/2022 21:20:02
+=======
+12/05/2022 06:50:27
+>>>>>>> 90b235b329fe03c39da9bc499914478247f26c39
 -------------------------------------
 -------------------------------------
 Exporting project...          
@@ -43,11 +47,19 @@ No modified tables found in this database.
 No modified queries found in this database.
 -------------------------------------
 Exporting forms...            
+<<<<<<< HEAD
   ~F_InfoTmp
     Sanitized in 0,007 seconds.
   F_CreateForm
 Source: modSanitize.SanitizeFile
     Sanitized in 0,022 seconds.
+=======
+  F_Test
+    Sanitized in 0,009 seconds.
+  F_CreateForm
+Source: modSanitize.SanitizeFile
+    Sanitized in 0,021 seconds.
+>>>>>>> 90b235b329fe03c39da9bc499914478247f26c39
 [2] forms processed.
 -------------------------------------
 No modified macros found in this database.
@@ -56,13 +68,25 @@ No modified reports found in this database.
 -------------------------------------
 Exporting table data...       
   Customers
+<<<<<<< HEAD
     Sanitized in 0,006 seconds.
+=======
+    Sanitized in 0,007 seconds.
+>>>>>>> 90b235b329fe03c39da9bc499914478247f26c39
 [1] table data processed.
+  Removing orphaned file: Module1.bas
 -------------------------------------
 Exporting modules...          
   CCreateFormContinu
   CSordFormColumn
+<<<<<<< HEAD
 [2] modules processed.
+=======
+  CUtilitaires
+  MD_Utilitaires
+  MD_VbComp
+[5] modules processed.
+>>>>>>> 90b235b329fe03c39da9bc499914478247f26c39
 -------------------------------------
 No modified table data macros found in this database.
 -------------------------------------
@@ -80,7 +104,11 @@ Exporting hidden attributes...
   Database hidden attributes
 [1] hidden attributes processed.
 -------------------------------------
+<<<<<<< HEAD
 Done. (0,73 seconds)
+=======
+Done. (0,84 seconds)
+>>>>>>> 90b235b329fe03c39da9bc499914478247f26c39
 
 --------------------------------------------------
                 PERFORMANCE REPORTS
@@ -91,21 +119,34 @@ Project                       1         0,02
 VB Project                    1         0,02
 VBE References                2         0,02
 Proj Properties               2         0,01
+<<<<<<< HEAD
 DB Properties                 50        0,18
 Themes                        1         0,00
 Forms                         2         0,12
 Table Data                    1         0,12
 Modules                       2         0,06
+=======
+DB Properties                 50        0,14
+Themes                        1         0,00
+Forms                         2         0,13
+Table Data                    1         0,15
+Modules                       5         0,15
+>>>>>>> 90b235b329fe03c39da9bc499914478247f26c39
 Doc Properties                2         0,02
 Nav Pane Groups               1         0,02
 Hidden Attributes             1         0,01
 --------------------------------------------------
+<<<<<<< HEAD
 TOTALS:                       66        0,58
+=======
+TOTALS:                       69        0,69
+>>>>>>> 90b235b329fe03c39da9bc499914478247f26c39
 --------------------------------------------------
 
 --------------------------------------------------
 Operations                    Count     Seconds
 --------------------------------------------------
+<<<<<<< HEAD
 Read File                     12        0,06
 Parse JSON                    9         0,01
 Convert to JSON               601       0,20
@@ -131,6 +172,33 @@ Export VBE Module             2         0,03
 Enc. Windows-1252 as utf-8    2         0,02
 --------------------------------------------------
 Other Operations                        0,17
+=======
+Read File                     12        0,05
+Parse JSON                    9         0,01
+Convert to JSON               463       0,17
+Compute SHA256                27        0,00
+Console Updates               2         0,03
+Compare Dictionary            7         0,00
+Get Modified Date             10        0,00
+Get File Property Hash        10        0,00
+Write File                    5         0,00
+Verify Path                   14        0,00
+Create Folder                 1         0,00
+Export Theme                  1         0,00
+Clear Orphaned                4         0,01
+Get VBA Hash                  14        0,04
+App.SaveAsText()              2         0,05
+Delete File                   9         0,00
+Read File Bytes               2         0,02
+Sanitize File                 2         0,03
+App.ExportXML()               1         0,13
+Sanitize XML                  1         0,00
+Format XML                    1         0,00
+Export VBE Module             5         0,06
+Enc. Windows-1252 as utf-8    5         0,04
+--------------------------------------------------
+Other Operations                        0,18
+>>>>>>> 90b235b329fe03c39da9bc499914478247f26c39
 --------------------------------------------------
 
 
