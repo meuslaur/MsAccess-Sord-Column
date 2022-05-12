@@ -86,11 +86,7 @@ Option Explicit
     '// Defaut paramètres.
     Private Const DEF_TXTFONTWEIGHT As Long = 700               '// Bold
     Private Const DEF_TXTCOLOR      As Long = 1137349           '// Couleur with sord  (m_objButton)
-<<<<<<< HEAD
 
-=======
-'VERIF:
->>>>>>> 90b235b329fe03c39da9bc499914478247f26c39
     Private Const DEF_IMGFOLDER     As String = "\assets\"             '// Default folder for picture (currentProject.path + DEF_IMGFOLDER)
     Private Const DEF_IMGASC        As String = "ic_SordASC16.png"  '// (m_objButton)
     Private Const DEF_IMGDESC       As String = "ic_SordDESC16.png" '// (m_objButton)
@@ -148,13 +144,8 @@ Private Sub Class_Initialize()
     '// TOUT est OK par défaut.
     m_bCheckOk = True
     m_sFieldName = "*"
-<<<<<<< HEAD
 
     m_sPicturePath = DEF_IMGFOLDER
-=======
-'VERIF:
-    m_sPicturePath = CurrentProject.Path & DEF_IMGFOLDER
->>>>>>> 90b235b329fe03c39da9bc499914478247f26c39
     m_sPictureAsc = DEF_IMGASC
     m_sPictureDesc = DEF_IMGDESC
     
