@@ -43,39 +43,53 @@ Attribute VB_Exposed = False
 '   Créate this function or sub in your form
 '   ========================================
 '
-'Private Function SordColumn(Optional FieldName As String, Optional ActiveTexte As T_OnOff = OptionOn, Optional ActiveImage As T_OnOff = OptionOff) As Boolean
+'Private Function SordColumn(Optional eActiveImage As T_OnOff = OptionOff, _
+'                            Optional eActiveTexte As T_OnOff = OptionOn, _
+'                            Optional sPicAsc As String = vbNullString, _
+'                            Optional sPicDesc As String = vbNullString, _
+'                            Optional sFieldName As String = vbNullString) As Boolean
 '
-'   ' init class and defined suffix (the clase cuts automatically thes button name for extact field name)
-'    If (CSordForm Is Nothing) Then
-'        Set CSordForm = New CsordFormColumn
-'        CSordForm.FieldSuffixLen = 4 (ex : 'Compagny_Name_cmd' extraire 'Compagny_Name')
+'    Dim bRet As Boolean
+'
+'    '// Initialisation de la classe, on peut indiquer, si besoin, le préfixe et/ou le suffixe (nb de car).
+'    '// Init class and defined suffix (the class cuts automatically the button name for extact field name)
+'    If (m_CSordForm Is Nothing) Then
+'        Set m_CSordForm = New CsordFormColumn
+'        m_CSordForm.FieldPrefixLen = 0
+'        m_CSordForm.FieldSuffixLen = 4
 '    End If
 '
-'    With CSordForm
-'        .PictureOn = ActiveImage            '// Optional (Default Off) si On, active les images par defaut.
-'        .TexteOn = ActiveTexte              '// Optional (Default On)
-'        '.TexteColor = 2366701              '// Optional (Default see const 'TXT_COULSORD' in class)
-'        '.PicturePath = "C:\Fld\Fld2\"      '// Optional (Default currentpath + const 'IMG_FOLDER' in class)
-'        '.PictureASC = "sordAsc.png"        '// Optional (Default see const 'IMG_ASC' in class)
-'        '.PictureDESC = "sordDesc.png"      '// Optional (Default see const 'IMG_DESC' in class)
-'        .SordNow                            '// Execute le tri, retourne TRUE if ok.
+'    With m_CSordForm
+'        .PictureOn = eActiveImage   '// Optional (Default Off) si On, active les images par defaut.
+'        .TexteOn = eActiveTexte     '// Optional (Default On)
+'        '.TexteColor = 2366701       '// Optional (Default see const 'TXT_COULSORD' in class)
+'        '.PicturePath = "\Res\"      '// Optional (Sous dossier des images, Default CurrentProject.Path + Const 'IMG_FOLDER' in class)
+'        .PictureASC = sPicAsc       '// Optional (see const 'IMG_ASC' in class)
+'        .PictureDESC = sPicDesc     '// Optional (see const 'IMG_DESC' in class)
+'
+'        bRet = .SordNow(sFieldName)     '// Execute le tri, retour TRUE if ok, 'sFieldName' is optional.
+'
 '    End With
 '
 '    Me.ID_Supplier.SetFocus
 '
-'End Function
+'    If (bRet = False) Then
+'        '// Your code here
+'        '// Your code here
+'    End If
 '
+'End Function
 ' ------------------------------------------------------
 Option Compare Database
 Option Explicit
 
     '// Defaut paramètres.
-    Private Const DEF_TxtFontWeight As Long = 700               '// Bold
-    Private Const DEF_TxtCOLOR      As Long = 1137349           '// Couleur with sord  (m_objButton)
+    Private Const DEF_TXTFONTWEIGHT As Long = 700               '// Bold
+    Private Const DEF_TXTCOLOR      As Long = 1137349           '// Couleur with sord  (m_objButton)
 
-    Private Const DEF_ImgFOLDER     As String = "\assets\"             '// Default folder for picture (currentProject.path + DEF_IMGFOLDER)
-    Private Const DEF_ImgASC        As String = "ic_SordASC16.png"  '// (m_objButton)
-    Private Const DEF_ImgDESC       As String = "ic_SordDESC16.png" '// (m_objButton)
+    Private Const DEF_IMGFOLDER     As String = "\assets\"             '// Default folder for picture (currentProject.path + DEF_IMGFOLDER)
+    Private Const DEF_IMGASC        As String = "ic_SordASC16.png"  '// (m_objButton)
+    Private Const DEF_IMGDESC       As String = "ic_SordDESC16.png" '// (m_objButton)
 
     Private Const SORD_ASC          As String = " ASC"
     Private Const SORD_DESC         As String = " DESC"
@@ -92,7 +106,7 @@ Option Explicit
         eAsc = 1
         eDESC = 2
     End Enum
-    Private m_CurrentSord       As T_Sord           '// Sens du tri en cours (1 asc, 2 desc).
+    Private m_eCurrentSord      As T_Sord           '// Sens du tri en cours (1 asc, 2 desc).
 
     Private m_bCheckOk          As Boolean          '// Flag if error occured.
 
@@ -121,7 +135,7 @@ Option Explicit
 
     Private m_eSvPicArr         As AcPictureCaptionArrangement
     Private m_SvPicType         As Byte             '// 0 incorporée, 1 liée
-    Private m_SvPicData         As Variant          '// Pour PicType = 0 (pictureData)
+    Private m_vSvPicData        As Variant          '// Pour PicType = 0 (pictureData)
     Private m_sSvPicFile        As String           '// Pour PicType = 1 (Path and picture file)
 
 '//----------------------------------       INIT/TERM       ----------------------------------
@@ -131,11 +145,11 @@ Private Sub Class_Initialize()
     m_bCheckOk = True
     m_sFieldName = "*"
 
-    m_sPicturePath = CurrentProject.Path & DEF_ImgFOLDER
-    m_sPictureAsc = DEF_ImgASC
-    m_sPictureDesc = DEF_ImgDESC
+    m_sPicturePath = DEF_IMGFOLDER
+    m_sPictureAsc = DEF_IMGASC
+    m_sPictureDesc = DEF_IMGDESC
     
-    m_lTxtColor = DEF_TxtCOLOR
+    m_lTxtColor = DEF_TXTCOLOR
 
 End Sub
 
@@ -183,7 +197,7 @@ Public Property Get TexteColor() As Long
     TexteColor = m_lTxtColor
 End Property
 Public Property Let TexteColor(NewColor As Long)
-    m_lTxtColor = IIf((NewColor < 1), DEF_TxtCOLOR, NewColor)
+    m_lTxtColor = IIf((NewColor < 1), DEF_TXTCOLOR, NewColor)
     Me.TexteOn = OptionOn
 End Property
 
@@ -205,7 +219,7 @@ Public Property Let PicturePath(NewPath As String)
     '// Evite les messages redondants.
     If (m_bCheckOk = False) Then Exit Property
 
-'TODO:    '// Le dossier existe ?
+    '// Le dossier existe ?
     If (CheckFolderExists(NewPath) = False) Then
         MsgBox "Sous-Dossier '" & NewPath & "', non trouver", vbExclamation + vbOKOnly, "PicturePath"
         m_bCheckOk = False
@@ -231,12 +245,12 @@ Public Property Let PictureASC(NewFileName As String)
     If (m_ePictureOn = OptionOff) Then Exit Property
 
     '// Img vide, et img par défaut déjà appliquer, on sort.
-    If (NewFileName = vbNullString) And (m_sPictureAsc = DEF_ImgASC) Then Exit Property
+    If (NewFileName = vbNullString) And (m_sPictureAsc = DEF_IMGASC) Then Exit Property
 
     '// Vide applique img par défaut.
-    If (NewFileName = vbNullString) Then NewFileName = DEF_ImgASC
+    If (NewFileName = vbNullString) Then NewFileName = DEF_IMGASC
 
-'TODO:    '// Le fichier existe ?
+    '// Le fichier existe ?
     If (CheckFileExist(m_sPicturePath & NewFileName) = False) Then
         MsgBox "Fichier " & vbCrLf & NewFileName & vbCrLf & " non trouver.", vbExclamation, "PictureASC"
         m_bCheckOk = False
@@ -260,12 +274,12 @@ Public Property Let PictureDESC(NewFileName As String)
     If (m_ePictureOn = OptionOff) Then Exit Property
 
     '// Img vide, et img par défaut déjà appliquer, on sort.
-    If (NewFileName = vbNullString) And (m_sPictureDesc = DEF_ImgDESC) Then Exit Property
+    If (NewFileName = vbNullString) And (m_sPictureDesc = DEF_IMGDESC) Then Exit Property
 
     '// Vide applique img par défaut.
-    If (NewFileName = vbNullString) Then NewFileName = DEF_ImgDESC
+    If (NewFileName = vbNullString) Then NewFileName = DEF_IMGDESC
 
-'TODO:    '// Le fichier existe ?
+    '// Le fichier existe ?
     If (CheckFileExist(m_sPicturePath & NewFileName) = False) Then
         MsgBox "Fichier " & vbCrLf & NewFileName & vbCrLf & " non trouver.", vbExclamation, "PictureDESC"
         m_bCheckOk = False
@@ -312,13 +326,13 @@ Public Function SordNow(Optional sFieldName As String = vbNullString) As Boolean
     Dim sCurSord As String
 
     '// Determine le texte et l'image as utilisés suivant le sens du tri.
-    Select Case m_CurrentSord
+    Select Case m_eCurrentSord
         Case eAsc
-            m_CurrentSord = eDESC
+            m_eCurrentSord = eDESC
             sCurSord = SORD_ASC
             m_sPictureSord = m_sPicturePath & m_sPictureAsc
         Case eDESC
-            m_CurrentSord = eAsc
+            m_eCurrentSord = eAsc
             sCurSord = SORD_DESC
             m_sPictureSord = m_sPicturePath & m_sPictureDesc
     End Select
@@ -339,7 +353,7 @@ SORTIE_SordNow:
 ERR_SordNow:
     MsgBox "Erreur " & Err.Number & vbCrLf & _
             " (" & Err.Description & ")" & vbCrLf & _
-            "Dans  TriSurFormContinu.CsordFormColumn.SordNow, ligne " & Erl & "."
+            "Dans  TriSurFormContinu.CSordFormColumn.SordNow, ligne " & Erl & "."
     m_bCheckOk = False
     Resume SORTIE_SordNow
 End Function
@@ -385,7 +399,7 @@ Private Sub SetFieldName(NewFieldName As String)
     RestorePropButton
 
     '// Place les options par défaut, remet le tri a DESC.
-    m_CurrentSord = eAsc
+    m_eCurrentSord = eAsc
 
     '// On stock le nom du champ.
     m_sFieldName = sTmpField
@@ -417,7 +431,7 @@ Private Sub SavePropButton()
     m_eSvPicArr = m_objButton.PictureCaptionArrangement
     Select Case m_SvPicType
         Case 0
-            m_SvPicData = m_objButton.PictureData
+            m_vSvPicData = m_objButton.PictureData
         Case Else
             m_sSvPicFile = m_objButton.Picture
     End Select
@@ -441,9 +455,9 @@ Private Sub RestorePropButton()
 
     Select Case m_SvPicType
         Case 0
-            m_objForm(m_sButtonOldName).PictureData = m_SvPicData
+            m_objForm(m_sButtonOldName).PictureData = m_vSvPicData
         Case Else
-                m_objForm(m_sButtonOldName).Picture = m_sSvPicFile
+            m_objForm(m_sButtonOldName).Picture = m_sSvPicFile
     End Select
 
 End Sub
@@ -455,7 +469,7 @@ Private Sub UpdatePropButton()
 
     '// On Modifie le control.
     If m_eTexteOn Then
-        m_objButton.FontWeight = DEF_TxtFontWeight
+        m_objButton.FontWeight = DEF_TXTFONTWEIGHT
         m_objButton.ForeColor = m_lTxtColor
     End If
 
@@ -478,7 +492,7 @@ End Sub
 ' DateModif:        22/04/2022 - 09:04
 ' ----------------------------------------------------------------
 Private Sub CheckForm()
-On Error GoTo ERR_CheckForm
+    On Error GoTo ERR_CheckForm
 
     '// Initialise le form sur lequel appliquer le tri,
     '// Sauvegarde des filtres en cours.
@@ -496,7 +510,7 @@ SORTIE_CheckForm:
 ERR_CheckForm:
     MsgBox "Erreur " & Err.Number & vbCrLf & _
             "(" & Err.Description & ")" & vbCrLf & _
-            "Dans  CsordFormColumn.CheckForm," & vbCrLf & _
+            "Dans  CSordFormColumn.CheckForm," & vbCrLf & _
             Switch(Erl = 0, vbNullString, Erl <> 0, vbCrLf & "Ligne No: " & Erl)
     m_bCheckOk = False
     Resume SORTIE_CheckForm
@@ -514,7 +528,7 @@ End Sub
 ' DateModif:        22/04/2022 - 09:06
 ' ----------------------------------------------------------------
 Private Sub CheckButton(NewButton As CommandButton)
-On Error GoTo ERR_CheckButton
+    On Error GoTo ERR_CheckButton
 
     '// Initialise le bouton.
     If (m_objButton Is Nothing) Then
@@ -531,7 +545,7 @@ SORTIE_CheckButton:
 ERR_CheckButton:
     MsgBox "Erreur " & Err.Number & vbCrLf & _
             " (" & Err.Description & ")" & vbCrLf & _
-            "Dans  SordFormCc.CsordFormColumn.CheckButton, ligne " & Erl & "."
+            "Dans  SordFormCc.CSordFormColumn.CheckButton, ligne " & Erl & "."
     m_bCheckOk = False
     Resume SORTIE_CheckButton
 End Sub
@@ -553,7 +567,7 @@ End Sub
 '
 ' ----------------------------------------------------------------
 Private Sub CheckFieldName(ByRef sField As String)
-On Error GoTo ERR_CheckFieldName
+    On Error GoTo ERR_CheckFieldName
 
     m_bCheckOk = IIf((DCount(sField, m_objForm.RecordSource) = 0), False, True)
 
@@ -595,8 +609,8 @@ Private Function CheckPrefixSuffix(sCmbName As String) As String
 
     '// Len valide ?
     If ((Len(m_iFieldSuffixLen) + (Len(m_iFieldPrefixLen)) >= lTemp)) Then
-         m_iFieldSuffixLen = 0: m_iFieldPrefixLen = 0
-   End If
+        m_iFieldSuffixLen = 0: m_iFieldPrefixLen = 0
+    End If
 
     '// Applique préfixe.
     If (m_iFieldPrefixLen > 0) Then

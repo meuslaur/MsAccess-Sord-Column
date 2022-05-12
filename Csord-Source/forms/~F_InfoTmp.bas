@@ -12,8 +12,8 @@ Begin Form
     ItemSuffix =15
     Left =645
     Top =450
-    Right =18225
-    Bottom =7950
+    Right =11190
+    Bottom =7875
     RecSrcDt = Begin
         0x5ceb645e54d1e540
     End
@@ -125,9 +125,9 @@ Begin Form
                     OverlapFlags =85
                     TextAlign =1
                     IMESentenceMode =3
-                    Left =1118
+                    Left =113
                     Top =56
-                    Width =1140
+                    Width =2145
                     Height =360
                     LeftMargin =44
                     TopMargin =22
@@ -140,36 +140,12 @@ Begin Form
                     BottomPadding =150
                     GridlineColor =10921638
 
-                    LayoutCachedLeft =1118
+                    LayoutCachedLeft =113
                     LayoutCachedTop =56
                     LayoutCachedWidth =2258
                     LayoutCachedHeight =416
                     ColumnStart =1
                     ColumnEnd =1
-                    Begin
-                        Begin Label
-                            OverlapFlags =85
-                            TextAlign =1
-                            Left =113
-                            Top =56
-                            Width =945
-                            Height =360
-                            LeftMargin =44
-                            TopMargin =22
-                            RightMargin =44
-                            BottomMargin =22
-                            BorderColor =8355711
-                            ForeColor =6710886
-                            Name ="Étiquette0"
-                            Caption ="ID_Info"
-                            BottomPadding =150
-                            GridlineColor =10921638
-                            LayoutCachedLeft =113
-                            LayoutCachedTop =56
-                            LayoutCachedWidth =1058
-                            LayoutCachedHeight =416
-                        End
-                    End
                 End
                 Begin TextBox
                     EnterKeyBehavior = NotDefault

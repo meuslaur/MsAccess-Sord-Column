@@ -24,8 +24,8 @@ Option Explicit
 
 
 '//::::::::::::::::::::::::::::::::::    VARIABLES      ::::::::::::::::::::::::::::::::::
-    Private Declare PtrSafe Function FindWindow Lib "user32" Alias "FindWindowA" (ByVal ClassName As String, ByVal WindowName As String) As Long
-    Private Declare PtrSafe Function LockWindowUpdate Lib "user32" (ByVal hWndLock As LongPtr) As Long
+Private Declare PtrSafe Function FindWindow Lib "user32" Alias "FindWindowA" (ByVal ClassName As String, ByVal WindowName As String) As Long
+Private Declare PtrSafe Function LockWindowUpdate Lib "user32" (ByVal hWndLock As LongPtr) As Long
 '//:::::::::::::::::::::::::::::::::: END VARIABLES ::::::::::::::::::::::::::::::::::::::
 
 '// \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ PUBLIC SUB/FUNC   \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -50,7 +50,7 @@ Public Sub EliminateScreenFlicker(AccAp As Access.Application)
     'AccAp.VBE.MainWindow.Visible = False
     Exit Sub
 ErrH:
-        LockWindowUpdate 0&
+    LockWindowUpdate 0&
 End Sub
 
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
@@ -154,10 +154,9 @@ Public Function CopyModule(ModuleName As String, _
     Dim TempVBComp  As VBIDE.VBComponent
     Dim FName       As String
     Dim CompName    As String
-    Dim S           As String
+    Dim sLine       As String
     Dim SlashPos    As Long
     Dim ExtPos      As Long
-    Dim sMsg        As String
 
     '''''''''''''''''''''''''''''''''''''''''''''
     ' Do some housekeeping validation.
@@ -275,8 +274,8 @@ Public Function CopyModule(ModuleName As String, _
             ' TempVBComp is source module
             With VBComp.CodeModule
                 .DeleteLines 1, .CountOfLines
-                S = TempVBComp.CodeModule.Lines(1, TempVBComp.CodeModule.CountOfLines)
-                .InsertLines 1, S
+                sLine = TempVBComp.CodeModule.Lines(1, TempVBComp.CodeModule.CountOfLines)
+                .InsertLines 1, sLine
             End With
             'On Error GoTo 0
             ToVBProject.VBComponents.Remove TempVBComp
@@ -288,10 +287,12 @@ Public Function CopyModule(ModuleName As String, _
 
 End Function
 
-Public Function ImporteModule(sFileName As String, _
+Public Function ImporteFileToModule(sFileName As String, _
                     sModuleName As String, _
                     ToVBProject As VBIDE.VBProject, _
                     Optional OverwriteExisting As Boolean = False) As String
+On Error GoTo ERR_ImporteFileToModule
+
     '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
     ' CopyModule
     ' This function import a module from one VBProject to
@@ -316,32 +317,31 @@ Public Function ImporteModule(sFileName As String, _
     '                       error.
     '
     '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-    Dim VBComp      As VBIDE.VBComponent
-    Dim TempVBComp  As VBIDE.VBComponent
-    Dim CompName    As String
-    Dim sMsg        As String
+    Dim oVBComp As VBIDE.VBComponent
+    Dim sMsg    As String   '// MsgBox.
+    Dim lRep    As Long     '// MsgBox.
 
     '''''''''''''''''''''''''''''''''''''''''''''
     ' Do some housekeeping validation.
     '''''''''''''''''''''''''''''''''''''''''''''
     If (CheckFileExist(sFileName) = False) Then
-        ImporteModule = "Fichier " & sFileName & " non trouver."
+        ImporteFileToModule = "Fichier " & sFileName & " non trouver."
         Exit Function
     End If
 
     If ToVBProject Is Nothing Then
-        ImporteModule = "VBIDE.VBProject destination non initialisé."
+        ImporteFileToModule = "VBIDE.VBProject destination non initialisé."
         Exit Function
     End If
 
     If ToVBProject.Protection = vbext_pp_locked Then
-        ImporteModule = "Le projet destination est vérouillé pour l'affichage."
+        ImporteFileToModule = "Le projet destination est vérouillé pour l'affichage."
         Exit Function
     End If
     
     On Error Resume Next
     
-    If OverwriteExisting = True Then
+    If (OverwriteExisting = True) Then
         ''''''''''''''''''''''''''''''''''''''
         ' If OverwriteExisting is True, remove
         ' the existing VBComponent from the
@@ -358,34 +358,77 @@ Public Function ImporteModule(sFileName As String, _
         ' exit with a return code of False.
         ''''''''''''''''''''''''''''''''''''''''''
         Err.Clear
-        Set VBComp = ToVBProject.VBComponents(sModuleName)
+        Set oVBComp = ToVBProject.VBComponents(sModuleName)
         If (Err.Number <> 0) Then
             If (Err.Number <> 9) Then
                 ' other error. get out with return value of False
-                ImporteModule = "Erreur :" & Err.Description & vbCrLf & "N°:" & Err.Number
+                ImporteFileToModule = "Erreur :" & Err.Description & vbCrLf & "N°:" & Err.Number
                 Exit Function
             End If
         Else
-            '// Le module exite, et OverwriteExisting False.
-            ImporteModule = "le module " & sModuleName & " existe déjà dans le projet source."
-            Exit Function
+            '// Le module existe, et OverwriteExisting False.
+            sMsg = "Le module " & sModuleName & " existe déjà dans le projet source." & vbNewLine & vbNewLine & "Voulez-vous le remplacer ?"
+            lRep = MsgBox(sMsg, vbDefaultButton2 + vbYesNo, "Remplacer le module")
+            If lRep = vbYes Then
+                With ToVBProject.VBComponents
+                    .Remove .Item(sModuleName)
+                End With
+                Set oVBComp = Nothing
+            Else
+                Exit Function
+            End If
         End If
     End If
 
     '// Le module n'existe pas on importe le fichier.
-    If VBComp Is Nothing Then
+    If oVBComp Is Nothing Then
         ToVBProject.VBComponents.Import FileName:=sFileName
     End If
 
-    ImporteModule = ""
+    ImporteFileToModule = ""
+    
+SORTIE_ImporteFileToModule:
+    Exit Function
 
+ERR_ImporteFileToModule:
+    MsgBox "Erreur " & Err.Number & vbCrLf & _
+            " (" & Err.Description & ")" & vbCrLf & _
+            "Dans  CSord.MD_VbComp.ImporteModule, ligne " & Erl & "."
+    Resume SORTIE_ImporteFileToModule
 End Function
 
-Public Function GetFileExtension(VBComp As VBIDE.VBComponent) As String
+' ----------------------------------------------------------------
+' Procedure Nom:    ModuleExiste
+' Sujet:            Vérifier si un module exisqte dajà dans la base
+' Procedure Kind:   Function
+' Procedure Access: Public
+' Références:       Vérifier si un module exisqte dajà dans la base
+'
+'=== Paramètres ===
+' sModuleName ():       Nom du Module
+' VbProjet (VBProject): Projet à utiliser pour la recherche
+'==================
+'
+' Return Type: Boolean Ttue si le module existe dans la base.
+'
+' Author:  Laurent
+' Date:    11/05/2022 - 19:02
+' DateMod:
+' ----------------------------------------------------------------
+Public Function ModuleExiste(sModuleName As String, oVBProjet As VBIDE.VBProject) As Boolean
+    On Error Resume Next
+    Dim oVBComp As VBIDE.VBComponent
+    
+    Set oVBComp = oVBProjet.VBComponents(sModuleName)
+    ModuleExiste = (Not oVBComp Is Nothing)
+    Set oVBComp = Nothing
+End Function
+
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 ' This returns the appropriate file extension based on the Type of
 ' the VBComponent.
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+Public Function GetFileExtension(VBComp As VBIDE.VBComponent) As String
     Select Case VBComp.Type
         Case vbext_ct_ClassModule
             GetFileExtension = ".cls"

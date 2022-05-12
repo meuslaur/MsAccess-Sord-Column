@@ -16,11 +16,11 @@ Begin Form
     GridY =10
     Width =14173
     DatasheetFontHeight =11
-    ItemSuffix =88
-    Left =2400
-    Top =405
-    Right =16830
-    Bottom =11985
+    ItemSuffix =89
+    Left =5220
+    Top =255
+    Right =19140
+    Bottom =11325
     DatasheetGridlinesColor =15132391
     RecSrcDt = Begin
         0x80c066f2cdd0e540
@@ -28,6 +28,7 @@ Begin Form
     Caption ="Paramètrage pour la création du formulaire"
     OnClose ="[Event Procedure]"
     DatasheetFontName ="Calibri"
+    OnTimer ="=Raz_bErr()"
     OnLoad ="[Event Procedure]"
     AllowDatasheetView =0
     FilterOnLoad =0
@@ -275,6 +276,7 @@ Begin Form
                     Top =1004
                     Width =4536
                     Height =3750
+                    TabIndex =7
                     BoundColumn =1
                     ForeColor =4210752
                     BorderColor =10921638
@@ -326,7 +328,7 @@ Begin Form
                     Top =3457
                     Width =4536
                     Height =315
-                    TabIndex =2
+                    TabIndex =9
                     BorderColor =10921638
                     ForeColor =4210752
                     Name ="txtFormName"
@@ -366,7 +368,7 @@ Begin Form
                     Top =6860
                     Width =861
                     Height =315
-                    TabIndex =6
+                    TabIndex =13
                     BorderColor =10921638
                     ForeColor =4210752
                     Name ="txtTbPrefix"
@@ -405,7 +407,7 @@ Begin Form
                     Top =7313
                     Width =861
                     Height =315
-                    TabIndex =7
+                    TabIndex =14
                     BorderColor =10921638
                     ForeColor =4210752
                     Name ="txtTbSuffix"
@@ -444,7 +446,7 @@ Begin Form
                     Top =8391
                     Width =846
                     Height =345
-                    TabIndex =8
+                    TabIndex =15
                     BorderColor =10921638
                     ForeColor =4210752
                     Name ="txtCmbPrefix"
@@ -483,7 +485,7 @@ Begin Form
                     Top =8901
                     Width =846
                     Height =345
-                    TabIndex =9
+                    TabIndex =16
                     BorderColor =10921638
                     ForeColor =4210752
                     Name ="txtCmbSuffix"
@@ -515,7 +517,6 @@ Begin Form
                     End
                 End
                 Begin TextBox
-                    Enabled = NotDefault
                     Locked = NotDefault
                     AllowAutoCorrect = NotDefault
                     OverlapFlags =223
@@ -525,7 +526,7 @@ Begin Form
                     Top =9864
                     Width =2901
                     Height =345
-                    TabIndex =11
+                    TabIndex =18
                     BorderColor =10921638
                     ForeColor =4210752
                     Name ="txtPicAsc"
@@ -557,7 +558,6 @@ Begin Form
                     End
                 End
                 Begin TextBox
-                    Enabled = NotDefault
                     Locked = NotDefault
                     AllowAutoCorrect = NotDefault
                     OverlapFlags =223
@@ -566,7 +566,7 @@ Begin Form
                     Top =10318
                     Width =2901
                     Height =345
-                    TabIndex =12
+                    TabIndex =19
                     BorderColor =10921638
                     ForeColor =4210752
                     Name ="txtPicDesc"
@@ -654,7 +654,7 @@ Begin Form
                     Left =8796
                     Top =5442
                     Height =315
-                    TabIndex =4
+                    TabIndex =11
                     BorderColor =10921638
                     ForeColor =4210752
                     Name ="txtClasseName"
@@ -693,7 +693,7 @@ Begin Form
                     Left =8796
                     Top =5895
                     Height =315
-                    TabIndex =5
+                    TabIndex =12
                     BorderColor =10921638
                     ForeColor =4210752
                     Name ="txtFunctionName"
@@ -751,7 +751,6 @@ Begin Form
                     ForeTint =100.0
                 End
                 Begin TextBox
-                    Enabled = NotDefault
                     Locked = NotDefault
                     AllowAutoCorrect = NotDefault
                     OverlapFlags =223
@@ -760,7 +759,7 @@ Begin Form
                     Top =9411
                     Width =3951
                     Height =345
-                    TabIndex =10
+                    TabIndex =17
                     BorderColor =10921638
                     ForeColor =4210752
                     Name ="txtPicFolder"
@@ -825,13 +824,14 @@ Begin Form
                     LayoutCachedHeight =4962
                 End
                 Begin CommandButton
+                    Enabled = NotDefault
                     TabStop = NotDefault
                     OverlapFlags =247
                     Left =12812
                     Top =9467
                     Width =345
                     Height =285
-                    TabIndex =13
+                    TabIndex =20
                     ForeColor =4210752
                     Name ="cmbSelectFolder"
                     Caption =",,,"
@@ -858,13 +858,14 @@ Begin Form
                     Overlaps =1
                 End
                 Begin CommandButton
+                    Enabled = NotDefault
                     TabStop = NotDefault
                     OverlapFlags =247
                     Left =11744
                     Top =10374
                     Width =345
                     Height =285
-                    TabIndex =15
+                    TabIndex =22
                     ForeColor =4210752
                     Name ="cmbSelectPicDesc"
                     Caption =",,,"
@@ -891,13 +892,14 @@ Begin Form
                     Overlaps =1
                 End
                 Begin CommandButton
+                    Enabled = NotDefault
                     TabStop = NotDefault
                     OverlapFlags =247
                     Left =11744
                     Top =9920
                     Width =345
                     Height =285
-                    TabIndex =14
+                    TabIndex =21
                     ForeColor =4210752
                     Name ="cmbSelectPicAsc"
                     Caption =",,,"
@@ -946,7 +948,7 @@ Begin Form
                     LayoutCachedTop =8189
                     LayoutCachedWidth =13143
                     LayoutCachedHeight =8489
-                    TabIndex =25
+                    TabIndex =27
                 End
                 Begin Image
                     Left =12697
@@ -982,7 +984,7 @@ Begin Form
                     LayoutCachedTop =6689
                     LayoutCachedWidth =13147
                     LayoutCachedHeight =7019
-                    TabIndex =24
+                    TabIndex =26
                 End
                 Begin Image
                     Left =13096
@@ -1011,7 +1013,7 @@ Begin Form
                     LayoutCachedTop =3230
                     LayoutCachedWidth =13546
                     LayoutCachedHeight =3590
-                    TabIndex =22
+                    TabIndex =24
                 End
                 Begin Image
                     PictureTiling = NotDefault
@@ -1048,7 +1050,7 @@ Begin Form
                     LayoutCachedTop =5219
                     LayoutCachedWidth =13150
                     LayoutCachedHeight =5616
-                    TabIndex =23
+                    TabIndex =25
                 End
                 Begin Label
                     Vertical = NotDefault
@@ -1081,24 +1083,24 @@ Begin Form
                     TabStop = NotDefault
                     AllowAutoCorrect = NotDefault
                     OldBorderStyle =0
-                    OverlapFlags =85
+                    OverlapFlags =93
                     BackStyle =0
                     IMESentenceMode =3
                     Left =5782
-                    Top =1019
+                    Top =1020
                     Width =8166
                     Height =2070
                     FontSize =10
-                    TabIndex =16
+                    TabIndex =5
                     BorderColor =2366701
                     ForeColor =4210752
                     Name ="txtInfoTxt"
                     GridlineColor =10921638
 
                     LayoutCachedLeft =5782
-                    LayoutCachedTop =1019
+                    LayoutCachedTop =1020
                     LayoutCachedWidth =13948
-                    LayoutCachedHeight =3089
+                    LayoutCachedHeight =3090
                     BorderThemeColorIndex =-1
                     BorderShade =100.0
                 End
@@ -1108,26 +1110,26 @@ Begin Form
                     TabStop = NotDefault
                     AllowAutoCorrect = NotDefault
                     OldBorderStyle =0
-                    OverlapFlags =85
+                    OverlapFlags =87
+                    BackStyle =0
                     IMESentenceMode =3
-                    Left =5550
-                    Top =701
-                    Width =8166
-                    Height =270
+                    Left =5555
+                    Top =737
+                    Width =8391
+                    Height =285
                     FontSize =10
                     FontWeight =700
-                    TabIndex =17
-                    BackColor =14610923
+                    TabIndex =6
                     BorderColor =10921638
                     ForeColor =4210752
                     Name ="txtInfoTitre"
                     GridlineColor =10921638
 
-                    LayoutCachedLeft =5550
-                    LayoutCachedTop =701
-                    LayoutCachedWidth =13716
-                    LayoutCachedHeight =971
-                    BackThemeColorIndex =-1
+                    LayoutCachedLeft =5555
+                    LayoutCachedTop =737
+                    LayoutCachedWidth =13946
+                    LayoutCachedHeight =1022
+                    BackThemeColorIndex =2
                     BackTint =20.0
                     BorderThemeColorIndex =-1
                 End
@@ -1199,7 +1201,7 @@ Begin Form
                     Top =5299
                     Width =4551
                     Height =5445
-                    TabIndex =1
+                    TabIndex =8
                     BackColor =14610923
                     ForeColor =4210752
                     BorderColor =10921638
@@ -1244,7 +1246,6 @@ Begin Form
                     End
                 End
                 Begin TextBox
-                    Enabled = NotDefault
                     Locked = NotDefault
                     TabStop = NotDefault
                     AllowAutoCorrect = NotDefault
@@ -1254,7 +1255,7 @@ Begin Form
                     Top =3910
                     Width =4536
                     Height =315
-                    TabIndex =3
+                    TabIndex =10
                     BackColor =15921906
                     BorderColor =10921638
                     ForeColor =4210752
@@ -1314,7 +1315,6 @@ Begin Form
                     Top =169
                     Width =5721
                     Height =315
-                    TabIndex =18
                     BorderColor =10921638
                     ForeColor =4210752
                     Name ="txtBdd"
@@ -1361,7 +1361,7 @@ Begin Form
                     Top =193
                     Width =345
                     Height =285
-                    TabIndex =19
+                    TabIndex =1
                     ForeColor =4210752
                     Name ="cmbSelectBdd"
                     Caption =",,,"
@@ -1394,7 +1394,7 @@ Begin Form
                     Top =169
                     Width =330
                     Height =330
-                    TabIndex =20
+                    TabIndex =2
                     ForeColor =4210752
                     Name ="cmdCloseBd"
                     OnClick ="[Event Procedure]"
@@ -1495,7 +1495,7 @@ Begin Form
                     LayoutCachedTop =113
                     LayoutCachedWidth =13892
                     LayoutCachedHeight =510
-                    TabIndex =26
+                    TabIndex =23
                 End
                 Begin CommandButton
                     TabStop = NotDefault
@@ -1504,7 +1504,7 @@ Begin Form
                     Top =170
                     Width =2145
                     Height =330
-                    TabIndex =21
+                    TabIndex =3
                     ForeColor =4210752
                     Name ="cmbLanceCreation"
                     Caption ="Lance la création"
@@ -1600,6 +1600,74 @@ Begin Form
                     WebImagePaddingBottom =1
                     Overlaps =1
                 End
+                Begin CommandButton
+                    Enabled = NotDefault
+                    TabStop = NotDefault
+                    OverlapFlags =215
+                    Left =11622
+                    Top =170
+                    Width =330
+                    Height =330
+                    TabIndex =4
+                    ForeColor =4210752
+                    Name ="cmbOuvreBase"
+                    OnClick ="[Event Procedure]"
+                    ControlTipText ="Ouvrir la base"
+                    GridlineColor =10921638
+                    ImageData = Begin
+                        0x2800000010000000100000000100200000000000000000000000000000000000 ,
+                        0x00000000000000000000000000000000000000002114881021148870211488bf ,
+                        0x211488ef211488ff211488ff211488ff211488ff211488ff211488ef211488bf ,
+                        0x2114887021148810000000000000000000000000211488ef211488ff211488ff ,
+                        0x211488ff211488ff211488ff211488ff211488ff211488ff211488ff211488ff ,
+                        0x211488ff211488ef000000000000000000000000100a44ff100a44ff100a44ff ,
+                        0x100a44ff100a44ff100a44ff100a44ff190f66ff211488ff211488ff211488ff ,
+                        0x211488ff211488ff3120afef3120afff3120afff3120afff3120afff3120afff ,
+                        0x3120afff3120afff3120afff2f1fa8ff100a44ff211488ff211488ff211488ff ,
+                        0x211488ff211488ff3120afff3120afff3120afff3120afff3120afff3120afff ,
+                        0x3120afff3120afff3120afff3120afff181057ff3120afff301fadff2d1da5ff ,
+                        0x281999ff22158aff3120afff3120afffe5e3f5ffbfb9e6ff3120afff3120afff ,
+                        0xbfb9e6ffe5e3f5ff3120afff3120afff181057ff3120afff3120afff3120afff ,
+                        0x3120afff301fadff3120afff3120afff9890d7ffffffffffccc7ebffccc7ebff ,
+                        0xffffffff9890d7ff3120afff3120afff181057ff3120afff3120afff3120afff ,
+                        0x3120afff3120afff3120afff3120afff4b3cb9ffffffffffccc7ebffccc7ebff ,
+                        0xffffffff4b3cb9ff3120afff3120afff181057ff3120afff3120afff3120afff ,
+                        0x3120afff3120afff3120afff3120afff3120afffccc7ebffbfb9e6ffbfb9e6ff ,
+                        0xd8d5f0ff3120afff3120afff3120afff302764ff604fc9ff5d4cc7ff5443c3ff ,
+                        0x4635baff3423b1ff3120afff3120afff3120afff7e74cdffffffffffffffffff ,
+                        0x7e74cdff3120afff3120afff3120afff302764ff604fc9ff604fc9ff604fc9ff ,
+                        0x604fc9ff5d4cc7ff3120afff3120afff3120afff3e2eb4ffffffffffffffffff ,
+                        0x3e2eb4ff3120afff3120afff3120afff302764ff604fc9ff604fc9ff604fc9ff ,
+                        0x604fc9ff604fc9ff3120afff3120afff3120afff3120afff3120afff3120afff ,
+                        0x3120afff3120afff3120afff3120afff332a6aff604fc9ff604fc9ff604fc9ff ,
+                        0x604fc9ff604fc9ff3120afef3120afff3120afff3120afff3120afff3120afff ,
+                        0x3120afff3120afff3120afff3726b2ff9580e0ff9580e0ff927ddfff8874daff ,
+                        0x7764d3ff6352caff000000000000000000000000927ddfff9580e0ff9580e0ff ,
+                        0x9580e0ff9580e0ff9580e0ff9580e0ff9580e0ff9580e0ff9580e0ff9580e0ff ,
+                        0x9580e0ff927ddfff0000000000000000000000009580e0ef9580e0ff9580e0ff ,
+                        0x9580e0ff9580e0ff9580e0ff9580e0ff9580e0ff9580e0ff9580e0ff9580e0ff ,
+                        0x9580e0ff9580e0ef0000000000000000000000009580e0109580e0709580e0bf ,
+                        0x9580e0ef9580e0ff9580e0ff9580e0ff9580e0ff9580e0ff9580e0ef9580e0bf ,
+                        0x9580e0709580e010
+                    End
+
+                    LayoutCachedLeft =11622
+                    LayoutCachedTop =170
+                    LayoutCachedWidth =11952
+                    LayoutCachedHeight =500
+                    UseTheme =0
+                    BackColor =14461583
+                    BorderColor =14461583
+                    HoverColor =15189940
+                    PressedColor =9917743
+                    HoverForeColor =4210752
+                    PressedForeColor =4210752
+                    WebImagePaddingLeft =2
+                    WebImagePaddingTop =2
+                    WebImagePaddingRight =1
+                    WebImagePaddingBottom =1
+                    Overlaps =1
+                End
             End
         End
         Begin FormFooter
@@ -1619,7 +1687,7 @@ Attribute VB_Exposed = False
 ' ------------------------------------------------------
 ' Name:     Form_F_CreateForm
 ' Kind:     Document VBA
-' Purpose:  Formulaire de définition des options pour la création d'un formulaire pour la classe CsordFormColumn
+' Purpose:  Formulaire de définition des options pour la création d'un formulaire pour la classe CSordFormColumn
 ' Author:   Laurent
 ' Date:     28/04/2022
 ' DateMod:  30/04/2022-11:38
@@ -1632,25 +1700,25 @@ Option Explicit
 
     Private Const C_COULDEF As Long = 16777215
     Private Const C_COULSEL As Long = 14610923
-    Private sCtrPrec        As String
+    Private m_sCtrPrec      As String
 
-    Private cCreate      As CCreateFormContinu
+    Private m_cCreate       As CCreateFormContinu
 
      '// Rst pour affichage des infos sur le ctr sélectionné.
-    Private oRst         As DAO.Recordset
-    Private Const ID_INF As String = "[ID_Info]='"
+    Private m_oRst          As DAO.Recordset
+    Private Const ID_INF    As String = "[ID_Info]='"
     
-    Private bErrSaisie   As Boolean     '// Indique erreur de saisie.
+    Private m_bErrSaisie    As Boolean  '// Indique erreur de saisie.
 '//---------------------------------------------------------------------------------------
 
 '//==================================       EVENT       ==================================
 Private Sub Form_Load()
 
     '// Initialisation de la classe.
-    Set cCreate = New CCreateFormContinu
+    Set m_cCreate = New CCreateFormContinu
 
     '// Table info controles.
-    Set oRst = CurrentDb.OpenRecordset(TAB_INFO, dbOpenSnapshot, dbReadOnly)
+    Set m_oRst = CurrentDb.OpenRecordset(TAB_INFO, dbOpenSnapshot, dbReadOnly)
 
     '// Applique les valeurs par défaut...
     RazForm
@@ -1658,17 +1726,17 @@ Private Sub Form_Load()
 End Sub
 
 Private Sub Form_Close()
-On Error GoTo ERR_Form_Close
+    On Error GoTo ERR_Form_Close
 
     Screen.MousePointer = 11    '// Hourglass.
 
-    If (Not oRst Is Nothing) Then
-        oRst.Close
-        Set oRst = Nothing
+    If (Not m_oRst Is Nothing) Then
+        m_oRst.Close
+        Set m_oRst = Nothing
     End If
 
     '// Déclenche class_Terminate()
-    Set cCreate = Nothing
+    Set m_cCreate = Nothing
 
 SORTIE_Form_Close:
     DoCmd.Echo True
@@ -1683,42 +1751,37 @@ ERR_Form_Close:
 End Sub
 
 Private Sub cmbSelectBdd_Click()
-On Error GoTo ERR_cmbSelectBdd
+    On Error GoTo ERR_cmbSelectBdd
 
     Dim bRet     As Boolean
     Dim sBaseSel As String
 
+    '// Séléction de la base à utiliser.
+    sBaseSel = OuvreBoite("MS Access", "*.accdb", , CurrentProject.Path)
+    If (sBaseSel = vbNullString) Then GoTo SORTIE_cmbSelectBdd
+
     DoCmd.Echo False
-    Screen.MousePointer = 11       '// Hourglass.
+    Screen.MousePointer = 11            '// Hourglass.
 
     '// Création Access.Application, si pas déjà fait.
-    If (cCreate.MsAppIsUp = False) Then
-        bRet = cCreate.OpenMsApp()
+    If (m_cCreate.MsAppIsUp = False) Then
+        bRet = m_cCreate.OpenMsApp()
         If (bRet = False) Then GoTo SORTIE_cmbSelectBdd
     End If
 
-    Screen.MousePointer = 0
-
-    '// Séléction de la base à utiliser.
-    sBaseSel = OuvreBoite("MS Access", "*.accdb")
-    If (sBaseSel = vbNullString) Then GoTo SORTIE_cmbSelectBdd
-
-    Screen.MousePointer = 11            '// Hourglass.
-
-    bRet = cCreate.OpenMsBase(sBaseSel) '// Ouverture de la base.
+    bRet = m_cCreate.OpenMsBase(sBaseSel) '// Ouverture de la base.
 
     If (bRet = False) Then
         '// Problème détecter, on ferme tout, RaZ et on sort.
-        cCreate.CloseMsBase True
+        m_cCreate.CloseMsBase True
         RazForm
-        Screen.MousePointer = 0
-        DoCmd.Echo True
-        Exit Sub
+        GoTo SORTIE_cmbSelectBdd
     End If
 
     RazForm True                        '// Reset les valeurs...
 
     txtBdd = sBaseSel
+    Me.cmbOuvreBase.Enabled = False
     MaJlisteObjets                      '// Rempli la liste des objets ...
 
 SORTIE_cmbSelectBdd:
@@ -1737,24 +1800,40 @@ Private Sub cmdCloseBd_Click()
 
     Screen.MousePointer = 11    '// Hourglass.
     '// Ferme la base en cours, réinitialise les champs par défaut...
-    cCreate.CloseMsBase
+    m_cCreate.CloseMsBase
     RazForm
     Screen.MousePointer = 0
     DoCmd.Echo True
 
 End Sub
 
-Private Sub lstObjets_AfterUpdate()
+Private Sub cmbOuvreBase_Click()
+    On Error GoTo ERR_cmbOuvreBase_Click
+
+    Dim dShell As Double
+    dShell = Shell("MSAccess.exe " & Me.txtBdd, 3)
+    
+SORTIE_cmbOuvreBase_Click:
+    Exit Sub
+
+ERR_cmbOuvreBase_Click:
+    MsgBox "Erreur " & Err.Number & vbCrLf & _
+            " (" & Err.Description & ")" & vbCrLf & _
+            "Dans  CSord.Form_F_CreateForm.cmbOuvreBase_Click, ligne " & Erl & "."
+    Resume SORTIE_cmbOuvreBase_Click
+End Sub
+
 '// MàJ de la liste des champs de l'objet sélectionné.
+Private Sub lstObjets_AfterUpdate()
 
-'TODO:    If (Me.lstObjets = Null) Then Exit Sub
+    If (Me.lstObjets = Null) Then Exit Sub
 
-    If ((cCreate.MsAppIsUp = False) Or (cCreate.MsBaseIsOpen = False)) Then Exit Sub
+    If ((m_cCreate.MsAppIsUp = False) Or (m_cCreate.MsBaseIsOpen = False)) Then Exit Sub
 
     Dim sListeVal As String
 
     '// Rempli(liste de valeurs) la liste lstFields...
-    sListeVal = ObjectFieldsToListVal(Me.lstObjets, Me.lstObjets.Column(0), cCreate.objMsBase)
+    sListeVal = ObjectFieldsToListVal(Me.lstObjets, Me.lstObjets.Column(0), m_cCreate.objMsBase)
     Me.lstFields.RowSource = sListeVal
 
     Me.txtFormName = "F_" & Me.lstObjets
@@ -1766,14 +1845,20 @@ End Sub
 Private Sub cmbSelectFolder_Click()
     '// Sélection du dossier img pour commandButton.
     Dim sRet As String
+    Dim lLen As Long
+    Dim lTmp As Long
     Dim sDos As String
 
-    sRet = OuvreBoite("Dossier des images...", , , , FD_TypeFolderPicker, False)
+
+    sRet = OuvreBoite("Dossier des images...", , , , FD_TypeFolderPicker)
 
     If (sRet = vbNullString) Then Exit Sub
 
+    sRet = sRet & "\"
     '// On vérifie que le dossier est bien un sous-dossier de l'application...
-    If (VerifDossierImage(sRet)) Then Me.txtPicFolder = sDos
+    If (VerifDossierImage(sRet)) Then
+        Me.txtPicFolder = sRet
+    End If
 
 End Sub
 
@@ -1815,38 +1900,47 @@ Private Sub cmbLanceCreation_Click()
     Dim vTmp    As Variant  '// Pour Split de sBackup.
     Dim sArg    As String
     
-    VerifSaisie                                         '// Contrôle des saisies...
-    If bErrSaisie Then Exit Sub
+    VerifSaisie                                             '// Contrôle des saisies...
+    If m_bErrSaisie Then Exit Sub
 
-    AfficheResume                                       '// Affiche résumé de qu'il vas être fait.
+    AfficheResume                                           '// Affiche résumé de qu'il vas être fait.
 
-    bRet = cCreate.CloseMsBase                          '// Fermeture de la base pour sauvegarde...
+    bRet = m_cCreate.CloseMsBase                            '// Fermeture de la base pour sauvegarde...
     If (bRet = False) Then Exit Sub
 
-    sArg = GetBackupFileName(cCreate.GetBaseFullName)   '// Création de la sauvegarde...
+    sArg = GetBackupFileName(m_cCreate.GetBaseFullName)     '// Création de la sauvegarde...
     '// NOTE retourne folder;backup;base
     vTmp = Split(sArg, ";")
     sBackUp = vTmp(0) & vTmp(1) '// folder + backup.
 
-    bRet = CopyFile(cCreate.GetBaseFullName, sBackUp)   '// Sauvegarde sous le nom sBackUp.
+    bRet = CopyFile(m_cCreate.GetBaseFullName, sBackUp)     '// Sauvegarde sous le nom sBackUp.
     If (bRet = False) Then Exit Sub
 
-    bRet = cCreate.OpenMsBase(cCreate.GetBaseFullName)  '// Réouverture de la base...
+    bRet = m_cCreate.OpenMsBase(m_cCreate.GetBaseFullName)  '// Réouverture de la base...
     If (bRet = False) Then Exit Sub
 
-    '// Affiche le message d'information.
-    DoCmd.OpenForm "~F_Info", , , , , acDialog, "SV;" & sArg
 
-    bRet = ActualiseOptionsClass()                      '// MàJ des propriétés de la classe...
+    DoCmd.OpenForm "~F_Info", , , , , acDialog, "SV;" & sArg    '// Affiche le message d'information.
+
+    bRet = ActualiseOptionsClass()                          '// MàJ des propriétés de la classe...
     If (bRet = False) Then Exit Sub
 
-    bRet = cCreate.LanceCreation()                       '// Lance la création du formulaire...
+    bRet = m_cCreate.LanceCreation()                        '// Lance la création du formulaire...
 
     If bRet Then
         MsgBox "Opération terminée avec succès", vbInformation, "Création du Formulaire"
-        Me.txtBdd.SetFocus
-        Me.cmbLanceCreation.Enabled = False
     End If
+    
+    Me.txtBdd.SetFocus
+    Me.cmbLanceCreation.Enabled = False
+
+    '// On ferme tout, base et application.
+    m_cCreate.CloseMsBase True
+    RazForm
+    
+    '// Permet d'ouvrir la base.
+    Me.cmbOuvreBase.Enabled = True
+    Me.txtBdd = m_cCreate.GetBaseFullName
 
 End Sub
 
@@ -1854,34 +1948,34 @@ End Sub
 
 '// ################################ PRIVATE SUB/FUNC ####################################
 
-Private Sub MaJlisteObjets()
 '// Rempli la liste des objets, avec ceux trouver dans la BdD.
+Private Sub MaJlisteObjets()
 
     '// Rempli la liste des objets de la base (Tables-Requêtes)
     Dim sListVal As String
-    sListVal = ListObjects(Tables_Local, True, Tables_Linked, QueriesType, cCreate.objMsBase)
+    sListVal = ListObjects(Tables_Local, True, Tables_Linked, QueriesType, m_cCreate.objMsBase)
 
     Me.lstObjets.RowSource = sListVal
     Me.lstObjets = vbNullString
 
 End Sub
 
-Private Sub RazForm(Optional bActive As Boolean)
 '// Applique les valeurs par défaut.
+Private Sub RazForm(Optional bActive As Boolean)
 
     Me.txtBdd.SetFocus
     Me.txtBdd = vbNullString
 
     Me.txtFormName = "F_"
-    Me.txtClasseName = cCreate.OptVarClasse
-    Me.txtFunctionName = cCreate.OptFunctionName
+    Me.txtClasseName = m_cCreate.OptVarClasse
+    Me.txtFunctionName = m_cCreate.OptFunctionName
 
-    Me.txtTbSuffix = cCreate.OptTextBoxSuffix
-    Me.txtCmbSuffix = cCreate.OptCmbSuffix
+    Me.txtTbSuffix = m_cCreate.OptTextBoxSuffix
+    Me.txtCmbSuffix = m_cCreate.OptCmbSuffix
     
-    Me.txtPicFolder = cCreate.OptPictureFolder
-    Me.txtPicAsc = cCreate.OptPictureAsc
-    Me.txtPicDesc = cCreate.OptPictureDesc
+    Me.txtPicFolder = m_cCreate.OptPictureFolder
+    Me.txtPicAsc = m_cCreate.OptPictureAsc
+    Me.txtPicDesc = m_cCreate.OptPictureDesc
 
     Me.lstObjets.RowSource = vbNullString
     Me.lstFields.RowSource = vbNullString
@@ -1890,19 +1984,20 @@ Private Sub RazForm(Optional bActive As Boolean)
     Me.cmdCloseBd.Visible = bActive
     Me.cmbSelectBdd.Visible = Not bActive
     Me.cmbLanceCreation.Enabled = bActive
-
+    Me.cmbSelectFolder.Enabled = bActive
+    Me.cmbSelectPicAsc.Enabled = bActive
+    Me.cmbSelectPicDesc.Enabled = bActive
 
 End Sub
 
-Private Function ActualiseOptionsClass() As Boolean
 '// Stock les options pour la création du formulaire.
+Private Function ActualiseOptionsClass() As Boolean
 
-    Dim sInfo   As String
     Dim sVerif  As String
 
     sVerif = Nz(Me.lstObjets, vbNullString)
     
-    With cCreate
+    With m_cCreate
         .OptFormName = Me.txtFormName
         .OptFormSource = Me.lstObjets
         .OptVarClasse = Me.txtClasseName
@@ -1919,39 +2014,39 @@ Private Function ActualiseOptionsClass() As Boolean
     '// Stock les champs sélectionés de la liste lstFields.
     Dim vItem As Variant
     For Each vItem In lstFields.ItemsSelected
-        cCreate.AddField = lstFields.ItemData(vItem)
+        m_cCreate.AddField = lstFields.ItemData(vItem)
     Next vItem
 
     ActualiseOptionsClass = True
 
 End Function
 
-Private Function AfficheInfo(Optional sID As String = vbNullString)
 '// Affiche des infos contenu dans la table '~T_Info', suivant le controle en cours.
 '//
 '// si sID est indiquer on utilise pas ActiveControl.Name, mais la valeur de sID.
 '//
 '// AfficheInfo est défini sur OnGotFocus du controle avec =AfficheInfo("")
 '//
+Private Function AfficheInfo(Optional sID As String = vbNullString)
 
-    If bErrSaisie Then Exit Function        '// Erreur de saisie, laisse les infos erreur afficher.
+    If m_bErrSaisie Then Exit Function      '// Erreur de saisie, laisse les infos erreur afficher.
 
 
     '// Restaure le ctr précedent, applique la backColor.
-    If (sCtrPrec <> vbNullString) Then Me(sCtrPrec).BackColor = C_COULDEF
-    sCtrPrec = Me.ActiveControl.Name
-    Me(sCtrPrec).BackColor = C_COULSEL
+    If (m_sCtrPrec <> vbNullString) Then Me(m_sCtrPrec).BackColor = C_COULDEF
+    m_sCtrPrec = Me.ActiveControl.Name
+    Me(m_sCtrPrec).BackColor = C_COULSEL
 
     Dim sFind As String
 
     '// Pour les préfixe/suffixe on affiche les mêmes infos (TextBox et CommandButton)
-    sFind = IIf(sID <> vbNullString, ID_INF & sID & "'", ID_INF & sCtrPrec & "'")
+    sFind = IIf(sID <> vbNullString, ID_INF & sID & "'", ID_INF & m_sCtrPrec & "'")
 
-    oRst.FindFirst sFind
-    If (oRst.NoMatch) Then Exit Function
+    m_oRst.FindFirst sFind
+    If (m_oRst.NoMatch) Then Exit Function
 
-    txtInfoTitre = oRst.Fields("InfoTitre")
-    txtInfoTxt = oRst.Fields("InfoTexte")
+    txtInfoTitre = m_oRst.Fields("InfoTitre")
+    txtInfoTxt = m_oRst.Fields("InfoTexte")
 
 End Function
 
@@ -1983,7 +2078,7 @@ Private Function VerifSaisie() As Boolean
         '// Vérifie la sélection dans listBox, Min 0 Max 10.
         If ((oCtr.ControlType = acListBox) And (sName = "lstFields")) Then
             If (oCtr.ItemsSelected.Count = 0 Or oCtr.ItemsSelected.Count > 10) Then
-                sInfo = sInfo & "- Sélectionnez entre 0 et 10 valeur dans la liste des champs." & vbCrLf
+                sInfo = sInfo & "- Sélectionnez entre 1 et 10 valeur(s) dans la liste des champs." & vbCrLf
             End If
         End If
 
@@ -2031,14 +2126,15 @@ Private Function VerifSaisie() As Boolean
         Me.txtInfoTitre.BorderColor = 2366701   '// Rouge
         Me.txtInfoTitre = "Erreurs de saisie :"
         Me.txtInfoTxt = sInfo
-        bErrSaisie = True
+        m_bErrSaisie = True
+        Me.TimerInterval = 10000                '// Affiche l'erruer 10 secondes.
     Else
         Me.txtInfoTitre.BorderColor = 10921638
         Me.txtInfoTitre.BorderStyle = 0
         Me.txtInfoTitre = vbNullString
         Me.txtInfoTxt.BorderStyle = 0
         Me.txtInfoTxt = vbNullString
-       bErrSaisie = False
+        m_bErrSaisie = False
     End If
 
     Set oCtr = Nothing
@@ -2056,21 +2152,28 @@ End Function
 ' sPath (String): Dossier a vérifier
 '==================
 '
-' Return Type: String True si bien un sous-dossier de l'application.
+' Return Type: String Seulement le dossier des images (ex: "C:\Fold1\Fold2\img\" retourne "\img\").
 '
 ' Author:  Laurent
-' Date:    09/05/2022 - 06:18
-' DateMod:
+' Date:    09/05/2022-06:18
+' DateMod: 12/05/2022-18:42
 '
 ' ----------------------------------------------------------------
-Private Function VerifDossierImage(sPath As String) As Boolean
+Private Function VerifDossierImage(sPath As String) As String
 
-    If (InStr(sPath, cCreate.GetBaseFullName) = 0) Then
+    Dim oFSO        As Object
+    Dim sDosBase    As String
+
+    Set oFSO = m_cCreate.m_cUtils.GetoFSO
+    sDosBase = oFSO.GetParentFolderName(m_cCreate.GetBaseFullName)
+
+    If (InStr(sPath, sDosBase) = 0) Then
         MsgBox "Le dossier des images doit être un sous-dossier de l'application", vbExclamation, "Vérification dossier images"
         Exit Function
     End If
 
-    VerifDossierImage = True
+    '// Retourne que le dossier des images.
+    VerifDossierImage = "\" & oFSO.GetBaseName(sPath) & "\"
 
 End Function
 
@@ -2082,29 +2185,39 @@ Private Sub AfficheResume()
     Dim lInd        As Long
     Dim lFor        As Long
 
-    sFields = cCreate.GetFields
+    sFields = m_cCreate.GetFields
     lInd = UBound(sFields)
     For lFor = 0 To lInd
         sFld = sFld & "!!" & sFields(lFor) & ";"
     Next lFor
 
-    sMsg = "Base de données : " & cCreate.GetBaseFullName & ";" & _
+    sMsg = "Base de données : " & m_cCreate.GetBaseFullName & ";" & _
             "Créations : " & ";" & _
-            "!Formulaire : " & cCreate.OptFormName & ";" & _
-            "!Source formulaire : " & cCreate.OptFormSource & ";" & _
+            "!Formulaire : " & m_cCreate.OptFormName & ";" & _
+            "!Source formulaire : " & m_cCreate.OptFormSource & ";" & _
             "!Champs utiliser : " & ";" & _
             sFld & ";" & _
-            "!Variable pour la classe : " & cCreate.OptVarClasse & ";" & _
-            "!Function d'appel de la classe : " & cCreate.OptFunctionName & ";" & _
-            "!TexteBox préfixe : " & cCreate.OptTextBoxPrefix & ";" & _
-            "!TexteBox suffixe : " & cCreate.OptTextBoxSuffix & ";" & _
-            "!CommandButton préfixe : " & cCreate.OptCmbPrefix & ";" & _
-            "!CommandButton suffixe : " & cCreate.OptCmbSuffix & ";" & _
-            "!Sous-Dossier images : " & cCreate.OptPictureFolder & ";" & _
-            "!Image tri ASC : " & cCreate.OptPictureAsc & ";" & _
-            "!Image tri DESC : " & cCreate.OptPictureDesc & ";"
+            "!Variable pour la classe : " & m_cCreate.OptVarClasse & ";" & _
+            "!Function d'appel de la classe : " & m_cCreate.OptFunctionName & ";" & _
+            "!TexteBox préfixe : " & m_cCreate.OptTextBoxPrefix & ";" & _
+            "!TexteBox suffixe : " & m_cCreate.OptTextBoxSuffix & ";" & _
+            "!CommandButton préfixe : " & m_cCreate.OptCmbPrefix & ";" & _
+            "!CommandButton suffixe : " & m_cCreate.OptCmbSuffix & ";" & _
+            "!Sous-Dossier images : " & m_cCreate.OptPictureFolder & ";" & _
+            "!Image tri ASC : " & m_cCreate.OptPictureAsc & ";" & _
+            "!Image tri DESC : " & m_cCreate.OptPictureDesc & ";"
 
     DoCmd.OpenForm "~F_Info", , , , , acDialog, sMsg
     
 End Sub
+
+'// Efface le message d'erreur au bout de 10 sec.
+Private Function Raz_bErr()
+    m_bErrSaisie = False
+    Me.txtInfoTxt = vbNullString
+    Me.txtInfoTitre = vbNullString
+    Me.txtInfoTitre.BorderColor = 10921638
+    Me.txtInfoTitre.BorderStyle = 0
+    Me.txtInfoTxt.BorderStyle = 0
+End Function
 '// ######################################################################################

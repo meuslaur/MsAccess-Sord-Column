@@ -13,18 +13,20 @@ Attribute VB_Exposed = False
 ' Purpose:  Création d'un formulaire pour la classe CsordFormColumn
 ' Author:   Laurent
 ' Date:     27/04/2022
-' DateMod:  30/04/2022 - 11:48
+' DateMod:  11/05/2022-20:46
 ' ------------------------------------------------------
 Option Compare Database
 Option Explicit
 
 '//::::::::::::::::::::::::::::::::::    VARIABLES      ::::::::::::::::::::::::::::::::::
+    Private Const MOD_CLASS     As String = "CSordFormColumn"   '// Nom du module de classe à importer.
+
 '// Options defaut.
-    Private Const CLS_VAR       As String = "CSordForm"     '// Name variable for create class 'CsordFormColumn'
+    Private Const CLS_VAR       As String = "m_CSordForm"   '// Name variable for create class 'CsordFormColumn'
     Private Const PROC_NAME     As String = "SordColumn"    '// Nom de la function pour lancer le tri.
     
-    Private Const FileCodeFrm   As String = "CodeForm.cls"
-    Private Const FileCodeClass As String = "CodeClasse.cls"
+    Private Const CODE_FRM      As String = "CodeForm.cls"  '// Fichiers pour import code dans le formulaire et la classe.
+    Private Const CODE_CLASS    As String = "CodeClasse.cls"
 
     Private Const PREF_CMB      As String = "cmb_"      '// Préfixe pour le commandbutton.
     Private Const SUF_CMB       As String = "_cmb"      '// Suffixe pour le commandbutton.
@@ -57,7 +59,7 @@ Option Explicit
     Private m_sOptTextBoxSuffix As String
     Private m_sOptTextBoxPrefix As String
 
-    Private cUtil As New CUtilitaires
+    Public m_cUtils As New CUtilitaires     '// FSO
 '//:::::::::::::::::::::::::::::::::: END VARIABLES ::::::::::::::::::::::::::::::::::::::
     
 '//----------------------------------       INIT/TERM       ----------------------------------
@@ -71,7 +73,7 @@ Private Sub Class_Initialize()
 
     '// Extraire les info par défaut de la classe 'CsordFormColumn'
     Set CsordFrm = New CsordFormColumn
-    m_sOptPictureFolder = CsordFrm.PicturePath
+    m_sOptPictureFolder = CsordFrm.PicturePath  '/MODE:
     m_sOptPictureAsc = CsordFrm.PictureASC
     m_sOptPictureDesc = CsordFrm.PictureDESC
     Set CsordFrm = Nothing
@@ -94,7 +96,7 @@ Private Sub class_Terminate()
 
     Set m_oMsBase = Nothing
     Set m_oMsApp = Nothing
-    Set cUtil = Nothing
+    Set m_cUtils = Nothing
 
 End Sub
 '//---------------------------------------------------------------------------------------
@@ -102,7 +104,7 @@ End Sub
 '//==================================       PROP        ==================================
 
 Public Property Get objMsBase() As DAO.Database
-     Set objMsBase = m_oMsApp.CurrentDb
+    Set objMsBase = m_oMsApp.CurrentDb
 End Property
 
 Public Property Get MsAppIsUp() As Boolean
@@ -142,9 +144,9 @@ Public Property Get GetFields() As String()
     GetFields = m_sFormFields
 End Property
 
-Public Property Let AddField(sFieldName As String)
 '//     m_sFormFields()    '// Stock les champs à utiliser dans le from.
 '//     m_iFieldIndex      '// Index(démarre à -1 donc 0) du tableau des champs.
+Public Property Let AddField(sFieldName As String)
     If (Len(sFieldName) = 0) Then Exit Property
 
     If (m_lFieldIndex <= UBound(m_sFormFields)) Then
@@ -155,6 +157,9 @@ Public Property Let AddField(sFieldName As String)
 
 End Property
 
+Public Property Get ClasseModuleName() As String
+    ClasseModuleName = MOD_CLASS
+End Property
 Public Property Get OptVarClasse() As String
     OptVarClasse = m_sOptVarClasse
 End Property
@@ -231,9 +236,8 @@ Public Function OpenMsApp() As Boolean
 
     '// Création de l'objet Access.Application.
     Set m_oMsApp = New Access.Application
-'TODO: OpenMsApp.UserControl = False
-'TODO:  oAccess.Visible = False
     DoEvents
+    m_oMsApp.Visible = False
     m_bMsAppIsUp = True
     OpenMsApp = True
 
@@ -275,13 +279,11 @@ Public Function OpenMsBase(sBaseFullName As String) As Boolean
     End If
 
     Dim sObj    As String
-    Dim lType   As Long
-    Dim sMsg    As String
     Dim bRep    As Boolean
     Dim bAutoEx As Boolean
 
     '// Voir si la base déjà ouverte (fichier .laccdb)...
-    bRep = CheckFileExist(sBaseFullName, "laccdb", "OpenMsBase")
+    bRep = CheckFileExist(sBaseFullName, "laccdb")
     If bRep Then
         MsgBox "La base " & sBaseFullName & vbCrLf & "est déjà ouverte, opération annuler.", vbExclamation, "OpenMsBase"
         OpenMsBase = False
@@ -347,7 +349,7 @@ End Function
 Public Function CloseMsBase(Optional CloseMsApp As Boolean = False) As Boolean
     On Error GoTo ERR_CloseMsBase
 
-    m_oMsApp.Visible = True
+'TODO:    m_oMsApp.Visible = True
 
     If (Me.MsAppIsUp = False) Or (Me.MsBaseIsOpen = False) Then
         MsgBox "La base est déjà fermée.", vbInformation + vbOKOnly, "OpenMsBase"
@@ -362,10 +364,11 @@ Public Function CloseMsBase(Optional CloseMsApp As Boolean = False) As Boolean
 
     m_bMsBaseIsOpen = False
     Set m_oMsBase = Nothing
-    
+
     '// On ferme aussi l'application ?
     If CloseMsApp Then
         If (MsAppIsUp And (Not m_oMsApp Is Nothing)) Then m_oMsApp.Quit
+        MsAppIsUp = False
         DoEvents
         Set m_oMsApp = Nothing
     End If
@@ -383,33 +386,40 @@ ERR_CloseMsBase:
 End Function
 
 Public Function LanceCreation() As Boolean
-    Dim sDos    As String
+On Error GoTo ERR_LanceCreation
+
+    Dim sDosTemp    As String
     Dim sFile       As String
     Dim sFileMod    As String
-    Dim bRep        As Boolean
-    Dim sRep        As String
+    Dim bRep        As Boolean  '// Retour Function.
 
     '// Extraire le code de la table dans des fichiers temp...
-    sDos = Environ("Temp") & "\"
-    bRep = ExtrairePiecesJointes("~T_Info", "pjCode", sDos)
+    sDosTemp = Environ("Temp") & "\"
+    bRep = ExtrairePiecesJointes("~T_Info", "pjCode", sDosTemp)
     If (bRep = False) Then Exit Function
 
     '// Modification des valeurs dans le code...
-    sFile = sDos & FileCodeClass
+    sFile = sDosTemp & CODE_CLASS
     sFileMod = RemplaceCode(sFile)
     If (sFileMod = vbNullString) Then Exit Function
 
-    '// Insertion du module de Classe....
-    sRep = ImporteModule(sFileMod, "CSordFormColumn", m_oMsApp.VBE.ActiveVBProject)
-
-    If (Len(sRep) > 0) Then
-        MsgBox sRep, vbExclamation, "InsereModule"
-        Exit Function
-    End If
+    '// Création du module de Classe...
+    '// ------------------------------
+    bRep = CreateModuleClass(sFileMod)
+    If (bRep = False) Then Exit Function
 
     '// Création du formulaire...
+    '// ------------------------------
     LanceCreation = CreateForm
+    
+SORTIE_LanceCreation:
+    Exit Function
 
+ERR_LanceCreation:
+    MsgBox "Erreur " & Err.Number & vbCrLf & _
+            " (" & Err.Description & ")" & vbCrLf & _
+            "Dans  CSord.CCreateFormContinu.LanceCreation, ligne " & Erl & "."
+    Resume SORTIE_LanceCreation
 End Function
 '// \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ END PUB. SUB/FUNC \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
@@ -438,15 +448,15 @@ End Function
 Private Function CreateForm() As Boolean
     On Error GoTo ERR_CreateForm
 
+    Dim oObj        As Object
     Dim oForm       As Access.Form
-    Dim oModule     As Access.Module
+    Dim oModule     As Access.module
     Dim oCtrCmb     As Access.CommandButton
     Dim oCtrTxtB    As Access.TextBox
     Dim oDb         As DAO.Database
     Dim oRst        As DAO.Recordset
     Dim oRstField   As DAO.Field
 
-    Const CLS_NAME      As String = "CsordFormColumn"
     Const EVE_CLICK     As String = "Click"     '// Event proc sur click button.
 
     Const CTR_WIDTH     As Long = 2835  '// Width  TxtB/Cmb
@@ -454,20 +464,41 @@ Private Function CreateForm() As Boolean
     Const TXB_HEIGHT    As Long = 315   '// Height  TextBox
     Const CMB_TOP       As Long = 1303  '// Top CommandButton (en bas de la section détail)
 
-    Dim lLeft           As Long '// Position gauche TxtB/Cmb 566
+    Dim lLeft       As Long     '// Position gauche TxtB/Cmb 566
 
-    Dim sFirstField     As String   '// First field in rst (for .SetFocus)
-    Dim lLigne          As Long     '// Ligne en cour dans le code.
-    Dim sCode           As String   '// Code insérer dans le formulaire.
-    Dim lIndex          As Long     '// Index pour le tableau des champs.
+    Dim sFirstField As String   '// First field in rst (for .SetFocus)
+    Dim lLigne      As Long     '// Ligne en cour dans le code.
+    Dim sCode       As String   '// Code insérer dans le formulaire.
+    Dim lIndex      As Long     '// Index pour le tableau des champs.
 
-    Dim sDos            As String   '// Temp folder.
-    Dim sFile           As String   '// source code.
-    Dim sFileMod        As String   '// New code.
+    Dim sDos        As String   '// Temp folder.
+    Dim sFile       As String   '// source code.
+    Dim sFileMod    As String   '// New code.
 
-    Dim bRep            As Boolean
+    Dim lRep    As Long     '// MsgBox.
+    Dim sMsg    As String   '// MsgBox.
+
+    '// Vérification si le formulaire existe déjà.
+    For Each oObj In m_oMsApp.CurrentProject.AllForms
+
+        If oObj.Name = Me.OptFormName Then
+            sMsg = "Le formulaire '" & Me.OptFormName & "' Existe déjà dans le projet source." & vbNewLine & vbNewLine & "Voulez-vous le remplacer ?"
+            Exit For
+        End If
+    Next
+
+    '// si le formulaire existe, le supprimer ?
+    If (sMsg <> vbNullString) Then
+        lRep = MsgBox(sMsg, vbDefaultButton2 + vbYesNo, "Remplacer le formulaire")
+        If (lRep = vbYes) Then
+            m_oMsApp.DoCmd.DeleteObject acForm, Me.OptFormName
+        Else
+            Exit Function
+        End If
+    End If
 
 '// ------------ Création Form, TextBox, CommandButton ----------
+    
     Set oForm = m_oMsApp.CreateForm()
 
     '// Paramètrages.
@@ -486,7 +517,7 @@ Private Function CreateForm() As Boolean
     m_oMsApp.DoCmd.OpenForm Me.OptFormName, acDesign, , , , acHidden
 
     Set oForm = m_oMsApp.Forms(Me.OptFormName)
-    Set oModule = oForm.Module
+    Set oModule = oForm.module
 
     '// Ouvre la source du form, pour définir le nom des commandButton et TextBox.
     Set oDb = m_oMsApp.CurrentDb
@@ -525,21 +556,18 @@ Private Function CreateForm() As Boolean
 
         End If
     Next
+'// --------- FIN Création Form, TextBox, CommandButton ---------
 
     '// Insertion du code Function dans le form pour utilisation de la classe 'CsordFormColumn'...
     sDos = Environ("Temp") & "\"
-    sFile = sDos & FileCodeFrm
+    sFile = sDos & CODE_FRM
     sFileMod = RemplaceCode(sFile, sFirstField)
     If (sFileMod = vbNullString) Then Exit Function
     oModule.AddFromFile sFileMod
 
     oRst.Close
     oDb.Close
-'// --------- FIN Création Form, TextBox, CommandButton ---------
 
-    '// Enregistre le module.
-    m_oMsApp.DoCmd.RunCommand acCmdCompileAndSaveAllModules
-    DoEvents
     '// Enregistrement du form.
     m_oMsApp.DoCmd.Close acForm, Me.OptFormName, acSaveYes
 
@@ -565,16 +593,15 @@ ERR_CreateForm:
 End Function
 
 Public Function RemplaceCode(ByVal sFile As String, Optional sCtrFocus As String) As String
-On Error GoTo ERR_RemplaceCode
+    On Error GoTo ERR_RemplaceCode
 
     Dim oFSO        As Object
     Dim oStreamIn   As Object
     Dim oStreamOut  As Object
     Dim sLigne      As String
     Dim sRemp       As String
-    Dim bRes        As Boolean
 
-    Set oFSO = cUtil.GetoFSO
+    Set oFSO = m_cUtils.GetoFSO
 
     '// paramètres OpenTextFile :  ForReading 1, ForWriting  2
     '//                            TristateUseDefault -2 = valeur système par défaut.
@@ -582,24 +609,24 @@ On Error GoTo ERR_RemplaceCode
     Set oStreamOut = oFSO.CreateTextFile(sFile & "tmp", 2)  '// Ecriture
 
     '// Boucle, modif texte, enregistre ligne.
-    If InStr(sFile, FileCodeFrm) Then
+    If InStr(sFile, CODE_FRM) Then
     
-        '// Code Form : VARCLS FUNCNAME
+        '// Code Form : VARCLS FUNCNAME LENPREF LENSUFF CTRFOCUS
         Do While Not oStreamIn.AtEndOfStream
             sLigne = oStreamIn.ReadLine
 
             sRemp = Replace(sLigne, "VARCLS", Me.OptVarClasse): sLigne = sRemp
             sRemp = Replace(sLigne, "FUNCNAME", Me.OptFunctionName): sLigne = sRemp
-            sRemp = Replace(sLigne, "CTRFOCUS", sCtrFocus): sLigne = sRemp
             sRemp = Replace(sLigne, "LENPREF", Len(Me.OptTextBoxPrefix)): sLigne = sRemp
             sRemp = Replace(sLigne, "LENSUFF", Len(Me.OptTextBoxSuffix)): sLigne = sRemp
+            sRemp = Replace(sLigne, "CTRFOCUS", sCtrFocus): sLigne = sRemp
             oStreamOut.WriteLine sLigne
         Loop
+    End If
 
-     End If
-    If InStr(sFile, FileCodeClass) Then
-     
-        '// Module de classe : PICDEFFOLDER PICDEFIMGASC PICDEFIMGDESC LENPREF LENSUFF
+    If InStr(sFile, CODE_CLASS) Then
+
+        '// Module de classe : PICDEFFOLDER PICDEFIMGASC PICDEFIMGDESC
         Do While Not oStreamIn.AtEndOfStream
             sLigne = oStreamIn.ReadLine
     
@@ -629,4 +656,51 @@ ERR_RemplaceCode:
     Resume SORTIE_RemplaceCode
 End Function
 
+Private Function CreateModuleClass(sFileForInser As String) As Boolean
+    On Error GoTo ERR_CreateModuleClass
+
+    Dim oMd     As VBIDE.VBComponent
+    Dim sMsg    As String   '// MsgBox.
+    Dim lRep    As Long     '// MsgBox.
+
+    '// Le module existe déjà ? ...
+    If (ModuleExiste(MOD_CLASS, m_oMsApp.VBE.ActiveVBProject)) Then
+        sMsg = "Le module " & MOD_CLASS & " existe déjà dans le projet source." & vbNewLine & vbNewLine & "Voulez-vous le remplacer ?"
+        lRep = MsgBox(sMsg, vbDefaultButton2 + vbYesNo, "Remplacer le module")
+        If (lRep = vbNo) Then Exit Function
+        '// Supprime le module.
+        With m_oMsApp.VBE.ActiveVBProject.VBComponents
+            .Remove .Item(MOD_CLASS)
+        End With
+    End If
+
+    '// Création du module.
+    Set oMd = m_oMsApp.VBE.ActiveVBProject.VBComponents.Add(vbext_ct_ClassModule)
+    'm_oMsApp.VBE.MainWindow.Visible = True
+    'm_oMsApp.VBE.ActiveVBProject.VBComponents(oMd.Name).Activate
+
+    '// Renome.
+    m_oMsApp.DoCmd.Close acModule, oMd.Name, acSaveYes
+    m_oMsApp.DoCmd.Rename MOD_CLASS, acModule, oMd.Name
+
+    'DoCmd.OpenModule MOD_CLASS
+
+    '// Insert le fichier.
+    oMd.CodeModule.AddFromFile sFileForInser
+
+    '// Sauvegarde
+    m_oMsApp.DoCmd.Close acModule, MOD_CLASS, acSaveYes
+    DoEvents
+
+    CreateModuleClass = True
+
+SORTIE_CreateModuleClass:
+    Exit Function
+
+ERR_CreateModuleClass:
+    MsgBox "Erreur " & Err.Number & vbCrLf & _
+            " (" & Err.Description & ")" & vbCrLf & _
+            "Dans  CSord.CCreateFormContinu.CreateModuleClass, ligne " & Erl & "."
+    Resume SORTIE_CreateModuleClass
+End Function
 '// ################################# END PRIV. SUB/FUNC #################################

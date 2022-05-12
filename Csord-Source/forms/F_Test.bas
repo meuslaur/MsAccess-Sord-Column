@@ -3,7 +3,6 @@ VersionRequired =20
 Begin Form
     AutoCenter = NotDefault
     DividingLines = NotDefault
-    OrderByOn = NotDefault
     AllowDesignChanges = NotDefault
     ScrollBars =2
     ViewsAllowed =1
@@ -497,7 +496,7 @@ Attribute VB_Exposed = False
 Option Compare Database
 Option Explicit
 
-Private CSordForm As CsordFormColumn
+Private m_CSordForm As CsordFormColumn
 
 Private Function SordColumn(Optional eActiveImage As T_OnOff = OptionOff, _
                             Optional eActiveTexte As T_OnOff = OptionOn, _
@@ -509,13 +508,13 @@ Private Function SordColumn(Optional eActiveImage As T_OnOff = OptionOff, _
 
     '// Initialisation de la classe, on peut indiquer, si besoin, le préfixe et/ou le suffixe (nb de car).
     '// Init class and defined suffix (the class cuts automatically the button name for extact field name)
-    If (CSordForm Is Nothing) Then
-        Set CSordForm = New CsordFormColumn
-        CSordForm.FieldPrefixLen = 7
-        CSordForm.FieldSuffixLen = 7
+    If (m_CSordForm Is Nothing) Then
+        Set m_CSordForm = New CsordFormColumn
+        m_CSordForm.FieldPrefixLen = 7
+        m_CSordForm.FieldSuffixLen = 7
     End If
 
-    With CSordForm
+    With m_CSordForm
         .PictureOn = eActiveImage   '// Optional (Default Off) si On, active les images par defaut.
         .TexteOn = eActiveTexte     '// Optional (Default On)
         '.TexteColor = 2366701       '// Optional (Default see const 'TXT_COULSORD' in class)
@@ -537,7 +536,7 @@ Private Function SordColumn(Optional eActiveImage As T_OnOff = OptionOff, _
 End Function
 
 Private Sub Form_Close()
-    Set CSordForm = Nothing      '// Recommended, clean mem.
+    Set m_CSordForm = Nothing   '// Recommended, clean mem.
 End Sub
 
 Private Sub Prefix_ID_Suffix_Click()
