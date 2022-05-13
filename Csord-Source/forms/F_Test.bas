@@ -17,11 +17,10 @@ Begin Form
     Top =270
     Right =18090
     Bottom =11325
-    OrderBy ="Job_Title DESC"
     RecSrcDt = Begin
-        0x05ad72ec58d2e540
+        0xa6063788ced2e540
     End
-    RecordSource ="Customers"
+    RecordSource ="T_Test"
     Caption ="Suppliers"
     OnClose ="[Event Procedure]"
     DatasheetFontName ="Calibri"

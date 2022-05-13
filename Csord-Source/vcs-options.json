@@ -39,7 +39,16 @@
     "SanitizeLevel": 2,
     "ExtractThemeFiles": false,
     "TablesToExportData": {
+      "~T_Info": {
+        "Format": "XML Format"
+      },
       "Customers": {
+        "Format": "XML Format"
+      },
+      "T_Info": {
+        "Format": "XML Format"
+      },
+      "T_Test": {
         "Format": "XML Format"
       },
       "USysRegInfo": {

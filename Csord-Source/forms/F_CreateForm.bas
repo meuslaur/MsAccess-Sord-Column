@@ -1696,7 +1696,7 @@ Option Compare Database
 Option Explicit
 
 '//----------------------------------       VAR       ------------------------------
-    Private Const TAB_INFO  As String = "~T_Info"
+    Private Const TAB_INFO  As String = "T_Info"
 
     Private Const C_COULDEF As Long = 16777215
     Private Const C_COULSEL As Long = 14610923
@@ -1920,7 +1920,7 @@ Private Sub cmbLanceCreation_Click()
     If (bRet = False) Then Exit Sub
 
 
-    DoCmd.OpenForm "~F_Info", , , , , acDialog, "SV;" & sArg    '// Affiche le message d'information.
+    DoCmd.OpenForm "F_Info", , , , , acDialog, "SV;" & sArg    '// Affiche le message d'information.
 
     bRet = ActualiseOptionsClass()                          '// MàJ des propriétés de la classe...
     If (bRet = False) Then Exit Sub
@@ -2021,7 +2021,7 @@ Private Function ActualiseOptionsClass() As Boolean
 
 End Function
 
-'// Affiche des infos contenu dans la table '~T_Info', suivant le controle en cours.
+'// Affiche des infos contenu dans la table 'T_Info', suivant le controle en cours.
 '//
 '// si sID est indiquer on utilise pas ActiveControl.Name, mais la valeur de sID.
 '//
@@ -2030,7 +2030,6 @@ End Function
 Private Function AfficheInfo(Optional sID As String = vbNullString)
 
     If m_bErrSaisie Then Exit Function      '// Erreur de saisie, laisse les infos erreur afficher.
-
 
     '// Restaure le ctr précedent, applique la backColor.
     If (m_sCtrPrec <> vbNullString) Then Me(m_sCtrPrec).BackColor = C_COULDEF
@@ -2207,7 +2206,7 @@ Private Sub AfficheResume()
             "!Image tri ASC : " & m_cCreate.OptPictureAsc & ";" & _
             "!Image tri DESC : " & m_cCreate.OptPictureDesc & ";"
 
-    DoCmd.OpenForm "~F_Info", , , , , acDialog, sMsg
+    DoCmd.OpenForm "F_Info", , , , , acDialog, sMsg
     
 End Sub
 

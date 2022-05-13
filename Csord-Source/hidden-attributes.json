@@ -5,7 +5,11 @@
   },
   "Items": {
     "Forms": [
-      "~F_InfoTmp"
+      "F_InfoTmp"
+    ],
+    "Tables": [
+      "T_Info",
+      "T_Info_Old"
     ]
   }
 }

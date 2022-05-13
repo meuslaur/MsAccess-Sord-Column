@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.20.5
+
+### Changes
+
+- Modification du code pour utilisation d'un champs String Long dans la table T_Info, a la place du champs dbAttachment.
+
+- Ajout de ma fonction `ExtraireCode`.
+  
+```VB
+Private Function ExtraireCode(sID As String, Optional sCtrName As String) As String
+```
+
 ## 0.20.0
 
 ### Changes

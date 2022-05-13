@@ -1,4 +1,4 @@
-﻿CREATE TABLE [Customers] (
+﻿CREATE TABLE [T_Test] (
   [ID] AUTOINCREMENT CONSTRAINT [PrimaryKey] PRIMARY KEY UNIQUE NOT NULL,
   [Company] VARCHAR (50),
   [Last_Name] VARCHAR (50),

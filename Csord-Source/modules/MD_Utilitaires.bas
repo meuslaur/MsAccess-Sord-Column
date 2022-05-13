@@ -159,24 +159,24 @@ End Function
 Public Function ObjectFieldsToListVal(sObjectName As String, lType As T_ObjectType, Optional ByRef oAutreBd As DAO.Database) As String
     On Error GoTo ERR_ObjectFieldsToListVal
 
-    Dim obd     As DAO.Database
+    Dim oBd     As DAO.Database
     Dim oTbDef  As DAO.TableDef
     Dim oQrDef  As DAO.QueryDef
     Dim oField  As Field
     Dim sLstVal As String
  
-    Set obd = IIf(oAutreBd Is Nothing, CurrentDb, oAutreBd)
+    Set oBd = IIf(oAutreBd Is Nothing, CurrentDb, oAutreBd)
 
     Select Case lType
         Case Tables_Local, Tables_Linked_ODBC, Tables_Linked
             '// Boucle sur les champs de la table.
-            Set oTbDef = obd.TableDefs(sObjectName)
+            Set oTbDef = oBd.TableDefs(sObjectName)
             For Each oField In oTbDef.Fields
                 sLstVal = sLstVal & oField.Name & ";"
             Next
         Case QueriesType
             '// Boucle sur les champs de la requête.
-            Set oQrDef = obd.QueryDefs(sObjectName)
+            Set oQrDef = oBd.QueryDefs(sObjectName)
             For Each oField In oQrDef.Fields
                 sLstVal = sLstVal & oField.Name & ";"
             Next
@@ -193,7 +193,7 @@ SORTIE_ObjectFieldsToListVal:
     Set oField = Nothing
     Set oTbDef = Nothing
     Set oQrDef = Nothing
-    Set obd = Nothing
+    Set oBd = Nothing
     Exit Function
 
 ERR_ObjectFieldsToListVal:

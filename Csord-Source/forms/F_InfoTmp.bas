@@ -7,17 +7,17 @@ Begin Form
     PictureAlignment =2
     DatasheetGridlinesBehavior =3
     GridY =10
-    Width =10544
+    Width =15307
     DatasheetFontHeight =11
-    ItemSuffix =15
+    ItemSuffix =16
     Left =645
     Top =450
-    Right =11190
+    Right =16680
     Bottom =7875
     RecSrcDt = Begin
-        0x5ceb645e54d1e540
+        0x9dd48382ced2e540
     End
-    RecordSource ="~T_Info"
+    RecordSource ="T_Info"
     DatasheetFontName ="Calibri"
     AllowDatasheetView =0
     FilterOnLoad =0
@@ -250,6 +250,28 @@ Begin Form
                             LayoutCachedHeight =371
                         End
                     End
+                End
+                Begin TextBox
+                    EnterKeyBehavior = NotDefault
+                    ScrollBars =2
+                    OverlapFlags =85
+                    IMESentenceMode =3
+                    Left =9807
+                    Top =566
+                    Width =4935
+                    Height =1698
+                    TabIndex =3
+                    BorderColor =10921638
+                    ForeColor =4210752
+                    Name ="Code"
+                    ControlSource ="Code"
+                    GridlineColor =10921638
+                    TextFormat =1
+
+                    LayoutCachedLeft =9807
+                    LayoutCachedTop =566
+                    LayoutCachedWidth =14742
+                    LayoutCachedHeight =2264
                 End
             End
         End

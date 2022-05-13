@@ -27,6 +27,8 @@ Option Explicit
     
     Private Const CODE_FRM      As String = "CodeForm.cls"  '// Fichiers pour import code dans le formulaire et la classe.
     Private Const CODE_CLASS    As String = "CodeClasse.cls"
+'TODO: 1    Private Const CODE_CLASS    As String = "CodeCls"       '// Fichiers pour import code dans le formulaire et la classe.
+'    Private Const CODE_FRM      As String = "CodeFrm"
 
     Private Const PREF_CMB      As String = "cmb_"      '// Préfixe pour le commandbutton.
     Private Const SUF_CMB       As String = "_cmb"      '// Suffixe pour le commandbutton.
@@ -394,18 +396,19 @@ On Error GoTo ERR_LanceCreation
     Dim bRep        As Boolean  '// Retour Function.
 
     '// Extraire le code de la table dans des fichiers temp...
-    sDosTemp = Environ("Temp") & "\"
-    bRep = ExtrairePiecesJointes("~T_Info", "pjCode", sDosTemp)
-    If (bRep = False) Then Exit Function
+'TODO: 1    sDosTemp = Environ("Temp") & "\"
+'    bRep = ExtrairePiecesJointes("T_Info", "pjCode", sDosTemp)
+'    If (bRep = False) Then Exit Function
 
     '// Modification des valeurs dans le code...
-    sFile = sDosTemp & CODE_CLASS
-    sFileMod = RemplaceCode(sFile)
-    If (sFileMod = vbNullString) Then Exit Function
+'TODO: 1    sFile = sDosTemp & CODE_CLASS
+'    sFileMod = RemplaceCode(sFile)
+'    If (sFileMod = vbNullString) Then Exit Function
+'    bRep = CreateModuleClass(sFileMod)
 
     '// Création du module de Classe...
     '// ------------------------------
-    bRep = CreateModuleClass(sFileMod)
+    bRep = CreateModuleClass()
     If (bRep = False) Then Exit Function
 
     '// Création du formulaire...
@@ -424,9 +427,62 @@ End Function
 '// \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ END PUB. SUB/FUNC \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
 '// ######################## PRIVATE SUB/FUNC ###########################################
-'
-' NOTE: cmb 1 - Left 566 - Top 170 - Height 405 - Width 1125
-'       twips 567 twips par centimètre / header 1700 twips
+
+'TODO: 1 Private Function CreateModuleClass(sFileForInser As String) As Boolean
+Private Function CreateModuleClass() As Boolean
+    On Error GoTo ERR_CreateModuleClass
+
+    Dim oMd     As VBIDE.VBComponent
+    Dim sCode   As String   '// Code à insérer et modifié.
+    Dim sMsg    As String   '// MsgBox.
+    Dim lRep    As Long     '// MsgBox.
+
+    '// Le module existe déjà ? ...
+    If (ModuleExiste(MOD_CLASS, m_oMsApp.VBE.ActiveVBProject)) Then
+        sMsg = "Le module " & MOD_CLASS & " existe déjà dans le projet source." & vbNewLine & vbNewLine & "Voulez-vous le remplacer ?"
+        lRep = MsgBox(sMsg, vbDefaultButton2 + vbYesNo, "Remplacer le module")
+        If (lRep = vbNo) Then Exit Function
+        '// Supprime le module.
+        With m_oMsApp.VBE.ActiveVBProject.VBComponents
+            .Remove .Item(MOD_CLASS)
+        End With
+    End If
+
+    '// Création du module.
+    Set oMd = m_oMsApp.VBE.ActiveVBProject.VBComponents.Add(vbext_ct_ClassModule)
+    'm_oMsApp.VBE.MainWindow.Visible = True
+    'm_oMsApp.VBE.ActiveVBProject.VBComponents(oMd.Name).Activate
+
+    '// Renome.
+    m_oMsApp.DoCmd.Close acModule, oMd.Name, acSaveYes
+    m_oMsApp.DoCmd.Rename MOD_CLASS, acModule, oMd.Name
+
+    'DoCmd.OpenModule MOD_CLASS
+
+    '// Insert le fichier.
+'TODO: 1    oMd.CodeModule.AddFromFile sFileForInser
+
+    '// Récupère le code dans la table T_Info...
+    sCode = ExtraireCode("CodeCls")
+    If (sCode = vbNullString) Then Exit Function
+    '// Insert le code.
+    oMd.CodeModule.AddFromString sCode
+
+    '// Sauvegarde
+    m_oMsApp.DoCmd.Close acModule, MOD_CLASS, acSaveYes
+    DoEvents
+
+    CreateModuleClass = True
+
+SORTIE_CreateModuleClass:
+    Exit Function
+
+ERR_CreateModuleClass:
+    MsgBox "Erreur " & Err.Number & vbCrLf & _
+            " (" & Err.Description & ")" & vbCrLf & _
+            "Dans  CSord.CCreateFormContinu.CreateModuleClass, ligne " & Erl & "."
+    Resume SORTIE_CreateModuleClass
+End Function
 
 ' ----------------------------------------------------------------
 ' Procedure Nom:    CreateForm
@@ -444,6 +500,9 @@ End Function
 ' DateMod: 23/04/2022 - 20:01
 '
 ' !Use! : RemplaceCode
+'
+' NOTE: cmb 1 - Left 566 - Top 170 - Height 405 - Width 1125
+'       twips 567 twips par centimètre / header 1700 twips
 ' ----------------------------------------------------------------
 Private Function CreateForm() As Boolean
     On Error GoTo ERR_CreateForm
@@ -477,6 +536,7 @@ Private Function CreateForm() As Boolean
 
     Dim lRep    As Long     '// MsgBox.
     Dim sMsg    As String   '// MsgBox.
+    Dim sTmp    As String
 
     '// Vérification si le formulaire existe déjà.
     For Each oObj In m_oMsApp.CurrentProject.AllForms
@@ -511,9 +571,9 @@ Private Function CreateForm() As Boolean
     oForm.Section(acHeader).Height = 1708
     oForm.Section(acDetail).Height = 315
 
-    sCode = oForm.Name                                      '// Stock temporairement le nom du form.
-    m_oMsApp.DoCmd.Close acForm, sCode, acSaveYes
-    m_oMsApp.DoCmd.Rename Me.OptFormName, acForm, sCode     '// Renome le form.
+    sTmp = oForm.Name                                       '// Stock temporairement le nom du form.
+    m_oMsApp.DoCmd.Close acForm, sTmp, acSaveYes
+    m_oMsApp.DoCmd.Rename Me.OptFormName, acForm, sTmp      '// Renome le form.
     m_oMsApp.DoCmd.OpenForm Me.OptFormName, acDesign, , , , acHidden
 
     Set oForm = m_oMsApp.Forms(Me.OptFormName)
@@ -556,22 +616,30 @@ Private Function CreateForm() As Boolean
 
         End If
     Next
-'// --------- FIN Création Form, TextBox, CommandButton ---------
-
-    '// Insertion du code Function dans le form pour utilisation de la classe 'CsordFormColumn'...
-    sDos = Environ("Temp") & "\"
-    sFile = sDos & CODE_FRM
-    sFileMod = RemplaceCode(sFile, sFirstField)
-    If (sFileMod = vbNullString) Then Exit Function
-    oModule.AddFromFile sFileMod
 
     oRst.Close
     oDb.Close
+'// --------- FIN Création Form, TextBox, CommandButton ---------
 
-    '// Enregistrement du form.
-    m_oMsApp.DoCmd.Close acForm, Me.OptFormName, acSaveYes
+    '// Insertion du code Function dans le form pour utilisation de la classe 'CsordFormColumn'...
+'TODO: 1    sDos = Environ("Temp") & "\"
+'    sFile = sDos & CODE_FRM
+'    sFileMod = RemplaceCode(sFile, sFirstField)
+'    If (sFileMod = vbNullString) Then Exit Function
+'    oModule.AddFromFile sFileMod
 
-    CreateForm = True
+    '// Récupère le code modifié...
+    sCode = ExtraireCode("CodeFrm", sFirstField)
+
+    If (sCode <> vbNullString) Then
+        '// Insère le code.
+        oModule.AddFromString sCode
+        '// Enregistrement du form.
+        m_oMsApp.DoCmd.Close acForm, Me.OptFormName, acSaveYes
+        CreateForm = True
+    Else
+        m_oMsApp.DoCmd.Close acForm, Me.OptFormName, acSaveNo
+    End If
 
 SORTIE_CreateForm:
     On Error Resume Next
@@ -590,6 +658,76 @@ ERR_CreateForm:
             " (" & Err.Description & ")" & vbCrLf & _
             "Dans  CCreateFormContinu.MD_CreateForm.CreateForm, ligne " & Erl & "."
     Resume SORTIE_CreateForm
+End Function
+
+' ----------------------------------------------------------------
+' Procedure Nom:    ExtraireCode
+' Sujet:            Extraire le code de la table T_Info, modifie le code, retroune le code modifié.
+' Procedure Kind:   Function
+' Procedure Access: Private
+' Références:       Extraire le code de la table T_Info, modifie le code, retroune le code modifié.
+'
+'=== Paramètres ===
+' sID (String): ID à utiliser sur la table T_Info.
+'==================
+'
+' Return Type: String -> Null string si erreur, le code modifié si ok
+'
+' Author:  Laurent
+' Date:    13/05/2022 - 18:32
+' DateMod:
+'
+' ----------------------------------------------------------------
+Private Function ExtraireCode(sID As String, Optional sCtrName As String) As String
+    On Error GoTo ERR_ExtraireCode
+
+    Dim oBd     As DAO.Database
+    Dim oRst    As DAO.Recordset
+    Dim sSql    As String
+    Dim sCode   As Variant
+    Dim sRemp   As String
+
+    '// Extraction du code.
+    Set oBd = Application.CurrentDb
+    sSql = "SELECT T_Info.Code FROM T_Info WHERE (((T_Info.ID_Info)=""" & sID & """));"
+    Set oRst = oBd.OpenRecordset(sSql, dbOpenDynaset, dbReadOnly)
+    sCode = oRst.Fields("Code")
+    
+    oRst.Close
+    oBd.Close
+    
+    '// Modification du code.
+    If (sID = "CodeFrm") Then
+    
+        '// Code Form : VARCLS FUNCNAME LENPREF LENSUFF CTRFOCUS
+        sRemp = Replace(sCode, "VARCLS", Me.OptVarClasse): sCode = sRemp
+        sRemp = Replace(sCode, "FUNCNAME", Me.OptFunctionName): sCode = sRemp
+        sRemp = Replace(sCode, "LENPREF", Str$(Len(Me.OptTextBoxPrefix))): sCode = sRemp
+        sRemp = Replace(sCode, "LENSUFF", Str$(Len(Me.OptTextBoxSuffix))): sCode = sRemp
+        sRemp = Replace(sCode, "CTRFOCUS", sCtrName): sCode = sRemp
+    End If
+
+    If (sID = "CodeCls") Then
+
+        '// Module de classe : PICDEFFOLDER PICDEFIMGASC PICDEFIMGDESC
+        sRemp = Replace(sCode, "PICDEFFOLDER", Me.OptPictureFolder): sCode = sRemp
+        sRemp = Replace(sCode, "PICDEFIMGASC", Me.OptPictureAsc): sCode = sRemp
+        sRemp = Replace(sCode, "PICDEFIMGDESC", Me.OptPictureDesc): sCode = sRemp
+    End If
+
+    ExtraireCode = sCode
+
+SORTIE_ExtraireCode:
+    On Error Resume Next
+    Set oRst = Nothing
+    Set oBd = Nothing
+    Exit Function
+
+ERR_ExtraireCode:
+    MsgBox "Erreur " & Err.Number & vbCrLf & _
+            " (" & Err.Description & ")" & vbCrLf & _
+            "Dans  CSord.CCreateFormContinu.ExtraireCode, ligne " & Erl & "."
+    Resume SORTIE_ExtraireCode
 End Function
 
 Public Function RemplaceCode(ByVal sFile As String, Optional sCtrFocus As String) As String
@@ -654,53 +792,5 @@ ERR_RemplaceCode:
             " (" & Err.Description & ")" & vbCrLf & _
             "Dans  TriSurFormContinu.CCreateFormContinu.RemplaceCode, ligne " & Erl & "."
     Resume SORTIE_RemplaceCode
-End Function
-
-Private Function CreateModuleClass(sFileForInser As String) As Boolean
-    On Error GoTo ERR_CreateModuleClass
-
-    Dim oMd     As VBIDE.VBComponent
-    Dim sMsg    As String   '// MsgBox.
-    Dim lRep    As Long     '// MsgBox.
-
-    '// Le module existe déjà ? ...
-    If (ModuleExiste(MOD_CLASS, m_oMsApp.VBE.ActiveVBProject)) Then
-        sMsg = "Le module " & MOD_CLASS & " existe déjà dans le projet source." & vbNewLine & vbNewLine & "Voulez-vous le remplacer ?"
-        lRep = MsgBox(sMsg, vbDefaultButton2 + vbYesNo, "Remplacer le module")
-        If (lRep = vbNo) Then Exit Function
-        '// Supprime le module.
-        With m_oMsApp.VBE.ActiveVBProject.VBComponents
-            .Remove .Item(MOD_CLASS)
-        End With
-    End If
-
-    '// Création du module.
-    Set oMd = m_oMsApp.VBE.ActiveVBProject.VBComponents.Add(vbext_ct_ClassModule)
-    'm_oMsApp.VBE.MainWindow.Visible = True
-    'm_oMsApp.VBE.ActiveVBProject.VBComponents(oMd.Name).Activate
-
-    '// Renome.
-    m_oMsApp.DoCmd.Close acModule, oMd.Name, acSaveYes
-    m_oMsApp.DoCmd.Rename MOD_CLASS, acModule, oMd.Name
-
-    'DoCmd.OpenModule MOD_CLASS
-
-    '// Insert le fichier.
-    oMd.CodeModule.AddFromFile sFileForInser
-
-    '// Sauvegarde
-    m_oMsApp.DoCmd.Close acModule, MOD_CLASS, acSaveYes
-    DoEvents
-
-    CreateModuleClass = True
-
-SORTIE_CreateModuleClass:
-    Exit Function
-
-ERR_CreateModuleClass:
-    MsgBox "Erreur " & Err.Number & vbCrLf & _
-            " (" & Err.Description & ")" & vbCrLf & _
-            "Dans  CSord.CCreateFormContinu.CreateModuleClass, ligne " & Erl & "."
-    Resume SORTIE_CreateModuleClass
 End Function
 '// ################################# END PRIV. SUB/FUNC #################################
