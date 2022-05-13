@@ -10,9 +10,12 @@
 
 ## Insertion de la Classe pour le tri sur les colonnes
 
-- ...
+**_Code exporter avec l'outil :_**
 
-Code exporter avec l'outil de @joyfullservice [msaccess-vcs-integration](https://github.com/joyfullservice/msaccess-vcs-integration)
+[@joyfullservice](https://github.com/joyfullservice)
+
+[msaccess-vcs-integration](https://github.com/joyfullservice/msaccess-vcs-integration)
+
 <!---
 meuslaur/meuslaur is a ✨ special ✨ repository because its `README.md` (this file) appears on your GitHub profile.
 You can click the Preview link to take a look at your changes.
