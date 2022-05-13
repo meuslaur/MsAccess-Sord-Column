@@ -28,7 +28,7 @@
 
 [msaccess-vcs-integration](https://github.com/joyfullservice/msaccess-vcs-integration)
 
-Créez une base vide et utilisez `msaccess-vcs-integration` pour réinporter le code.
+Créez une base vide et utilisez `msaccess-vcs-integration` pour réimporter le code.
 <!---
 meuslaur/meuslaur is a ✨ special ✨ repository because its `README.md` (this file) appears on your GitHub profile.
 You can click the Preview link to take a look at your changes.
