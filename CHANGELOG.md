@@ -4,7 +4,7 @@
 
 ### Changes
 
-- Modification du code pour utilisation d'un champs String Long dans la table T_Info, a la place du champs dbAttachment.
+- Modification du code pour utilisation d'un champs String Long dans la table T_Info, a la place du champ dbAttachment.
 
 - Ajout de ma fonction `ExtraireCode`.
   
