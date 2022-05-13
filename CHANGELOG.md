@@ -8,7 +8,7 @@
 
 - Correstion problème enregistrement de la classe.
 
-- Correction code 'VerifDossierImage' retourne le nom correct du dossier des images.
+- Correction code `VerifDossierImage` retourne le nom correct du dossier des images.
 
 ```VB
 ...
