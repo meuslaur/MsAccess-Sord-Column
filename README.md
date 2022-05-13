@@ -1,14 +1,26 @@
 # Création automatique d'un formulaire en continu
 
+![Formulaire de démarrage](Doc/Frm_img1.png)
+
+![Sélection de la base](Doc/Frm_img2.png)
+
 ## Création du formulaire
+
+### Insertion Function pour les CommandButton
 
 ## Création des CommandButton et des TextBox
 
+![Image tri ASC](Doc/Col_Tri1.png)
+
+![Image tri DESC](Doc/Col_Tri2.png)
+
 ### Code sur les CommandButton pour le tri des colonnes
 
-## Insertion des TextBox dnas la section Detail
+## Insertion des TextBox dans la section Detail
 
 ## Insertion de la Classe pour le tri sur les colonnes
+
+![Objets insérés](Doc/Lst_Obj1.png)
 
 **_Code exporter avec l'outil :_**
 
