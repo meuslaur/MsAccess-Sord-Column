@@ -3,6 +3,7 @@ VersionRequired =20
 Begin Form
     AutoCenter = NotDefault
     DividingLines = NotDefault
+    OrderByOn = NotDefault
     AllowDesignChanges = NotDefault
     ScrollBars =2
     ViewsAllowed =1
@@ -17,6 +18,7 @@ Begin Form
     Top =270
     Right =18090
     Bottom =11325
+    OrderBy ="Last_Name DESC"
     RecSrcDt = Begin
         0xa6063788ced2e540
     End

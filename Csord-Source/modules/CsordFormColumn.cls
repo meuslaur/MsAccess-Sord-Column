@@ -239,6 +239,7 @@ Public Property Get PictureASC() As String
     PictureASC = m_sPictureAsc
 End Property
 Public Property Let PictureASC(NewFileName As String)
+    Dim sFullPath As String
 
     '// OFF, rien a faire on sort.
     '// Evite les messages répétitif d'érreur.
@@ -251,7 +252,8 @@ Public Property Let PictureASC(NewFileName As String)
     If (NewFileName = vbNullString) Then NewFileName = DEF_IMGASC
 
     '// Le fichier existe ?
-    If (CheckFileExist(m_sPicturePath & NewFileName) = False) Then
+    sFullPath = CurrentProject.Path & m_sPicturePath & NewFileName
+    If (CheckFileExist(sFullPath) = False) Then
         MsgBox "Fichier " & vbCrLf & NewFileName & vbCrLf & " non trouver.", vbExclamation, "PictureASC"
         m_bCheckOk = False
         m_ePictureOn = OptionOff
@@ -268,6 +270,7 @@ Public Property Get PictureDESC() As String
     PictureDESC = m_sPictureDesc
 End Property
 Public Property Let PictureDESC(NewFileName As String)
+    Dim sFullPath As String
 
     '// OFF, rien a faire on sort.
     '// Evite les messages répétitif d'érreur.
@@ -280,7 +283,8 @@ Public Property Let PictureDESC(NewFileName As String)
     If (NewFileName = vbNullString) Then NewFileName = DEF_IMGDESC
 
     '// Le fichier existe ?
-    If (CheckFileExist(m_sPicturePath & NewFileName) = False) Then
+    sFullPath = CurrentProject.Path & m_sPicturePath & NewFileName
+    If (CheckFileExist(sFullPath) = False) Then
         MsgBox "Fichier " & vbCrLf & NewFileName & vbCrLf & " non trouver.", vbExclamation, "PictureDESC"
         m_bCheckOk = False
         m_ePictureOn = OptionOff
@@ -330,11 +334,11 @@ Public Function SordNow(Optional sFieldName As String = vbNullString) As Boolean
         Case eAsc
             m_eCurrentSord = eDESC
             sCurSord = SORD_ASC
-            m_sPictureSord = m_sPicturePath & m_sPictureAsc
+            m_sPictureSord = CurrentProject.Path & m_sPicturePath & m_sPictureAsc
         Case eDESC
             m_eCurrentSord = eAsc
             sCurSord = SORD_DESC
-            m_sPictureSord = m_sPicturePath & m_sPictureDesc
+            m_sPictureSord = CurrentProject.Path & m_sPicturePath & m_sPictureDesc
     End Select
 
     '// Initialise le control cliquer...
