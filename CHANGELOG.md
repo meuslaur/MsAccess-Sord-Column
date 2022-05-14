@@ -6,7 +6,7 @@
 
 - Modification du code pour utilisation d'un champs String Long dans la table T_Info, a la place du champ dbAttachment.
 
-- Ajout de ma fonction `ExtraireCode`.
+- Ajout de la fonction `ExtraireCode`.
   
 ```VB
 Private Function ExtraireCode(sID As String, Optional sCtrName As String) As String
