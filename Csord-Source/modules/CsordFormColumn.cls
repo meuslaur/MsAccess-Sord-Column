@@ -60,18 +60,25 @@ Attribute VB_Exposed = False
 '    End If
 '
 '    With m_CSordForm
-'        .PictureOn = eActiveImage   '// Optional (Default Off) si On, active les images par defaut.
-'        .TexteOn = eActiveTexte     '// Optional (Default On)
-'        '.TexteColor = 2366701       '// Optional (Default see const 'TXT_COULSORD' in class)
-'        '.PicturePath = "\Res\"      '// Optional (Sous dossier des images, Default CurrentProject.Path + Const 'IMG_FOLDER' in class)
-'        .PictureASC = sPicAsc       '// Optional (see const 'IMG_ASC' in class)
-'        .PictureDESC = sPicDesc     '// Optional (see const 'IMG_DESC' in class)
+'        .PictureOn = eActiveImage           '// Optional (Default Off) si On, active les images par defaut.
+'        .TexteOn = eActiveTexte             '// Optional (Default On)
+'        '.TexteColor = 2366701               '// Optional (Default see const 'TXT_COULSORD' in class)
+'
+'        '.PicturePath = "C:\MyApp\Res\"      '// Optional (dossier des images)
+'           OR
+'        '.PicturePath = CurrentProject.Path & "\Res\"
+'
+'        .PictureASC = sPicAsc               '// Optional
+'        .PictureDESC = sPicDesc             '// Optional
+'           OR
+'        .PictureASC = "MyPicAsc.png"        '// Optional
+'        .PictureDESC = "MyPicDesc.png"      '// Optional
 '
 '        bRet = .SordNow(sFieldName)     '// Execute le tri, retour TRUE if ok, 'sFieldName' is optional.
 '
 '    End With
 '
-'    Me.ID_Supplier.SetFocus
+'    Me.MyControl.SetFocus
 '
 '    If (bRet = False) Then
 '        '// Your code here
@@ -86,10 +93,6 @@ Option Explicit
     '// Defaut paramètres.
     Private Const DEF_TXTFONTWEIGHT As Long = 700               '// Bold
     Private Const DEF_TXTCOLOR      As Long = 1137349           '// Couleur with sord  (m_objButton)
-
-    Private Const DEF_IMGFOLDER     As String = "\assets\"             '// Default folder for picture (currentProject.path + DEF_IMGFOLDER)
-    Private Const DEF_IMGASC        As String = "ic_SordASC16.png"  '// (m_objButton)
-    Private Const DEF_IMGDESC       As String = "ic_SordDESC16.png" '// (m_objButton)
 
     Private Const SORD_ASC          As String = " ASC"
     Private Const SORD_DESC         As String = " DESC"
@@ -144,11 +147,6 @@ Private Sub Class_Initialize()
     '// TOUT est OK par défaut.
     m_bCheckOk = True
     m_sFieldName = "*"
-
-    m_sPicturePath = DEF_IMGFOLDER
-    m_sPictureAsc = DEF_IMGASC
-    m_sPictureDesc = DEF_IMGDESC
-    
     m_lTxtColor = DEF_TXTCOLOR
 
 End Sub
@@ -231,6 +229,7 @@ Public Property Let PicturePath(NewPath As String)
     If (Right$(NewPath, 1) <> "\") Then NewPath = NewPath & "\"
 
     m_sPicturePath = NewPath
+    m_ePictureOn = OptionOn
 
 End Property
 
@@ -239,20 +238,17 @@ Public Property Get PictureASC() As String
     PictureASC = m_sPictureAsc
 End Property
 Public Property Let PictureASC(NewFileName As String)
+
     Dim sFullPath As String
 
-    '// OFF, rien a faire on sort.
+    If (NewFileName = vbNullString) Then Exit Property
+
+    '// OFF, Img vide, rien a faire on sort.
     '// Evite les messages répétitif d'érreur.
-    If (m_ePictureOn = OptionOff) Then Exit Property
-
-    '// Img vide, et img par défaut déjà appliquer, on sort.
-    If (NewFileName = vbNullString) And (m_sPictureAsc = DEF_IMGASC) Then Exit Property
-
-    '// Vide applique img par défaut.
-    If (NewFileName = vbNullString) Then NewFileName = DEF_IMGASC
+    If (m_ePictureOn = OptionOff) Or (m_sPicturePath = vbNullString) Then Exit Property
 
     '// Le fichier existe ?
-    sFullPath = CurrentProject.Path & m_sPicturePath & NewFileName
+    sFullPath = m_sPicturePath & NewFileName
     If (CheckFileExist(sFullPath) = False) Then
         MsgBox "Fichier " & vbCrLf & NewFileName & vbCrLf & " non trouver.", vbExclamation, "PictureASC"
         m_bCheckOk = False
@@ -270,20 +266,17 @@ Public Property Get PictureDESC() As String
     PictureDESC = m_sPictureDesc
 End Property
 Public Property Let PictureDESC(NewFileName As String)
+
     Dim sFullPath As String
 
-    '// OFF, rien a faire on sort.
+    If (NewFileName = vbNullString) Then Exit Property
+
+    '// OFF, Img vide, rien a faire on sort.
     '// Evite les messages répétitif d'érreur.
-    If (m_ePictureOn = OptionOff) Then Exit Property
-
-    '// Img vide, et img par défaut déjà appliquer, on sort.
-    If (NewFileName = vbNullString) And (m_sPictureDesc = DEF_IMGDESC) Then Exit Property
-
-    '// Vide applique img par défaut.
-    If (NewFileName = vbNullString) Then NewFileName = DEF_IMGDESC
+    If (m_ePictureOn = OptionOff) Or (m_sPicturePath = vbNullString) Then Exit Property
 
     '// Le fichier existe ?
-    sFullPath = CurrentProject.Path & m_sPicturePath & NewFileName
+    sFullPath = m_sPicturePath & NewFileName
     If (CheckFileExist(sFullPath) = False) Then
         MsgBox "Fichier " & vbCrLf & NewFileName & vbCrLf & " non trouver.", vbExclamation, "PictureDESC"
         m_bCheckOk = False
@@ -330,15 +323,16 @@ Public Function SordNow(Optional sFieldName As String = vbNullString) As Boolean
     Dim sCurSord As String
 
     '// Determine le texte et l'image as utilisés suivant le sens du tri.
+    If (m_sPictureAsc = vbNullString) Or (m_sPictureDesc = vbNullString) Then Me.PictureOn = OptionOff
     Select Case m_eCurrentSord
         Case eAsc
             m_eCurrentSord = eDESC
             sCurSord = SORD_ASC
-            m_sPictureSord = CurrentProject.Path & m_sPicturePath & m_sPictureAsc
+            m_sPictureSord = m_sPicturePath & m_sPictureAsc
         Case eDESC
             m_eCurrentSord = eAsc
             sCurSord = SORD_DESC
-            m_sPictureSord = CurrentProject.Path & m_sPicturePath & m_sPictureDesc
+            m_sPictureSord = m_sPicturePath & m_sPictureDesc
     End Select
 
     '// Initialise le control cliquer...
