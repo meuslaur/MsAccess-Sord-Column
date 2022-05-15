@@ -1,4 +1,14 @@
 # Changelog
+## 0.30
+
+- Ajoute options affichage des images des CommandButton
+- Modification controle saisie si optImages est a On.
+- Suppréssion de la fonction `VerifDossierImage(sRet)`, utilise le chemin complet.
+- Modification indication des erreurs de saisie (label en rouge).
+- Ajoute message d'information si aucune base sélectionnée.
+- Ajoute 'OptionOn' sur la fonction du form si des images sélectionnées.
+- Ajoute code insertion picfolder picasc et picdesc dans l'initialisation de la classe de la function du formulaire.
+- Modification du code d'importation de la classe `CsordFormColumn` utilise CopyModule et plus la table T_Info.
 
 ## 0.20.5
 
