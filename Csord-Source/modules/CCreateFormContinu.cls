@@ -27,8 +27,6 @@ Option Explicit
     
     Private Const CODE_FRM      As String = "CodeForm.cls"  '// Fichiers pour import code dans le formulaire et la classe.
     Private Const CODE_CLASS    As String = "CodeClasse.cls"
-'TODO: 1    Private Const CODE_CLASS    As String = "CodeCls"       '// Fichiers pour import code dans le formulaire et la classe.
-'    Private Const CODE_FRM      As String = "CodeFrm"
 
     Private Const PREF_CMB      As String = "cmb_"      '// Préfixe pour le commandbutton.
     Private Const SUF_CMB       As String = "_cmb"      '// Suffixe pour le commandbutton.
@@ -61,36 +59,33 @@ Option Explicit
     Private m_sOptTextBoxSuffix As String
     Private m_sOptTextBoxPrefix As String
 
-    Public m_cUtils As New CUtilitaires     '// FSO
+    Private m_cUtils            As New CUtilitaires     '// FSO
 '//:::::::::::::::::::::::::::::::::: END VARIABLES ::::::::::::::::::::::::::::::::::::::
     
 '//----------------------------------       INIT/TERM       ----------------------------------
 Private Sub Class_Initialize()
 
-    Dim CsordFrm As CsordFormColumn
-
     '// Défini les options par défaut.
     m_sOptVarClasse = CLS_VAR
     m_sOptFunctionName = PROC_NAME
-
-    '// Extraire les info par défaut de la classe 'CsordFormColumn'
-    Set CsordFrm = New CsordFormColumn
-    m_sOptPictureFolder = CsordFrm.PicturePath  '/MODE:
-    m_sOptPictureAsc = CsordFrm.PictureASC
-    m_sOptPictureDesc = CsordFrm.PictureDESC
-    Set CsordFrm = Nothing
 
     m_sOptCmbPrefix = PREF_CMB
     m_sOptCmbSuffix = SUF_CMB
 
     m_sOptTextBoxPrefix = PREF_TXTBOX
     m_sOptTextBoxSuffix = SUF_TXTBOX
+    
+    m_sOptPictureFolder = vbNullString
+    m_sOptPictureAsc = vbNullString
+    m_sOptPictureDesc = vbNullString
 
     m_lFieldIndex = -1      '// Indique tableau non initialiser.
 
 End Sub
 
 Private Sub class_Terminate()
+
+    On Error Resume Next
 
     If (MsBaseIsOpen And (Not m_oMsBase Is Nothing)) Then m_oMsBase.Close
     If (MsAppIsUp And (Not m_oMsApp Is Nothing)) Then m_oMsApp.Quit
@@ -353,10 +348,10 @@ Public Function CloseMsBase(Optional CloseMsApp As Boolean = False) As Boolean
 
 'TODO:    m_oMsApp.Visible = True
 
-    If (Me.MsAppIsUp = False) Or (Me.MsBaseIsOpen = False) Then
-        MsgBox "La base est déjà fermée.", vbInformation + vbOKOnly, "OpenMsBase"
-        Exit Function
-    End If
+'    If (Me.MsAppIsUp = False) Or (Me.MsBaseIsOpen = False) And (CloseMsApp = False) Then
+'        MsgBox "La base est déjà fermée.", vbInformation + vbOKOnly, "OpenMsBase"
+'        Exit Function
+'    End If
 
     '// Ouverture de la base (sBaseName).
     If (Not m_oMsBase Is Nothing) Then
@@ -390,31 +385,20 @@ End Function
 Public Function LanceCreation() As Boolean
 On Error GoTo ERR_LanceCreation
 
-    Dim sDosTemp    As String
-    Dim sFile       As String
-    Dim sFileMod    As String
     Dim bRep        As Boolean  '// Retour Function.
 
-    '// Extraire le code de la table dans des fichiers temp...
-'TODO: 1    sDosTemp = Environ("Temp") & "\"
-'    bRep = ExtrairePiecesJointes("T_Info", "pjCode", sDosTemp)
-'    If (bRep = False) Then Exit Function
-
-    '// Modification des valeurs dans le code...
-'TODO: 1    sFile = sDosTemp & CODE_CLASS
-'    sFileMod = RemplaceCode(sFile)
-'    If (sFileMod = vbNullString) Then Exit Function
-'    bRep = CreateModuleClass(sFileMod)
-
-    '// Création du module de Classe...
     '// ------------------------------
-    bRep = CreateModuleClass()
+    bRep = CreateModuleClass()      '// Création du module de Classe...
     If (bRep = False) Then Exit Function
 
-    '// Création du formulaire...
     '// ------------------------------
-    LanceCreation = CreateForm
-    
+    bRep = CreateFormColumn         '// Création du formulaire...
+
+    If bRep Then
+        m_oMsApp.DoCmd.Minimize
+        LanceCreation = bRep
+    End If
+
 SORTIE_LanceCreation:
     Exit Function
 
@@ -428,7 +412,6 @@ End Function
 
 '// ######################## PRIVATE SUB/FUNC ###########################################
 
-'TODO: 1 Private Function CreateModuleClass(sFileForInser As String) As Boolean
 Private Function CreateModuleClass() As Boolean
     On Error GoTo ERR_CreateModuleClass
 
@@ -450,23 +433,18 @@ Private Function CreateModuleClass() As Boolean
 
     '// Création du module.
     Set oMd = m_oMsApp.VBE.ActiveVBProject.VBComponents.Add(vbext_ct_ClassModule)
-    'm_oMsApp.VBE.MainWindow.Visible = True
-    'm_oMsApp.VBE.ActiveVBProject.VBComponents(oMd.Name).Activate
 
     '// Renome.
     m_oMsApp.DoCmd.Close acModule, oMd.Name, acSaveYes
     m_oMsApp.DoCmd.Rename MOD_CLASS, acModule, oMd.Name
 
-    'DoCmd.OpenModule MOD_CLASS
+    sMsg = CopyModule(MOD_CLASS, Application.VBE.ActiveVBProject, m_oMsApp.VBE.ActiveVBProject, True)
 
-    '// Insert le fichier.
-'TODO: 1    oMd.CodeModule.AddFromFile sFileForInser
-
-    '// Récupère le code dans la table T_Info...
-    sCode = ExtraireCode("CodeCls")
-    If (sCode = vbNullString) Then Exit Function
-    '// Insert le code.
-    oMd.CodeModule.AddFromString sCode
+'    '// Récupère le code dans la table T_Info...
+'    sCode = ExtraireCode("CodeCls")
+'    If (sCode = vbNullString) Then Exit Function
+'    '// Insert le code.
+'    oMd.CodeModule.AddFromString sCode
 
     '// Sauvegarde
     m_oMsApp.DoCmd.Close acModule, MOD_CLASS, acSaveYes
@@ -485,7 +463,7 @@ ERR_CreateModuleClass:
 End Function
 
 ' ----------------------------------------------------------------
-' Procedure Nom:    CreateForm
+' Procedure Nom:    CreateFormColumn
 ' Sujet:            Création du formulaire en continu pour la classe 'CsordFormColumn'
 ' Procedure Kind:   Function
 ' Procedure Access: Private
@@ -504,12 +482,12 @@ End Function
 ' NOTE: cmb 1 - Left 566 - Top 170 - Height 405 - Width 1125
 '       twips 567 twips par centimètre / header 1700 twips
 ' ----------------------------------------------------------------
-Private Function CreateForm() As Boolean
-    On Error GoTo ERR_CreateForm
+Private Function CreateFormColumn() As Boolean
+    On Error GoTo ERR_CreateFormColumn
 
     Dim oObj        As Object
     Dim oForm       As Access.Form
-    Dim oModule     As Access.module
+    Dim oModule     As Access.Module
     Dim oCtrCmb     As Access.CommandButton
     Dim oCtrTxtB    As Access.TextBox
     Dim oDb         As DAO.Database
@@ -529,10 +507,6 @@ Private Function CreateForm() As Boolean
     Dim lLigne      As Long     '// Ligne en cour dans le code.
     Dim sCode       As String   '// Code insérer dans le formulaire.
     Dim lIndex      As Long     '// Index pour le tableau des champs.
-
-    Dim sDos        As String   '// Temp folder.
-    Dim sFile       As String   '// source code.
-    Dim sFileMod    As String   '// New code.
 
     Dim lRep    As Long     '// MsgBox.
     Dim sMsg    As String   '// MsgBox.
@@ -577,7 +551,7 @@ Private Function CreateForm() As Boolean
     m_oMsApp.DoCmd.OpenForm Me.OptFormName, acDesign, , , , acHidden
 
     Set oForm = m_oMsApp.Forms(Me.OptFormName)
-    Set oModule = oForm.module
+    Set oModule = oForm.Module
 
     '// Ouvre la source du form, pour définir le nom des commandButton et TextBox.
     Set oDb = m_oMsApp.CurrentDb
@@ -605,7 +579,9 @@ Private Function CreateForm() As Boolean
 
             '// Création des Procédure event pour les CommandButton.
             lLigne = oModule.CreateEventProc(EVE_CLICK, oCtrCmb.Name)
-            oModule.InsertLines lLigne + 1, vbTab & Me.OptFunctionName
+            sTmp = vbTab & Me.OptFunctionName
+            If (m_sOptPictureFolder <> vbNullString) Then sTmp = sTmp & " OptionOn"     '// Active affichage des images
+            oModule.InsertLines lLigne + 1, sTmp
             oModule.DeleteLines lLigne + 2, 1       '// Supprime les lignes vide.
 
             lLeft = lLeft + CTR_WIDTH               '// Incrémente position gauche des txtb/cmb.
@@ -621,13 +597,6 @@ Private Function CreateForm() As Boolean
     oDb.Close
 '// --------- FIN Création Form, TextBox, CommandButton ---------
 
-    '// Insertion du code Function dans le form pour utilisation de la classe 'CsordFormColumn'...
-'TODO: 1    sDos = Environ("Temp") & "\"
-'    sFile = sDos & CODE_FRM
-'    sFileMod = RemplaceCode(sFile, sFirstField)
-'    If (sFileMod = vbNullString) Then Exit Function
-'    oModule.AddFromFile sFileMod
-
     '// Récupère le code modifié...
     sCode = ExtraireCode("CodeFrm", sFirstField)
 
@@ -636,12 +605,12 @@ Private Function CreateForm() As Boolean
         oModule.AddFromString sCode
         '// Enregistrement du form.
         m_oMsApp.DoCmd.Close acForm, Me.OptFormName, acSaveYes
-        CreateForm = True
+        CreateFormColumn = True
     Else
         m_oMsApp.DoCmd.Close acForm, Me.OptFormName, acSaveNo
     End If
 
-SORTIE_CreateForm:
+SORTIE_CreateFormColumn:
     On Error Resume Next
     Set oForm = Nothing
     Set oModule = Nothing
@@ -653,11 +622,11 @@ SORTIE_CreateForm:
 
     Exit Function
 
-ERR_CreateForm:
+ERR_CreateFormColumn:
     MsgBox "Erreur " & Err.Number & vbCrLf & _
             " (" & Err.Description & ")" & vbCrLf & _
-            "Dans  CCreateFormContinu.MD_CreateForm.CreateForm, ligne " & Erl & "."
-    Resume SORTIE_CreateForm
+            "Dans  CCreateFormContinu.MD_CreateForm.CreateFormColumn, ligne " & Erl & "."
+    Resume SORTIE_CreateFormColumn
 End Function
 
 ' ----------------------------------------------------------------
@@ -699,20 +668,17 @@ Private Function ExtraireCode(sID As String, Optional sCtrName As String) As Str
     '// Modification du code.
     If (sID = "CodeFrm") Then
     
-        '// Code Form : VARCLS FUNCNAME LENPREF LENSUFF CTRFOCUS
+        '// Code Form : VARCLS FUNCNAME LENPREF LENSUFF PICFFOLDER PICIMGASC PICIMGDESC CTRFOCUS
         sRemp = Replace(sCode, "VARCLS", Me.OptVarClasse): sCode = sRemp
         sRemp = Replace(sCode, "FUNCNAME", Me.OptFunctionName): sCode = sRemp
         sRemp = Replace(sCode, "LENPREF", Str$(Len(Me.OptTextBoxPrefix))): sCode = sRemp
         sRemp = Replace(sCode, "LENSUFF", Str$(Len(Me.OptTextBoxSuffix))): sCode = sRemp
+        If (Me.OptPictureFolder <> vbNullString) Then
+            sRemp = Replace(sCode, "PICFOLDER", Me.OptPictureFolder): sCode = sRemp
+            sRemp = Replace(sCode, "PICIMGASC", Me.OptPictureAsc): sCode = sRemp
+            sRemp = Replace(sCode, "PICIMGDESC", Me.OptPictureDesc): sCode = sRemp
+        End If
         sRemp = Replace(sCode, "CTRFOCUS", sCtrName): sCode = sRemp
-    End If
-
-    If (sID = "CodeCls") Then
-
-        '// Module de classe : PICDEFFOLDER PICDEFIMGASC PICDEFIMGDESC
-        sRemp = Replace(sCode, "PICDEFFOLDER", Me.OptPictureFolder): sCode = sRemp
-        sRemp = Replace(sCode, "PICDEFIMGASC", Me.OptPictureAsc): sCode = sRemp
-        sRemp = Replace(sCode, "PICDEFIMGDESC", Me.OptPictureDesc): sCode = sRemp
     End If
 
     ExtraireCode = sCode
@@ -749,31 +715,36 @@ Public Function RemplaceCode(ByVal sFile As String, Optional sCtrFocus As String
     '// Boucle, modif texte, enregistre ligne.
     If InStr(sFile, CODE_FRM) Then
     
-        '// Code Form : VARCLS FUNCNAME LENPREF LENSUFF CTRFOCUS
+        '// Code Form : VARCLS FUNCNAME LENPREF LENSUFF PICFOLDER PICIMGASC PICIMGDESC CTRFOCUS
         Do While Not oStreamIn.AtEndOfStream
             sLigne = oStreamIn.ReadLine
 
             sRemp = Replace(sLigne, "VARCLS", Me.OptVarClasse): sLigne = sRemp
             sRemp = Replace(sLigne, "FUNCNAME", Me.OptFunctionName): sLigne = sRemp
-            sRemp = Replace(sLigne, "LENPREF", Len(Me.OptTextBoxPrefix)): sLigne = sRemp
-            sRemp = Replace(sLigne, "LENSUFF", Len(Me.OptTextBoxSuffix)): sLigne = sRemp
+            sRemp = Replace(sLigne, "LENPREF", Str$(Len(Me.OptTextBoxPrefix))): sLigne = sRemp
+            sRemp = Replace(sLigne, "LENSUFF", Str$(Len(Me.OptTextBoxSuffix))): sLigne = sRemp
+            If (m_sOptPictureFolder <> vbNullString) Then
+                sRemp = Replace(sLigne, "PICFOLDER", Me.OptPictureFolder): sLigne = sRemp
+                sRemp = Replace(sLigne, "PICIMGASC", Me.OptPictureAsc): sLigne = sRemp
+                sRemp = Replace(sLigne, "PICIMGDESC", Me.OptPictureDesc): sLigne = sRemp
+            End If
             sRemp = Replace(sLigne, "CTRFOCUS", sCtrFocus): sLigne = sRemp
             oStreamOut.WriteLine sLigne
         Loop
     End If
 
-    If InStr(sFile, CODE_CLASS) Then
-
-        '// Module de classe : PICDEFFOLDER PICDEFIMGASC PICDEFIMGDESC
-        Do While Not oStreamIn.AtEndOfStream
-            sLigne = oStreamIn.ReadLine
-    
-            sRemp = Replace(sLigne, "PICDEFFOLDER", Me.OptPictureFolder): sLigne = sRemp
-            sRemp = Replace(sLigne, "PICDEFIMGASC", Me.OptPictureAsc): sLigne = sRemp
-            sRemp = Replace(sLigne, "PICDEFIMGDESC", Me.OptPictureDesc): sLigne = sRemp
-            oStreamOut.WriteLine sLigne
-        Loop
-    End If
+'    If InStr(sFile, CODE_CLASS) Then
+'
+'        '// Module de classe : PICDEFFOLDER PICDEFIMGASC PICDEFIMGDESC
+'        Do While Not oStreamIn.AtEndOfStream
+'            sLigne = oStreamIn.ReadLine
+'
+'            sRemp = Replace(sLigne, "PICDEFFOLDER", Me.OptPictureFolder): sLigne = sRemp
+'            sRemp = Replace(sLigne, "PICDEFIMGASC", Me.OptPictureAsc): sLigne = sRemp
+'            sRemp = Replace(sLigne, "PICDEFIMGDESC", Me.OptPictureDesc): sLigne = sRemp
+'            oStreamOut.WriteLine sLigne
+'        Loop
+'    End If
 
     oStreamIn.Close
     oStreamOut.Close

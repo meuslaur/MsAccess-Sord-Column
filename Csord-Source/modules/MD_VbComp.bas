@@ -215,7 +215,7 @@ Public Function CopyModule(ModuleName As String, _
         End If
         '// Supprime le module.
         With ToVBProject.VBComponents
-            .Remove .Item(ModuleName)
+'            .Remove .Item(ModuleName)
         End With
     Else
         '''''''''''''''''''''''''''''''''''''''''
@@ -268,7 +268,7 @@ Public Function CopyModule(ModuleName As String, _
     Else
         '// Le module existe et OverwriteExisting a True,
         '// Supprime toute les ligne du module et colle le nouveau code.
-        If VBComp.Type = vbext_ct_Document Then
+        If VBComp.Type = vbext_ct_ClassModule Or VBComp.Type = vbext_ct_StdModule Then
             ' VBComp is destination module
             Set TempVBComp = ToVBProject.VBComponents.Import(FName)
             ' TempVBComp is source module

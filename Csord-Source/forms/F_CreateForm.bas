@@ -16,11 +16,10 @@ Begin Form
     GridY =10
     Width =14173
     DatasheetFontHeight =11
-    ItemSuffix =89
-    Left =5220
-    Top =255
-    Right =19140
-    Bottom =11325
+    ItemSuffix =100
+    Left =5610
+    Right =19785
+    Bottom =12135
     DatasheetGridlinesColor =15132391
     RecSrcDt = Begin
         0x80c066f2cdd0e540
@@ -114,6 +113,35 @@ Begin Form
             PressedForeThemeColorIndex =0
             PressedForeTint =75.0
         End
+        Begin OptionButton
+            BorderLineStyle =0
+            LabelX =230
+            LabelY =-30
+            BorderThemeColorIndex =1
+            BorderShade =65.0
+            GridlineThemeColorIndex =1
+            GridlineShade =65.0
+        End
+        Begin CheckBox
+            BorderLineStyle =0
+            LabelX =230
+            LabelY =-30
+            BorderThemeColorIndex =1
+            BorderShade =65.0
+            GridlineThemeColorIndex =1
+            GridlineShade =65.0
+        End
+        Begin OptionGroup
+            SpecialEffect =3
+            BorderLineStyle =0
+            Width =1701
+            Height =1701
+            BackThemeColorIndex =1
+            BorderThemeColorIndex =1
+            BorderShade =65.0
+            GridlineThemeColorIndex =1
+            GridlineShade =65.0
+        End
         Begin TextBox
             AddColon = NotDefault
             FELineBreak = NotDefault
@@ -164,6 +192,33 @@ Begin Form
             GridlineThemeColorIndex =1
             GridlineShade =65.0
         End
+        Begin ToggleButton
+            Width =283
+            Height =283
+            ForeThemeColorIndex =0
+            ForeTint =75.0
+            GridlineThemeColorIndex =1
+            GridlineShade =65.0
+            UseTheme =1
+            Shape =2
+            Bevel =1
+            BackColor =-1
+            BackThemeColorIndex =4
+            BackTint =60.0
+            OldBorderStyle =0
+            BorderLineStyle =0
+            BorderColor =-1
+            BorderThemeColorIndex =4
+            BorderTint =60.0
+            ThemeFontIndex =1
+            HoverThemeColorIndex =4
+            HoverTint =40.0
+            PressedThemeColorIndex =4
+            PressedShade =75.0
+            HoverForeThemeColorIndex =0
+            HoverForeTint =75.0
+            PressedForeThemeColorIndex =1
+        End
         Begin EmptyCell
             Height =240
             GridlineThemeColorIndex =1
@@ -187,7 +242,7 @@ Begin Form
             BackThemeColorIndex =1
         End
         Begin Section
-            Height =11338
+            Height =12359
             Name ="F_Detail"
             AlternateBackColor =15921906
             AlternateBackThemeColorIndex =1
@@ -216,36 +271,36 @@ Begin Form
                     SpecialEffect =0
                     BackStyle =1
                     OverlapFlags =93
-                    Left =6404
-                    Top =8107
+                    Left =6407
+                    Top =7767
                     Width =6802
-                    Height =2664
+                    Height =3399
                     BackColor =15921906
                     BorderColor =10921638
                     Name ="boxCmb"
                     GridlineColor =10921638
-                    LayoutCachedLeft =6404
-                    LayoutCachedTop =8107
-                    LayoutCachedWidth =13206
-                    LayoutCachedHeight =10771
+                    LayoutCachedLeft =6407
+                    LayoutCachedTop =7767
+                    LayoutCachedWidth =13209
+                    LayoutCachedHeight =11166
                     BackShade =95.0
                 End
                 Begin Rectangle
                     SpecialEffect =0
                     BackStyle =1
                     OverlapFlags =93
-                    Left =6404
-                    Top =6632
+                    Left =6407
+                    Top =6462
                     Width =6800
                     Height =1191
                     BackColor =15921906
                     BorderColor =10921638
                     Name ="boxTxtBox"
                     GridlineColor =10921638
-                    LayoutCachedLeft =6404
-                    LayoutCachedTop =6632
-                    LayoutCachedWidth =13204
-                    LayoutCachedHeight =7823
+                    LayoutCachedLeft =6407
+                    LayoutCachedTop =6462
+                    LayoutCachedWidth =13207
+                    LayoutCachedHeight =7653
                     BackShade =95.0
                 End
                 Begin Rectangle
@@ -275,7 +330,7 @@ Begin Form
                     Left =747
                     Top =1004
                     Width =4536
-                    Height =3750
+                    Height =4095
                     TabIndex =7
                     BoundColumn =1
                     ForeColor =4210752
@@ -293,7 +348,7 @@ Begin Form
                     LayoutCachedLeft =747
                     LayoutCachedTop =1004
                     LayoutCachedWidth =5283
-                    LayoutCachedHeight =4754
+                    LayoutCachedHeight =5099
                     BackThemeColorIndex =-1
                     Begin
                         Begin Label
@@ -332,6 +387,7 @@ Begin Form
                     BorderColor =10921638
                     ForeColor =4210752
                     Name ="txtFormName"
+                    AfterUpdate ="=RestaureLabelTxt()"
                     OnGotFocus ="=AfficheInfo(\"\")"
                     ControlTipText ="Nom du formulaire"
                     GridlineColor =10921638
@@ -364,27 +420,28 @@ Begin Form
                     AllowAutoCorrect = NotDefault
                     OverlapFlags =223
                     IMESentenceMode =3
-                    Left =8793
-                    Top =6860
+                    Left =8796
+                    Top =6690
                     Width =861
                     Height =315
                     TabIndex =13
                     BorderColor =10921638
                     ForeColor =4210752
                     Name ="txtTbPrefix"
+                    AfterUpdate ="=RestaureLabelTxt()"
                     OnGotFocus ="=AfficheInfo(\"txtTb\")"
                     GridlineColor =10921638
 
-                    LayoutCachedLeft =8793
-                    LayoutCachedTop =6860
-                    LayoutCachedWidth =9654
-                    LayoutCachedHeight =7175
+                    LayoutCachedLeft =8796
+                    LayoutCachedTop =6690
+                    LayoutCachedWidth =9657
+                    LayoutCachedHeight =7005
                     Begin
                         Begin Label
                             OverlapFlags =223
                             TextAlign =3
-                            Left =7653
-                            Top =6860
+                            Left =7656
+                            Top =6690
                             Width =1080
                             Height =315
                             BorderColor =8355711
@@ -392,10 +449,10 @@ Begin Form
                             Name ="lbl_txtTbPrefix"
                             Caption ="Prefixe :"
                             GridlineColor =10921638
-                            LayoutCachedLeft =7653
-                            LayoutCachedTop =6860
-                            LayoutCachedWidth =8733
-                            LayoutCachedHeight =7175
+                            LayoutCachedLeft =7656
+                            LayoutCachedTop =6690
+                            LayoutCachedWidth =8736
+                            LayoutCachedHeight =7005
                         End
                     End
                 End
@@ -403,27 +460,28 @@ Begin Form
                     AllowAutoCorrect = NotDefault
                     OverlapFlags =223
                     IMESentenceMode =3
-                    Left =8794
-                    Top =7313
+                    Left =8797
+                    Top =7143
                     Width =861
                     Height =315
                     TabIndex =14
                     BorderColor =10921638
                     ForeColor =4210752
                     Name ="txtTbSuffix"
+                    AfterUpdate ="=RestaureLabelTxt()"
                     OnGotFocus ="=AfficheInfo(\"txtTb\")"
                     GridlineColor =10921638
 
-                    LayoutCachedLeft =8794
-                    LayoutCachedTop =7313
-                    LayoutCachedWidth =9655
-                    LayoutCachedHeight =7628
+                    LayoutCachedLeft =8797
+                    LayoutCachedTop =7143
+                    LayoutCachedWidth =9658
+                    LayoutCachedHeight =7458
                     Begin
                         Begin Label
                             OverlapFlags =223
                             TextAlign =3
-                            Left =7647
-                            Top =7313
+                            Left =7650
+                            Top =7143
                             Width =1080
                             Height =315
                             BorderColor =8355711
@@ -431,10 +489,10 @@ Begin Form
                             Name ="lbl_txtTbSuffix"
                             Caption ="Suffix :"
                             GridlineColor =10921638
-                            LayoutCachedLeft =7647
-                            LayoutCachedTop =7313
-                            LayoutCachedWidth =8727
-                            LayoutCachedHeight =7628
+                            LayoutCachedLeft =7650
+                            LayoutCachedTop =7143
+                            LayoutCachedWidth =8730
+                            LayoutCachedHeight =7458
                         End
                     End
                 End
@@ -442,27 +500,28 @@ Begin Form
                     AllowAutoCorrect = NotDefault
                     OverlapFlags =223
                     IMESentenceMode =3
-                    Left =8798
-                    Top =8391
+                    Left =8801
+                    Top =8051
                     Width =846
                     Height =345
                     TabIndex =15
                     BorderColor =10921638
                     ForeColor =4210752
                     Name ="txtCmbPrefix"
+                    AfterUpdate ="=RestaureLabelTxt()"
                     OnGotFocus ="=AfficheInfo(\"txtCmb\")"
                     GridlineColor =10921638
 
-                    LayoutCachedLeft =8798
-                    LayoutCachedTop =8391
-                    LayoutCachedWidth =9644
-                    LayoutCachedHeight =8736
+                    LayoutCachedLeft =8801
+                    LayoutCachedTop =8051
+                    LayoutCachedWidth =9647
+                    LayoutCachedHeight =8396
                     Begin
                         Begin Label
                             OverlapFlags =223
                             TextAlign =3
-                            Left =7647
-                            Top =8390
+                            Left =7650
+                            Top =8050
                             Width =1080
                             Height =315
                             BorderColor =8355711
@@ -470,10 +529,10 @@ Begin Form
                             Name ="lbl_txtCmbPrefix"
                             Caption ="Prefixe  :"
                             GridlineColor =10921638
-                            LayoutCachedLeft =7647
-                            LayoutCachedTop =8390
-                            LayoutCachedWidth =8727
-                            LayoutCachedHeight =8705
+                            LayoutCachedLeft =7650
+                            LayoutCachedTop =8050
+                            LayoutCachedWidth =8730
+                            LayoutCachedHeight =8365
                         End
                     End
                 End
@@ -481,27 +540,28 @@ Begin Form
                     AllowAutoCorrect = NotDefault
                     OverlapFlags =223
                     IMESentenceMode =3
-                    Left =8798
-                    Top =8901
+                    Left =8801
+                    Top =8561
                     Width =846
                     Height =345
                     TabIndex =16
                     BorderColor =10921638
                     ForeColor =4210752
                     Name ="txtCmbSuffix"
+                    AfterUpdate ="=RestaureLabelTxt()"
                     OnGotFocus ="=AfficheInfo(\"txtCmb\")"
                     GridlineColor =10921638
 
-                    LayoutCachedLeft =8798
-                    LayoutCachedTop =8901
-                    LayoutCachedWidth =9644
-                    LayoutCachedHeight =9246
+                    LayoutCachedLeft =8801
+                    LayoutCachedTop =8561
+                    LayoutCachedWidth =9647
+                    LayoutCachedHeight =8906
                     Begin
                         Begin Label
                             OverlapFlags =223
                             TextAlign =3
-                            Left =7647
-                            Top =8901
+                            Left =7650
+                            Top =8561
                             Width =1080
                             Height =315
                             BorderColor =8355711
@@ -509,40 +569,42 @@ Begin Form
                             Name ="lbl_txtCmbSuffix"
                             Caption ="Suffix  :"
                             GridlineColor =10921638
-                            LayoutCachedLeft =7647
-                            LayoutCachedTop =8901
-                            LayoutCachedWidth =8727
-                            LayoutCachedHeight =9216
+                            LayoutCachedLeft =7650
+                            LayoutCachedTop =8561
+                            LayoutCachedWidth =8730
+                            LayoutCachedHeight =8876
                         End
                     End
                 End
                 Begin TextBox
                     Locked = NotDefault
+                    TabStop = NotDefault
                     AllowAutoCorrect = NotDefault
                     OverlapFlags =223
                     TextAlign =1
                     IMESentenceMode =3
-                    Left =8796
-                    Top =9864
+                    Left =8800
+                    Top =10261
                     Width =2901
                     Height =345
                     TabIndex =18
                     BorderColor =10921638
                     ForeColor =4210752
                     Name ="txtPicAsc"
+                    AfterUpdate ="=RestaureLabelTxt()"
                     OnGotFocus ="=AfficheInfo(\"txtPic\")"
                     GridlineColor =10921638
 
-                    LayoutCachedLeft =8796
-                    LayoutCachedTop =9864
-                    LayoutCachedWidth =11697
-                    LayoutCachedHeight =10209
+                    LayoutCachedLeft =8800
+                    LayoutCachedTop =10261
+                    LayoutCachedWidth =11701
+                    LayoutCachedHeight =10606
                     Begin
                         Begin Label
                             OverlapFlags =223
                             TextAlign =3
-                            Left =6575
-                            Top =9864
+                            Left =6579
+                            Top =10261
                             Width =2160
                             Height =315
                             BorderColor =8355711
@@ -550,39 +612,41 @@ Begin Form
                             Name ="lbl_txtPicAsc"
                             Caption ="Image tri ASC :"
                             GridlineColor =10921638
-                            LayoutCachedLeft =6575
-                            LayoutCachedTop =9864
-                            LayoutCachedWidth =8735
-                            LayoutCachedHeight =10179
+                            LayoutCachedLeft =6579
+                            LayoutCachedTop =10261
+                            LayoutCachedWidth =8739
+                            LayoutCachedHeight =10576
                         End
                     End
                 End
                 Begin TextBox
                     Locked = NotDefault
+                    TabStop = NotDefault
                     AllowAutoCorrect = NotDefault
                     OverlapFlags =223
                     IMESentenceMode =3
-                    Left =8796
-                    Top =10318
+                    Left =8800
+                    Top =10715
                     Width =2901
                     Height =345
                     TabIndex =19
                     BorderColor =10921638
                     ForeColor =4210752
                     Name ="txtPicDesc"
+                    AfterUpdate ="=RestaureLabelTxt()"
                     OnGotFocus ="=AfficheInfo(\"txtPic\")"
                     GridlineColor =10921638
 
-                    LayoutCachedLeft =8796
-                    LayoutCachedTop =10318
-                    LayoutCachedWidth =11697
-                    LayoutCachedHeight =10663
+                    LayoutCachedLeft =8800
+                    LayoutCachedTop =10715
+                    LayoutCachedWidth =11701
+                    LayoutCachedHeight =11060
                     Begin
                         Begin Label
                             OverlapFlags =223
                             TextAlign =3
-                            Left =6578
-                            Top =10318
+                            Left =6582
+                            Top =10715
                             Width =2160
                             Height =315
                             BorderColor =8355711
@@ -590,10 +654,10 @@ Begin Form
                             Name ="lbl_txtPicDesc"
                             Caption ="Image tri DESC :"
                             GridlineColor =10921638
-                            LayoutCachedLeft =6578
-                            LayoutCachedTop =10318
-                            LayoutCachedWidth =8738
-                            LayoutCachedHeight =10633
+                            LayoutCachedLeft =6582
+                            LayoutCachedTop =10715
+                            LayoutCachedWidth =8742
+                            LayoutCachedHeight =11030
                         End
                     End
                 End
@@ -602,8 +666,8 @@ Begin Form
                     BackStyle =1
                     OverlapFlags =93
                     TextAlign =2
-                    Left =5893
-                    Top =6632
+                    Left =5896
+                    Top =6462
                     Width =345
                     Height =1200
                     FontSize =12
@@ -612,10 +676,10 @@ Begin Form
                     Caption ="TextBox"
                     FontName ="Arial"
                     GridlineColor =10921638
-                    LayoutCachedLeft =5893
-                    LayoutCachedTop =6632
-                    LayoutCachedWidth =6238
-                    LayoutCachedHeight =7832
+                    LayoutCachedLeft =5896
+                    LayoutCachedTop =6462
+                    LayoutCachedWidth =6241
+                    LayoutCachedHeight =7662
                     ThemeFontIndex =-1
                     BackThemeColorIndex =7
                     BackShade =50.0
@@ -627,20 +691,20 @@ Begin Form
                     BackStyle =1
                     OverlapFlags =93
                     TextAlign =2
-                    Left =5893
-                    Top =8106
+                    Left =5896
+                    Top =7766
                     Width =330
-                    Height =2670
+                    Height =3390
                     FontSize =12
                     BorderColor =8355711
                     Name ="lbl_boxCmb"
                     Caption ="CommandButton"
                     FontName ="Arial"
                     GridlineColor =10921638
-                    LayoutCachedLeft =5893
-                    LayoutCachedTop =8106
-                    LayoutCachedWidth =6223
-                    LayoutCachedHeight =10776
+                    LayoutCachedLeft =5896
+                    LayoutCachedTop =7766
+                    LayoutCachedWidth =6226
+                    LayoutCachedHeight =11156
                     ThemeFontIndex =-1
                     BackThemeColorIndex =9
                     BackShade =50.0
@@ -658,6 +722,7 @@ Begin Form
                     BorderColor =10921638
                     ForeColor =4210752
                     Name ="txtClasseName"
+                    AfterUpdate ="=RestaureLabelTxt()"
                     OnGotFocus ="=AfficheInfo(\"\")"
                     ControlTipText ="Nom variable de classe"
                     GridlineColor =10921638
@@ -697,6 +762,7 @@ Begin Form
                     BorderColor =10921638
                     ForeColor =4210752
                     Name ="txtFunctionName"
+                    AfterUpdate ="=RestaureLabelTxt()"
                     OnGotFocus ="=AfficheInfo(\"\")"
                     ControlTipText ="Nom de la fonction"
                     GridlineColor =10921638
@@ -752,30 +818,32 @@ Begin Form
                 End
                 Begin TextBox
                     Locked = NotDefault
+                    TabStop = NotDefault
                     AllowAutoCorrect = NotDefault
                     OverlapFlags =223
                     IMESentenceMode =3
-                    Left =8796
-                    Top =9411
-                    Width =3951
+                    Left =8800
+                    Top =9808
+                    Width =3501
                     Height =345
                     TabIndex =17
                     BorderColor =10921638
                     ForeColor =4210752
                     Name ="txtPicFolder"
+                    AfterUpdate ="=RestaureLabelTxt()"
                     OnGotFocus ="=AfficheInfo(\"\")"
                     GridlineColor =10921638
 
-                    LayoutCachedLeft =8796
-                    LayoutCachedTop =9411
-                    LayoutCachedWidth =12747
-                    LayoutCachedHeight =9756
+                    LayoutCachedLeft =8800
+                    LayoutCachedTop =9808
+                    LayoutCachedWidth =12301
+                    LayoutCachedHeight =10153
                     Begin
                         Begin Label
                             OverlapFlags =223
                             TextAlign =3
-                            Left =6582
-                            Top =9411
+                            Left =6586
+                            Top =9808
                             Width =2145
                             Height =315
                             BorderColor =8355711
@@ -783,10 +851,10 @@ Begin Form
                             Name ="lbl_txtPicFolder"
                             Caption ="Sous dossier images :"
                             GridlineColor =10921638
-                            LayoutCachedLeft =6582
-                            LayoutCachedTop =9411
-                            LayoutCachedWidth =8727
-                            LayoutCachedHeight =9726
+                            LayoutCachedLeft =6586
+                            LayoutCachedTop =9808
+                            LayoutCachedWidth =8731
+                            LayoutCachedHeight =10123
                         End
                     End
                 End
@@ -796,14 +864,14 @@ Begin Form
                     Left =5612
                     Top =4817
                     Width =7753
-                    Height =6129
+                    Height =6519
                     BorderColor =10921638
                     Name ="boxOptions"
                     GridlineColor =10921638
                     LayoutCachedLeft =5612
                     LayoutCachedTop =4817
                     LayoutCachedWidth =13365
-                    LayoutCachedHeight =10946
+                    LayoutCachedHeight =11336
                 End
                 Begin Label
                     BackStyle =1
@@ -824,25 +892,24 @@ Begin Form
                     LayoutCachedHeight =4962
                 End
                 Begin CommandButton
-                    Enabled = NotDefault
                     TabStop = NotDefault
                     OverlapFlags =247
-                    Left =12812
-                    Top =9467
+                    Left =12362
+                    Top =9864
                     Width =345
                     Height =285
-                    TabIndex =20
+                    TabIndex =21
                     ForeColor =4210752
-                    Name ="cmbSelectFolder"
+                    Name ="cmbSelectPicFolder"
                     Caption =",,,"
                     OnClick ="[Event Procedure]"
                     ControlTipText ="Sélection du dossier..."
                     GridlineColor =10921638
 
-                    LayoutCachedLeft =12812
-                    LayoutCachedTop =9467
-                    LayoutCachedWidth =13157
-                    LayoutCachedHeight =9752
+                    LayoutCachedLeft =12362
+                    LayoutCachedTop =9864
+                    LayoutCachedWidth =12707
+                    LayoutCachedHeight =10149
                     UseTheme =0
                     BackColor =14461583
                     BorderWidth =1
@@ -858,14 +925,13 @@ Begin Form
                     Overlaps =1
                 End
                 Begin CommandButton
-                    Enabled = NotDefault
                     TabStop = NotDefault
                     OverlapFlags =247
-                    Left =11744
-                    Top =10374
+                    Left =11748
+                    Top =10771
                     Width =345
                     Height =285
-                    TabIndex =22
+                    TabIndex =23
                     ForeColor =4210752
                     Name ="cmbSelectPicDesc"
                     Caption =",,,"
@@ -873,10 +939,10 @@ Begin Form
                     ControlTipText ="Sélection de l'image..."
                     GridlineColor =10921638
 
-                    LayoutCachedLeft =11744
-                    LayoutCachedTop =10374
-                    LayoutCachedWidth =12089
-                    LayoutCachedHeight =10659
+                    LayoutCachedLeft =11748
+                    LayoutCachedTop =10771
+                    LayoutCachedWidth =12093
+                    LayoutCachedHeight =11056
                     UseTheme =0
                     BackColor =14461583
                     BorderWidth =1
@@ -892,14 +958,13 @@ Begin Form
                     Overlaps =1
                 End
                 Begin CommandButton
-                    Enabled = NotDefault
                     TabStop = NotDefault
                     OverlapFlags =247
-                    Left =11744
-                    Top =9920
+                    Left =11748
+                    Top =10317
                     Width =345
                     Height =285
-                    TabIndex =21
+                    TabIndex =22
                     ForeColor =4210752
                     Name ="cmbSelectPicAsc"
                     Caption =",,,"
@@ -907,10 +972,10 @@ Begin Form
                     ControlTipText ="Sélection de l'image..."
                     GridlineColor =10921638
 
-                    LayoutCachedLeft =11744
-                    LayoutCachedTop =9920
-                    LayoutCachedWidth =12089
-                    LayoutCachedHeight =10205
+                    LayoutCachedLeft =11748
+                    LayoutCachedTop =10317
+                    LayoutCachedWidth =12093
+                    LayoutCachedHeight =10602
                     UseTheme =0
                     BackColor =14461583
                     BorderWidth =1
@@ -926,8 +991,8 @@ Begin Form
                     Overlaps =1
                 End
                 Begin Image
-                    Left =12693
-                    Top =8189
+                    Left =12696
+                    Top =7849
                     Width =450
                     Height =300
                     BorderColor =10921638
@@ -944,15 +1009,15 @@ Begin Form
                         0x426082
                     End
 
-                    LayoutCachedLeft =12693
-                    LayoutCachedTop =8189
-                    LayoutCachedWidth =13143
-                    LayoutCachedHeight =8489
-                    TabIndex =27
+                    LayoutCachedLeft =12696
+                    LayoutCachedTop =7849
+                    LayoutCachedWidth =13146
+                    LayoutCachedHeight =8149
+                    TabIndex =28
                 End
                 Begin Image
-                    Left =12697
-                    Top =6689
+                    Left =12700
+                    Top =6519
                     Width =450
                     Height =330
                     BorderColor =10921638
@@ -980,11 +1045,11 @@ Begin Form
                         0x000049454e44ae426082
                     End
 
-                    LayoutCachedLeft =12697
-                    LayoutCachedTop =6689
-                    LayoutCachedWidth =13147
-                    LayoutCachedHeight =7019
-                    TabIndex =26
+                    LayoutCachedLeft =12700
+                    LayoutCachedTop =6519
+                    LayoutCachedWidth =13150
+                    LayoutCachedHeight =6849
+                    TabIndex =27
                 End
                 Begin Image
                     Left =13096
@@ -1013,7 +1078,7 @@ Begin Form
                     LayoutCachedTop =3230
                     LayoutCachedWidth =13546
                     LayoutCachedHeight =3590
-                    TabIndex =24
+                    TabIndex =25
                 End
                 Begin Image
                     PictureTiling = NotDefault
@@ -1050,7 +1115,7 @@ Begin Form
                     LayoutCachedTop =5219
                     LayoutCachedWidth =13150
                     LayoutCachedHeight =5616
-                    TabIndex =25
+                    TabIndex =26
                 End
                 Begin Label
                     Vertical = NotDefault
@@ -1141,7 +1206,7 @@ Begin Form
                     Left =297
                     Top =679
                     Width =375
-                    Height =4080
+                    Height =4425
                     FontSize =12
                     BackColor =4138256
                     BorderColor =8355711
@@ -1153,7 +1218,7 @@ Begin Form
                     LayoutCachedLeft =297
                     LayoutCachedTop =679
                     LayoutCachedWidth =672
-                    LayoutCachedHeight =4759
+                    LayoutCachedHeight =5104
                     ThemeFontIndex =-1
                     BackThemeColorIndex =-1
                     BackShade =50.0
@@ -1167,10 +1232,10 @@ Begin Form
                     BackStyle =1
                     OverlapFlags =85
                     TextAlign =2
-                    Left =283
-                    Top =4957
+                    Left =285
+                    Top =5295
                     Width =375
-                    Height =5805
+                    Height =6045
                     FontSize =12
                     BackColor =9592887
                     BorderColor =8355711
@@ -1179,10 +1244,10 @@ Begin Form
                     Caption ="Champs de : T_Vehicules"
                     FontName ="Arial"
                     GridlineColor =10921638
-                    LayoutCachedLeft =283
-                    LayoutCachedTop =4957
-                    LayoutCachedWidth =658
-                    LayoutCachedHeight =10762
+                    LayoutCachedLeft =285
+                    LayoutCachedTop =5295
+                    LayoutCachedWidth =660
+                    LayoutCachedHeight =11340
                     ThemeFontIndex =-1
                     BackThemeColorIndex =-1
                     BackShade =75.0
@@ -1198,9 +1263,9 @@ Begin Form
                     MultiSelect =1
                     IMESentenceMode =3
                     Left =736
-                    Top =5299
+                    Top =5614
                     Width =4551
-                    Height =5445
+                    Height =5715
                     TabIndex =8
                     BackColor =14610923
                     ForeColor =4210752
@@ -1210,15 +1275,16 @@ Begin Form
                     RowSource ="ID_Vehicule;Vehi_Marque;Vehi_Modele;ID_Etat;Vehi_KmActuel;ID_Vendeur;Vehi_DateAc"
                         "hat;Vehi_DatePremImmat;Vehi_DateImmat;Vehi_Prix;Vehi_KmAchat;Vehi_FichImage;Vehi"
                         "_Note;"
+                    AfterUpdate ="=RestaureLabelLst()"
                     OnGotFocus ="=AfficheInfo(\"\")"
                     GridlineColor =10921638
                     AllowValueListEdits =0
 
                     ShowOnlyRowSourceValues =255
                     LayoutCachedLeft =736
-                    LayoutCachedTop =5299
+                    LayoutCachedTop =5614
                     LayoutCachedWidth =5287
-                    LayoutCachedHeight =10744
+                    LayoutCachedHeight =11329
                     BackThemeColorIndex =-1
                     Begin
                         Begin Label
@@ -1226,7 +1292,7 @@ Begin Form
                             OldBorderStyle =1
                             OverlapFlags =93
                             Left =735
-                            Top =4991
+                            Top =5306
                             Width =4551
                             Height =315
                             BackColor =15921906
@@ -1235,9 +1301,9 @@ Begin Form
                             Caption ="Champs de la source : (sel. max 10 champs)"
                             GridlineColor =10921638
                             LayoutCachedLeft =735
-                            LayoutCachedTop =4991
+                            LayoutCachedTop =5306
                             LayoutCachedWidth =5286
-                            LayoutCachedHeight =5306
+                            LayoutCachedHeight =5621
                             BackShade =95.0
                             BorderThemeColorIndex =1
                             BorderTint =100.0
@@ -1308,8 +1374,10 @@ Begin Form
                     BackShade =95.0
                 End
                 Begin TextBox
+                    Enabled = NotDefault
+                    Locked = NotDefault
                     AllowAutoCorrect = NotDefault
-                    OverlapFlags =215
+                    OverlapFlags =223
                     IMESentenceMode =3
                     Left =2967
                     Top =169
@@ -1326,32 +1394,6 @@ Begin Form
                     LayoutCachedWidth =8688
                     LayoutCachedHeight =484
                     BackThemeColorIndex =-1
-                    Begin
-                        Begin Label
-                            BackStyle =1
-                            OverlapFlags =215
-                            TextAlign =3
-                            Left =286
-                            Top =169
-                            Width =2565
-                            Height =315
-                            FontSize =12
-                            BorderColor =8355711
-                            Name ="lbl_txtBdd"
-                            Caption ="Base de données :"
-                            FontName ="Arial"
-                            GridlineColor =10921638
-                            LayoutCachedLeft =286
-                            LayoutCachedTop =169
-                            LayoutCachedWidth =2851
-                            LayoutCachedHeight =484
-                            ThemeFontIndex =-1
-                            BackThemeColorIndex =0
-                            BackTint =65.0
-                            ForeThemeColorIndex =1
-                            ForeTint =100.0
-                        End
-                    End
                 End
                 Begin CommandButton
                     Visible = NotDefault
@@ -1374,6 +1416,7 @@ Begin Form
                     LayoutCachedWidth =9080
                     LayoutCachedHeight =478
                     UseTheme =0
+                    Gradient =0
                     BackColor =14461583
                     BorderWidth =1
                     BorderColor =14461583
@@ -1442,7 +1485,10 @@ Begin Form
                     LayoutCachedWidth =9066
                     LayoutCachedHeight =499
                     UseTheme =0
-                    BackColor =14461583
+                    Gradient =0
+                    BackColor =6567968
+                    BackTint =100.0
+                    BackShade =50.0
                     BorderColor =14461583
                     HoverColor =15189940
                     PressedColor =9917743
@@ -1495,7 +1541,7 @@ Begin Form
                     LayoutCachedTop =113
                     LayoutCachedWidth =13892
                     LayoutCachedHeight =510
-                    TabIndex =23
+                    TabIndex =24
                 End
                 Begin CommandButton
                     TabStop = NotDefault
@@ -1668,6 +1714,168 @@ Begin Form
                     WebImagePaddingBottom =1
                     Overlaps =1
                 End
+                Begin OptionGroup
+                    TabStop = NotDefault
+                    OverlapFlags =247
+                    Left =9357
+                    Top =9184
+                    Width =954
+                    Height =433
+                    TabIndex =20
+                    BorderColor =10921638
+                    Name ="BoxOptImages"
+                    AfterUpdate ="[Event Procedure]"
+                    DefaultValue ="2"
+                    GridlineColor =10921638
+
+                    LayoutCachedLeft =9357
+                    LayoutCachedTop =9184
+                    LayoutCachedWidth =10311
+                    LayoutCachedHeight =9617
+                    Begin
+                        Begin Label
+                            OverlapFlags =247
+                            TextAlign =3
+                            Left =6587
+                            Top =9297
+                            Width =2700
+                            Height =315
+                            BorderColor =8355711
+                            ForeColor =6710886
+                            Name ="lbl_BoxOptImages"
+                            Caption ="Image CommandButton :"
+                            GridlineColor =10921638
+                            LayoutCachedLeft =6587
+                            LayoutCachedTop =9297
+                            LayoutCachedWidth =9287
+                            LayoutCachedHeight =9612
+                        End
+                        Begin ToggleButton
+                            OverlapFlags =255
+                            Left =9414
+                            Top =9240
+                            Width =405
+                            Height =345
+                            OptionValue =1
+                            ForeColor =4210752
+                            Name ="optImgOn"
+                            Caption ="On"
+                            FontName ="Calibri"
+                            GridlineColor =10921638
+
+                            LayoutCachedLeft =9414
+                            LayoutCachedTop =9240
+                            LayoutCachedWidth =9819
+                            LayoutCachedHeight =9585
+                            UseTheme =0
+                            BackColor =14461583
+                            BorderColor =14461583
+                            HoverColor =15189940
+                            PressedColor =9917743
+                            HoverForeColor =4210752
+                            PressedForeColor =16777215
+                            WebImagePaddingLeft =2
+                            WebImagePaddingTop =2
+                            WebImagePaddingRight =1
+                            WebImagePaddingBottom =1
+                            Overlaps =1
+                        End
+                        Begin ToggleButton
+                            OverlapFlags =247
+                            Left =9810
+                            Top =9240
+                            Width =420
+                            Height =345
+                            TabIndex =1
+                            OptionValue =2
+                            ForeColor =4210752
+                            Name ="optImgOff"
+                            Caption ="Off"
+                            FontName ="Calibri"
+                            GridlineColor =10921638
+
+                            LayoutCachedLeft =9810
+                            LayoutCachedTop =9240
+                            LayoutCachedWidth =10230
+                            LayoutCachedHeight =9585
+                            UseTheme =0
+                            BackColor =14461583
+                            BorderColor =14461583
+                            HoverColor =15189940
+                            PressedColor =9917743
+                            HoverForeColor =4210752
+                            PressedForeColor =16777215
+                            WebImagePaddingLeft =2
+                            WebImagePaddingTop =2
+                            WebImagePaddingRight =1
+                            WebImagePaddingBottom =1
+                            Overlaps =1
+                        End
+                    End
+                End
+                Begin Rectangle
+                    SpecialEffect =0
+                    BackStyle =1
+                    OldBorderStyle =0
+                    OverlapFlags =247
+                    Left =6519
+                    Top =9694
+                    Width =230
+                    Height =1417
+                    BackColor =15921906
+                    BorderColor =10921638
+                    Name ="boxCacheCtrImgCmb"
+                    GridlineColor =10921638
+                    LayoutCachedLeft =6519
+                    LayoutCachedTop =9694
+                    LayoutCachedWidth =6749
+                    LayoutCachedHeight =11111
+                    BackShade =95.0
+                End
+                Begin Label
+                    BackStyle =1
+                    OverlapFlags =215
+                    TextAlign =3
+                    Left =286
+                    Top =169
+                    Width =2565
+                    Height =315
+                    FontSize =12
+                    BackColor =5855577
+                    BorderColor =8355711
+                    Name ="lbl_txtBdd"
+                    Caption ="Base de données :"
+                    FontName ="Arial"
+                    GridlineColor =10921638
+                    LayoutCachedLeft =286
+                    LayoutCachedTop =169
+                    LayoutCachedWidth =2851
+                    LayoutCachedHeight =484
+                    ThemeFontIndex =-1
+                    BackThemeColorIndex =-1
+                    ForeThemeColorIndex =1
+                    ForeTint =100.0
+                End
+                Begin Label
+                    OverlapFlags =247
+                    Left =4365
+                    Top =170
+                    Width =3561
+                    Height =315
+                    ForeColor =4210752
+                    Name ="lbl_InfoBaseNonSelect"
+                    Caption ="Sélectionnez une base de données..."
+                    GridlineColor =10921638
+                    LayoutCachedLeft =4365
+                    LayoutCachedTop =170
+                    LayoutCachedWidth =7926
+                    LayoutCachedHeight =485
+                    BackThemeColorIndex =-1
+                    BorderThemeColorIndex =1
+                    BorderTint =100.0
+                    BorderShade =65.0
+                    ForeTint =75.0
+                End
             End
         End
         Begin FormFooter
@@ -1690,25 +1898,28 @@ Attribute VB_Exposed = False
 ' Purpose:  Formulaire de définition des options pour la création d'un formulaire pour la classe CSordFormColumn
 ' Author:   Laurent
 ' Date:     28/04/2022
-' DateMod:  30/04/2022-11:38
+' DateMod:  15/05/2022-12:12
 ' ------------------------------------------------------
 Option Compare Database
 Option Explicit
 
 '//----------------------------------       VAR       ------------------------------
-    Private Const TAB_INFO  As String = "T_Info"
 
-    Private Const C_COULDEF As Long = 16777215
-    Private Const C_COULSEL As Long = 14610923
-    Private m_sCtrPrec      As String
+    Private Const LBL_COLOR As Long = 6710886       '// ForeColor label, 'Texte 1, Plus clair 40%.
 
     Private m_cCreate       As CCreateFormContinu
+    Private m_cUtil         As CUtilitaires
 
-     '// Rst pour affichage des infos sur le ctr sélectionné.
+    Private m_bErrSaisie    As Boolean  '// Indique erreur de saisie.
+
+    '// Rst pour affichage des infos sur le ctr sélectionné.
+    Private Const TAB_INFO  As String = "T_Info"
     Private m_oRst          As DAO.Recordset
     Private Const ID_INF    As String = "[ID_Info]='"
-    
-    Private m_bErrSaisie    As Boolean  '// Indique erreur de saisie.
+    Private Const C_COULDEF As Long = 16777215      '// BackColor label sélectionné.
+    Private Const C_COULSEL As Long = 14610923      '// BackColor label déselectionné.
+    Private m_sCtrPrec      As String
+
 '//---------------------------------------------------------------------------------------
 
 '//==================================       EVENT       ==================================
@@ -1716,12 +1927,21 @@ Private Sub Form_Load()
 
     '// Initialisation de la classe.
     Set m_cCreate = New CCreateFormContinu
+    Set m_cUtil = New CUtilitaires
 
     '// Table info controles.
     Set m_oRst = CurrentDb.OpenRecordset(TAB_INFO, dbOpenSnapshot, dbReadOnly)
 
+    '// Masque la barre de navigation et la barre des boutons.
+    NavigationPane False
+    DoCmd.ShowToolbar "Ribbon", acToolbarNo
+    Me.boxCacheCtrImgCmb.Width = 6395       '// Masque les textBox pour les images.
+
     '// Applique les valeurs par défaut...
     RazForm
+
+    '// Affiche le message select BdD.
+    Me.TimerInterval = 2000
 
 End Sub
 
@@ -1737,6 +1957,9 @@ Private Sub Form_Close()
 
     '// Déclenche class_Terminate()
     Set m_cCreate = Nothing
+
+    NavigationPane True
+    DoCmd.ShowToolbar "Ribbon", acToolbarYes
 
 SORTIE_Form_Close:
     DoCmd.Echo True
@@ -1756,8 +1979,12 @@ Private Sub cmbSelectBdd_Click()
     Dim bRet     As Boolean
     Dim sBaseSel As String
 
+    '// Met en pause le msg pas de bd.
+    Me.TimerInterval = 0
+    Me.lbl_InfoBaseNonSelect.Visible = False
+    
     '// Séléction de la base à utiliser.
-    sBaseSel = OuvreBoite("MS Access", "*.accdb", , CurrentProject.Path)
+    sBaseSel = OuvreBoite("MS Access", "*.accdb", , CurrentProject.Path, FD_TypeFilePicker)
     If (sBaseSel = vbNullString) Then GoTo SORTIE_cmbSelectBdd
 
     DoCmd.Echo False
@@ -1769,7 +1996,9 @@ Private Sub cmbSelectBdd_Click()
         If (bRet = False) Then GoTo SORTIE_cmbSelectBdd
     End If
 
-    bRet = m_cCreate.OpenMsBase(sBaseSel) '// Ouverture de la base.
+    If (m_cCreate.MsBaseIsOpen = False) Then
+        bRet = m_cCreate.OpenMsBase(sBaseSel) '// Ouverture de la base.
+    End If
 
     If (bRet = False) Then
         '// Problème détecter, on ferme tout, RaZ et on sort.
@@ -1780,7 +2009,9 @@ Private Sub cmbSelectBdd_Click()
 
     RazForm True                        '// Reset les valeurs...
 
+    Me.txtBdd.Enabled = True
     txtBdd = sBaseSel
+    Me.txtBdd.SetFocus
     Me.cmbOuvreBase.Enabled = False
     MaJlisteObjets                      '// Rempli la liste des objets ...
 
@@ -1803,7 +2034,7 @@ Private Sub cmdCloseBd_Click()
     m_cCreate.CloseMsBase
     RazForm
     Screen.MousePointer = 0
-    DoCmd.Echo True
+    Me.txtBdd = "Sélectionnez un base..."
 
 End Sub
 
@@ -1838,42 +2069,73 @@ Private Sub lstObjets_AfterUpdate()
 
     Me.txtFormName = "F_" & Me.lstObjets
     Me.txtFormSource = Me.lstObjets
+    Me.lstObjets.Controls(0).ForeColor = LBL_COLOR
+    Me.txtFormName.Controls(0).ForeColor = LBL_COLOR
+    Me.txtFormSource.Controls(0).ForeColor = LBL_COLOR
     Me.lbl_lstFieldsInfo.Caption = "Champs de : " & Me.lstObjets
 
 End Sub
 
-Private Sub cmbSelectFolder_Click()
+Private Sub BoxOptImages_AfterUpdate()
+    Select Case BoxOptImages
+        Case 1
+            Me.boxCacheCtrImgCmb.Visible = False
+            Me.txtPicFolder.TabStop = True
+            Me.txtPicAsc.TabStop = True
+            Me.txtPicDesc.TabStop = True
+            Me.txtPicFolder.SetFocus
+        Case 2
+            Me.boxCacheCtrImgCmb.Visible = True
+            Me.txtPicFolder.TabStop = False
+            Me.txtPicFolder = vbNullString
+            Me.txtPicAsc.TabStop = False
+            Me.txtPicAsc = vbNullString
+            Me.txtPicDesc.TabStop = False
+            Me.txtPicDesc = vbNullString
+    End Select
+End Sub
+
+Private Sub cmbSelectPicFolder_Click()
     '// Sélection du dossier img pour commandButton.
     Dim sRet As String
-    Dim lLen As Long
-    Dim lTmp As Long
-    Dim sDos As String
-
 
     sRet = OuvreBoite("Dossier des images...", , , , FD_TypeFolderPicker)
-
     If (sRet = vbNullString) Then Exit Sub
 
-    sRet = sRet & "\"
-    '// On vérifie que le dossier est bien un sous-dossier de l'application...
-    If (VerifDossierImage(sRet)) Then
-        Me.txtPicFolder = sRet
-    End If
+    Me.txtPicFolder = sRet & "\"
 
 End Sub
 
 Private Sub cmbSelectPicAsc_Click()
     '// Sélection de l'image ASC.
     Dim sRet As String
-    sRet = OuvreBoite("Image...", "*.png,*.jpg,*.bmp", "Sélectionnez l'image ASC", Me.txtPicFolder, FD_TypeFilePicker, False)
-    If (sRet <> vbNullString) Then Me.txtPicAsc = sRet
+    Dim lTmp As Long
+    Dim sTmp As String
+
+    sRet = OuvreBoite("Image...", "*.png,*.jpg,*.bmp", "Sélectionnez l'image ASC", Me.txtPicFolder, FD_TypeFilePicker)
+    If (sRet = vbNullString) Then Exit Sub
+    
+    '// Récupère que le fichier.
+    lTmp = Len(sRet) - InStrRev(sRet, "\")
+    sTmp = Right$(sRet, lTmp)
+
+    Me.txtPicAsc = sTmp
 End Sub
 
 Private Sub cmbSelectPicDesc_Click()
     '// Sélection de l'image DESC.
     Dim sRet As String
-    sRet = OuvreBoite("Image...", "*.png,*.jpg,*.bmp", "Sélectionnez l'image DESC", Me.txtPicFolder, FD_TypeFilePicker, False)
-    If (sRet <> vbNullString) Then Me.txtPicDesc = sRet
+    Dim lTmp As Long
+    Dim sTmp As String
+
+    sRet = OuvreBoite("Image...", "*.png,*.jpg,*.bmp", "Sélectionnez l'image DESC", Me.txtPicFolder, FD_TypeFilePicker)
+    If (sRet = vbNullString) Then Exit Sub
+
+    '// Récupère que le fichier.
+    lTmp = Len(sRet) - InStrRev(sRet, "\")
+    sTmp = Right$(sRet, lTmp)
+
+    Me.txtPicDesc = sTmp
 End Sub
 
 ' ----------------------------------------------------------------
@@ -1900,12 +2162,12 @@ Private Sub cmbLanceCreation_Click()
     Dim vTmp    As Variant  '// Pour Split de sBackup.
     Dim sArg    As String
     
-    VerifSaisie                                             '// Contrôle des saisies...
-    If m_bErrSaisie Then Exit Sub
+    bRet = VerifSaisie()            '// Contrôle des saisies...
+    If (bRet = True) Then Exit Sub
 
-    AfficheResume                                           '// Affiche résumé de qu'il vas être fait.
+    AfficheResume                   '// Affiche résumé de qu'il vas être fait.
 
-    bRet = m_cCreate.CloseMsBase                            '// Fermeture de la base pour sauvegarde...
+    bRet = m_cCreate.CloseMsBase    '// Fermeture de la base pour sauvegarde...
     If (bRet = False) Then Exit Sub
 
     sArg = GetBackupFileName(m_cCreate.GetBaseFullName)     '// Création de la sauvegarde...
@@ -1919,29 +2181,26 @@ Private Sub cmbLanceCreation_Click()
     bRet = m_cCreate.OpenMsBase(m_cCreate.GetBaseFullName)  '// Réouverture de la base...
     If (bRet = False) Then Exit Sub
 
+    DoCmd.OpenForm "F_Info", , , , , acDialog, "SV;" & sArg '// Affiche le message d'information.
 
-    DoCmd.OpenForm "F_Info", , , , , acDialog, "SV;" & sArg    '// Affiche le message d'information.
-
-    bRet = ActualiseOptionsClass()                          '// MàJ des propriétés de la classe...
+    bRet = ActualiseOptionsClass()      '// MàJ des propriétés de la classe...
     If (bRet = False) Then Exit Sub
 
-    bRet = m_cCreate.LanceCreation()                        '// Lance la création du formulaire...
+    bRet = m_cCreate.LanceCreation()    '// Lance la création...
 
-    If bRet Then
-        MsgBox "Opération terminée avec succès", vbInformation, "Création du Formulaire"
-    End If
-    
+    If bRet Then MsgBox "Opération terminée avec succès", vbInformation, "Création du Formulaire"
+
     Me.txtBdd.SetFocus
     Me.cmbLanceCreation.Enabled = False
-
-    '// On ferme tout, base et application.
-    m_cCreate.CloseMsBase True
-    RazForm
     
-    '// Permet d'ouvrir la base.
+    m_cCreate.CloseMsBase True      '// On ferme tout, base et application...
+
+    RazForm                         '// RaZ des valeurs du form...
+
+    '// Permet d'ouvrir la base avec le bouton cmbOuvreBase.
     Me.cmbOuvreBase.Enabled = True
     Me.txtBdd = m_cCreate.GetBaseFullName
-
+    
 End Sub
 
 '//=======================================================================================
@@ -1963,9 +2222,6 @@ End Sub
 '// Applique les valeurs par défaut.
 Private Sub RazForm(Optional bActive As Boolean)
 
-    Me.txtBdd.SetFocus
-    Me.txtBdd = vbNullString
-
     Me.txtFormName = "F_"
     Me.txtClasseName = m_cCreate.OptVarClasse
     Me.txtFunctionName = m_cCreate.OptFunctionName
@@ -1973,20 +2229,21 @@ Private Sub RazForm(Optional bActive As Boolean)
     Me.txtTbSuffix = m_cCreate.OptTextBoxSuffix
     Me.txtCmbSuffix = m_cCreate.OptCmbSuffix
     
-    Me.txtPicFolder = m_cCreate.OptPictureFolder
-    Me.txtPicAsc = m_cCreate.OptPictureAsc
-    Me.txtPicDesc = m_cCreate.OptPictureDesc
+    Me.BoxOptImages = 2
+    BoxOptImages_AfterUpdate        '// Masque les txt images.
 
     Me.lstObjets.RowSource = vbNullString
+    Me.lstObjets.SetFocus
     Me.lstFields.RowSource = vbNullString
     Me.lbl_lstFieldsInfo.Caption = "Champs"
 
     Me.cmdCloseBd.Visible = bActive
     Me.cmbSelectBdd.Visible = Not bActive
     Me.cmbLanceCreation.Enabled = bActive
-    Me.cmbSelectFolder.Enabled = bActive
+    Me.cmbSelectPicFolder.Enabled = bActive
     Me.cmbSelectPicAsc.Enabled = bActive
     Me.cmbSelectPicDesc.Enabled = bActive
+    Me.BoxOptImages.Enabled = bActive
 
 End Sub
 
@@ -2057,86 +2314,87 @@ End Function
 '
 ' Author:  Laurent
 ' Date:    03/05/2022 - 08:44
-' DateMod:
+' DateMod: 15/05/2022-14:18
 '
 ' ----------------------------------------------------------------
 Private Function VerifSaisie() As Boolean
 
     Dim oCtr    As Control
-    Dim sInfo   As String
-    Dim bChk    As Boolean
-    Dim bTxtChk As Boolean
-    Dim bCmbChk As Boolean
-    Dim sName   As String
+    Dim sName   As String   '// Nom du control.
+    Dim bErrChk As Boolean  '// True si erreur saisie
 
-    '// Parcoure les ctr du form.
+    m_bErrSaisie = False
+
+    '// Parcour les ctr du form.
     For Each oCtr In Me.Controls
 
         sName = oCtr.Name
 
-        '// Vérifie la sélection dans listBox, Min 0 Max 10.
-        If ((oCtr.ControlType = acListBox) And (sName = "lstFields")) Then
-            If (oCtr.ItemsSelected.Count = 0 Or oCtr.ItemsSelected.Count > 10) Then
-                sInfo = sInfo & "- Sélectionnez entre 1 et 10 valeur(s) dans la liste des champs." & vbCrLf
-            End If
+        '// Controle la saisie des ListBox.
+        If (oCtr.ControlType = acListBox) Then
+
+            oCtr.Controls(0).ForeColor = LBL_COLOR
+            '// Max 10 CommandButton de créer, sinon form trop petit.
+            If ((oCtr.ItemsSelected.Count = 0) Or (oCtr.ItemsSelected.Count > 11)) Then bErrChk = True
+
         End If
 
-        If (oCtr.ControlType = acTextBox) Then      '// Vérification Value fait après, pour éviter erreur si le type n'as pas d valeur (Box, etc).
-    
-            If (oCtr <> vbNullString) Then sName = "*"  '// On passe le select.
+        '// Controle la saisie des TextBox
+        If (oCtr.ControlType = acTextBox) Then
 
-            Select Case sName
+            If (oCtr <> vbNullString) Then sName = "*"  '// Remet le label avec la couleur normal.
 
-                Case "*"
-                Case "txtFormSource"
-                    sInfo = sInfo & "- Sélectionnez une source pour le formulaire dans la liste." & vbCrLf
-                    
-                Case "txtFormName", "txtClasseName", "txtFunctionName"
-                    sInfo = sInfo & "- Le champ " & oCtr.ControlTipText & ", doit obligatoirement contenir une valeur." & vbCrLf
+                Select Case sName
+                    Case "*"            '// Ignore le controle.
+                        If (oCtr.Controls.Count > 0) Then oCtr.Controls(0).ForeColor = LBL_COLOR
 
-                Case "txtTbPrefix", "txtTbSuffix"
-                    bChk = (Me.txtTbPrefix = vbNullString And Me.txtTbSuffix = vbNullString)
-                    If (bChk And bTxtChk = False) Then
-                        sInfo = sInfo & "- Les TextBox doivent obligatoirement avoir un préfixe et/ou un suffixe."
-                        bTxtChk = True
-                    End If
+                    Case Me.txtFormName.Name, Me.txtClasseName.Name, Me.txtFunctionName.Name
+                        bErrChk = True
 
-                Case "txtCmbPrefix", "txtCmbSuffix"
-                    bChk = ((IsNull(Me.txtCmbPrefix)) And (IsNull(Me.txtCmbSuffix)))
-                    If (bChk And (bCmbChk = False)) Then
-                        sInfo = sInfo & "- Les CommandButton doivent obligatoirement avoir un préfixe et/ou un suffixe." & vbCrLf
-                        bCmbChk = True
-                    End If
+                    Case Me.txtTbPrefix.Name, Me.txtTbSuffix.Name
+                        If (IsNull(Me.txtTbPrefix) And IsNull(Me.txtTbSuffix)) Then
+                            bErrChk = True
+                        Else
+                            oCtr.Controls(0).ForeColor = LBL_COLOR
+                        End If
 
-                Case "txtPicFolder"
-                    If ((IsNull(Me.txtPicAsc)) And (IsNull(Me.txtPicDesc))) Then
-                        sInfo = sInfo & "- Vous devez définir le dossier source pour les images." & vbCrLf
-                    End If
-                Case Else
-            End Select
-            
+                    Case Me.txtCmbPrefix.Name, Me.txtCmbSuffix.Name
+                        If (IsNull(Me.txtCmbPrefix) And IsNull(Me.txtCmbSuffix)) Then
+                            bErrChk = True
+                        Else
+                            oCtr.Controls(0).ForeColor = LBL_COLOR
+                        End If
+
+                    Case Me.txtPicFolder.Name, Me.txtPicAsc.Name, Me.txtPicDesc.Name
+                        If (Me.BoxOptImages = 1) Then bErrChk = True
+
+                End Select
         End If
+
+        If bErrChk Then
+            oCtr.Controls(0).ForeColor = 2366701   '// label du control en rouge.
+            m_bErrSaisie = True
+        End If
+
+        bErrChk = False     '/// loop.
     Next
+    Set oCtr = Nothing
 
-    If (Len(sInfo) > 0) Then
-        Me.txtInfoTxt.BorderStyle = 1
-        Me.txtInfoTxt.BorderColor = 2366701
+    '// Affiche info erreur de saisie pendant 10 sec.
+    If m_bErrSaisie Then
         Me.txtInfoTitre.BorderStyle = 1
         Me.txtInfoTitre.BorderColor = 2366701   '// Rouge
         Me.txtInfoTitre = "Erreurs de saisie :"
-        Me.txtInfoTxt = sInfo
-        m_bErrSaisie = True
-        Me.TimerInterval = 10000                '// Affiche l'erruer 10 secondes.
+        Me.txtInfoTxt = "Les champs indiquer en rouge doivent obligatoirement contenir une valeur."
+        Me.TimerInterval = 10000                '// Affiche l'erreur 10 secondes.
     Else
-        Me.txtInfoTitre.BorderColor = 10921638
+        Me.txtInfoTitre.BorderColor = 10921638  '// Arrière-plan 1, Plus sombre 35%.
         Me.txtInfoTitre.BorderStyle = 0
         Me.txtInfoTitre = vbNullString
-        Me.txtInfoTxt.BorderStyle = 0
         Me.txtInfoTxt = vbNullString
-        m_bErrSaisie = False
     End If
 
-    Set oCtr = Nothing
+    VerifSaisie = m_bErrSaisie
 
 End Function
 
@@ -2158,23 +2416,23 @@ End Function
 ' DateMod: 12/05/2022-18:42
 '
 ' ----------------------------------------------------------------
-Private Function VerifDossierImage(sPath As String) As String
-
-    Dim oFSO        As Object
-    Dim sDosBase    As String
-
-    Set oFSO = m_cCreate.m_cUtils.GetoFSO
-    sDosBase = oFSO.GetParentFolderName(m_cCreate.GetBaseFullName)
-
-    If (InStr(sPath, sDosBase) = 0) Then
-        MsgBox "Le dossier des images doit être un sous-dossier de l'application", vbExclamation, "Vérification dossier images"
-        Exit Function
-    End If
-
-    '// Retourne que le dossier des images.
-    VerifDossierImage = "\" & oFSO.GetBaseName(sPath) & "\"
-
-End Function
+'Private Function VerifDossierImage(sPath As String) As String
+'
+'    Dim oFSO        As Object
+'    Dim sDosBase    As String
+'
+'    Set oFSO = m_cUtil.GetoFSO
+'    sDosBase = oFSO.GetParentFolderName(m_cCreate.GetBaseFullName)
+'
+'    If (InStr(sPath, sDosBase) = 0) Then
+'        MsgBox "Le dossier des images doit être un sous-dossier de l'application", vbExclamation, "Vérification dossier images"
+'        Exit Function
+'    End If
+'
+'    '// Retourne que le dossier des images.
+'    VerifDossierImage = "\" & oFSO.GetBaseName(sPath) & "\"
+'
+'End Function
 
 Private Sub AfficheResume()
 
@@ -2210,13 +2468,38 @@ Private Sub AfficheResume()
     
 End Sub
 
-'// Efface le message d'erreur au bout de 10 sec.
+'// Affiche le message aucune bd select(2sec), ou Efface le message d'erreur au bout de 10 sec.
 Private Function Raz_bErr()
+
+    '// Msg pas de Bd ouverte, ce msgg est afficher que à l'ouverture du form.
+    If (IsNull(Me.txtBdd)) Then
+        lbl_InfoBaseNonSelect.Visible = Not Me.lbl_InfoBaseNonSelect.Visible
+        Exit Function
+    End If
+
+    '// Efface msg d'erreur.
     m_bErrSaisie = False
     Me.txtInfoTxt = vbNullString
     Me.txtInfoTitre = vbNullString
     Me.txtInfoTitre.BorderColor = 10921638
     Me.txtInfoTitre.BorderStyle = 0
-    Me.txtInfoTxt.BorderStyle = 0
+    Me.TimerInterval = 0
+
+End Function
+
+Private Function RestaureLabelTxt()
+    With Me.ActiveControl
+        If Not IsNull(.Value) Then
+            .Controls(0).ForeColor = LBL_COLOR
+        End If
+    End With
+End Function
+
+Private Function RestaureLabelLst()
+    With Me.ActiveControl
+        If ((.ItemsSelected.Count > 0) Or (.ItemsSelected.Count < 11)) Then
+            .Controls(0).ForeColor = LBL_COLOR
+        End If
+    End With
 End Function
 '// ######################################################################################

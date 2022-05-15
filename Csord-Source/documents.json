@@ -6,8 +6,10 @@
   "Items": {
     "Databases": {
       "SummaryInfo": {
-        "Author": "Laurent P",
-        "Title": "CSord"
+        "Author": "MeusLau",
+        "Comments": "https://github.com/meuslaur/MsAccess-Sord-Column",
+        "Subject": "Uitlitaire",
+        "Title": "CSordColumn"
       }
     }
   }

@@ -3,7 +3,6 @@ VersionRequired =20
 Begin Form
     AutoCenter = NotDefault
     DividingLines = NotDefault
-    OrderByOn = NotDefault
     AllowDesignChanges = NotDefault
     ScrollBars =2
     ViewsAllowed =1
@@ -18,7 +17,7 @@ Begin Form
     Top =270
     Right =18090
     Bottom =11325
-    OrderBy ="Last_Name DESC"
+    OrderBy ="ID DESC"
     RecSrcDt = Begin
         0xa6063788ced2e540
     End
@@ -511,19 +510,25 @@ Private Function SordColumn(Optional eActiveImage As T_OnOff = OptionOff, _
     '// Init class and defined suffix (the class cuts automatically the button name for extact field name)
     If (m_CSordForm Is Nothing) Then
         Set m_CSordForm = New CsordFormColumn
-        m_CSordForm.FieldPrefixLen = 7
-        m_CSordForm.FieldSuffixLen = 7
+        With m_CSordForm
+            .FieldPrefixLen = 7
+            .FieldSuffixLen = 7
+            '// Aplique images défini lors de la création du form.
+            .PicturePath = CurrentProject.Path & "\assets\"
+            .PictureASC = "ic_SordASC.png"
+            .PictureDESC = "ic_SordDESC.png"
+        End With
     End If
 
     With m_CSordForm
-        .PictureOn = eActiveImage   '// Optional (Default Off) si On, active les images par defaut.
         .TexteOn = eActiveTexte     '// Optional (Default On)
-        '.TexteColor = 2366701       '// Optional (Default see const 'TXT_COULSORD' in class)
-        '.PicturePath = "\Res\"      '// Optional (Sous dossier des images, Default CurrentProject.Path + Const 'IMG_FOLDER' in class)
-        .PictureASC = sPicAsc       '// Optional (see const 'IMG_ASC' in class)
-        .PictureDESC = sPicDesc     '// Optional (see const 'IMG_DESC' in class)
+        '.TexteColor = 2366701       '// Optional (Default see Const 'TXT_COULSORD' in class CSordFormColumn)
+        .PictureOn = eActiveImage   '// Optional (Default Off).
+        .PictureASC = sPicAsc       '// Optional (ex : sPicAsc = 'otherPicAsc.png', doit se trouver dans le dossier '.PicturePath'.
+        .PictureDESC = sPicDesc     '// Optional            idem pour l'image DESC
 
-        bRet = .SordNow(sFieldName)     '// Execute le tri, retour TRUE if ok, 'sFieldName' is optional.
+        bRet = .SordNow(sFieldName)     '// Execute le tri, retour TRUE if ok,
+                                        '// 'sFieldName' is optional, a utiliser si le nom du control ne correspond pas au nom du champ à trier.
 
     End With
 
@@ -541,21 +546,26 @@ Private Sub Form_Close()
 End Sub
 
 Private Sub Prefix_ID_Suffix_Click()
+'// Désactive toutes les options.
     SordColumn OptionOff, OptionOff
 End Sub
 
 Private Sub Prefix_Company_Suffix_Click()
-    SordColumn OptionOn, OptionOff
+'// On utilise une autre images, couleur texte off.
+    SordColumn OptionOn, OptionOff, "ic_SordASC.png", "ic_SordDESC.png"
 End Sub
 
 Private Sub Prefix_Last_Name_Suffix_Click()
-    SordColumn OptionOn, , "ic_1ASC.png", "ic_1DESC.png"
+    '// Affiche les images (si défini dans l'initialisation de la classe)
+    SordColumn OptionOn
 End Sub
 
 Private Sub Prefix_First_Name_Suffix_Click()
+'// Aucun paramètres, utilise ceux définis dans la function.
     SordColumn
 End Sub
 
 Private Sub CommandButton1_Click()
+    '// Le nom du CommandButton le correspond pas au nom champ a trier, on passe le nom du champ (Job_Title).
     SordColumn OptionOff, OptionOff, , , "Job_Title"
 End Sub

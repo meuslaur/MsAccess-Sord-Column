@@ -342,8 +342,7 @@ Public Function OuvreBoite(Optional sFltDes As String = "Tous fichiers", _
                            Optional sFltExt As String = "*.*", _
                            Optional sTitre As String, _
                            Optional sInitialPath As String, _
-                           Optional eDialogType As T_FileDialogType = FD_TypeFilePicker, _
-                           Optional bReturnFullPath As Boolean = True) As String
+                           Optional eDialogType As T_FileDialogType = FD_TypeFilePicker) As String
 On Error GoTo ERR_OuvreBoite
 
     Dim oFd             As Object
@@ -380,21 +379,11 @@ On Error GoTo ERR_OuvreBoite
         '// Ouvre la boite, récupère la sélection.
         If .Show = True Then
             For Each vSelectedItem In .SelectedItems
-                sTmp = vSelectedItem
+                sValRet = vSelectedItem
             Next vSelectedItem
 
-            '// Renvoi chemin/fichier ou que le dossier/fichier si demander dans bReturnFullPath.
-            If (bReturnFullPath = False) Then
-                '// Retourne que le fichier / dossier.
-                lTmp = Len(sTmp) - InStrRev(sTmp, "\")
-                sValRet = Right$(sTmp, lTmp)
-                '// Ajoute le préfix si un dossier.
-                If (eDialogType = FD_TypeFolderPicker) Then sValRet = "\" & sValRet
-            Else
-                sValRet = sTmp
-            End If
-
             OuvreBoite = sValRet
+
         End If
     End With
 
@@ -615,6 +604,25 @@ Public Function GetStartUpForm(ByRef MsBase As DAO.Database) As String
     Next
     Set oProp = Nothing
 
+End Function
+
+Public Function NavigationPane(bShow As Boolean) As Boolean
+On Error GoTo ERR_NavigationPane
+
+    Select Case bShow
+        Case True
+            DoCmd.SelectObject acForm, , True
+        Case False
+            DoCmd.NavigateTo "acNavigationCategoryObjectType"
+            DoCmd.RunCommand acCmdWindowHide
+    End Select
+
+SORTIE_ErrHandler:
+    Exit Function
+
+ERR_NavigationPane:
+    MsgBox "Erreur " & Err.Number & " dans NavigationPane routine : " & vbCrLf & Err.Description, vbOKOnly + vbCritical
+    Resume SORTIE_ErrHandler
 End Function
 
 '// \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ END PUB. SUB/FUNC \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
