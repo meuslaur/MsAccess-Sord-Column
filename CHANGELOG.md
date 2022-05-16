@@ -1,4 +1,5 @@
 # Changelog
+
 ## 0.30
 
 - Ajoute options affichage des images des CommandButton
@@ -12,8 +13,6 @@
 
 ## 0.20.5
 
-### Changes
-
 - Modification du code pour utilisation d'un champs String Long dans la table T_Info, a la place du champ dbAttachment.
 
 - Ajout de la fonction `ExtraireCode`.
@@ -23,8 +22,6 @@ Private Function ExtraireCode(sID As String, Optional sCtrName As String) As Str
 ```
 
 ## 0.20.0
-
-### Changes
 
 - Correction variable du dossier des images.
 
