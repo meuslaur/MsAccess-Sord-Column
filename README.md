@@ -1,8 +1,8 @@
 # Création automatique d'un formulaire en continu
 
-![Formulaire de démarrage](Doc/Frm_img1.png)
+![Formulaire de démarrage](Doc/Frm_img3.gif)
 
-![Sélection de la base](Doc/Frm_img2.png)
+<!--![Sélection de la base](Doc/Frm_img2.png) !-->
 
 ## Création du formulaire
 
