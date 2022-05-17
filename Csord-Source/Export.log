@@ -1,0 +1,146 @@
+﻿-------------------------------------
+Beginning Export of all Source
+CSord.accdb
+VCS Version 3.4.21
+Using Fast Save
+17/05/2022 17:21:26
+-------------------------------------
+-------------------------------------
+Exporting project...          
+  CSord.accdb
+[1] project processed.
+-------------------------------------
+Exporting vb project...       
+  CSord
+[1] vb project processed.
+-------------------------------------
+Exporting vbe references...   
+  DAO
+[2] vbe references processed.
+-------------------------------------
+No modified vbe forms found in this database.
+-------------------------------------
+Exporting proj properties...  
+  Current Project Properties (Access)
+[2] proj properties processed.
+-------------------------------------
+No modified saved specs found in this database.
+-------------------------------------
+Exporting db properties...    
+  Database Properties (DAO)
+[50] db properties processed.
+-------------------------------------
+No modified shared images found in this database.
+-------------------------------------
+Exporting themes...           
+  Thème Office
+[1] themes processed.
+-------------------------------------
+No modified imex specs found in this database.
+-------------------------------------
+Exporting tables...           
+  T_Info
+    Sanitized in 0,006 seconds.
+  T_Info (SQL)
+  T_Test
+    Sanitized in 0,006 seconds.
+  T_Test (SQL)
+[2] tables processed.
+-------------------------------------
+No modified queries found in this database.
+-------------------------------------
+Exporting forms...            
+  F_CreateForm
+Source: modSanitize.SanitizeFile
+    Sanitized in 0,027 seconds.
+  F_Info
+Source: modSanitize.SanitizeFile
+    Sanitized in 0,017 seconds.
+  F_InfoTmp
+    Sanitized in 0,004 seconds.
+  F_Test
+    Sanitized in 0,010 seconds.
+[4] forms processed.
+-------------------------------------
+No modified macros found in this database.
+-------------------------------------
+No modified reports found in this database.
+-------------------------------------
+Exporting table data...       
+  T_Info
+    Sanitized in 0,003 seconds.
+  T_Test
+    Sanitized in 0,003 seconds.
+[2] table data processed.
+-------------------------------------
+No modified modules found in this database.
+-------------------------------------
+No modified table data macros found in this database.
+-------------------------------------
+No modified relations found in this database.
+-------------------------------------
+Exporting doc properties...   
+  Database Documents
+[4] doc properties processed.
+-------------------------------------
+Exporting nav pane groups...  
+  Groups
+[1] nav pane groups processed.
+-------------------------------------
+Exporting hidden attributes...
+  Database hidden attributes
+[2] hidden attributes processed.
+-------------------------------------
+Done. (0,92 seconds)
+
+--------------------------------------------------
+                PERFORMANCE REPORTS
+--------------------------------------------------
+Object Type                   Count     Seconds
+--------------------------------------------------
+Project                       1         0,02
+VB Project                    1         0,02
+VBE References                2         0,02
+Proj Properties               2         0,01
+DB Properties                 50        0,17
+Themes                        1         0,01
+Tables                        2         0,08
+Forms                         4         0,25
+Table Data                    2         0,17
+Doc Properties                4         0,02
+Nav Pane Groups               1         0,02
+Hidden Attributes             2         0,01
+--------------------------------------------------
+TOTALS:                       72        0,78
+--------------------------------------------------
+
+--------------------------------------------------
+Operations                    Count     Seconds
+--------------------------------------------------
+Read File                     17        0,11
+Parse JSON                    9         0,01
+Convert to JSON               463       0,20
+Compute SHA256                21        0,00
+Console Updates               2         0,03
+Compare Dictionary            7         0,00
+Get Modified Date             9         0,00
+Get File Property Hash        9         0,00
+Verify Path                   20        0,00
+Create Folder                 1         0,00
+Export Theme                  1         0,00
+Clear Orphaned                4         0,01
+App.ExportXML()               4         0,18
+Sanitize XML                  4         0,01
+Format XML                    4         0,01
+Write File                    11        0,01
+Save Table SQL                2         0,00
+App.SaveAsText()              4         0,06
+Delete File                   6         0,00
+Read File Bytes               4         0,04
+Sanitize File                 4         0,06
+Get VBA Hash                  9         0,01
+--------------------------------------------------
+Other Operations                        0,21
+--------------------------------------------------
+
+

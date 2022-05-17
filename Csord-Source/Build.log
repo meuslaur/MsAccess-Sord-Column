@@ -1,0 +1,149 @@
+﻿-------------------------------------
+Beginning Build from Source
+CSord.accdb
+VCS Version 3.4.21
+17/05/2022 06:37:59
+-------------------------------------
+Saving backup of original database...
+Saved as CSord_VCSBackup.accdb.
+Created blank database for import. (v12)
+Removing non built-in references...
+  Removed DAO
+  Removed stdole
+-------------------------------------
+-------------------------------------
+Importing project...          
+  project.json
+[1] project processed.
+-------------------------------------
+Importing vb project...       
+  vbe-project.json
+[1] vb project processed.
+-------------------------------------
+Importing vbe references...   
+  vbe-references.json
+[1] vbe references processed.
+-------------------------------------
+No vbe forms source files found.
+-------------------------------------
+Importing proj properties...  
+  proj-properties.json
+[1] proj properties processed.
+-------------------------------------
+No saved specs source files found.
+-------------------------------------
+Importing db properties...    
+  dbs-properties.json
+[1] db properties processed.
+-------------------------------------
+No shared images source files found.
+-------------------------------------
+Importing themes...           
+  Thème Office.thmx
+[1] themes processed.
+-------------------------------------
+No imex specs source files found.
+-------------------------------------
+Importing tables...           
+  T_Info.xml
+  T_Test.xml
+[2] tables processed.
+-------------------------------------
+No queries source files found.
+-------------------------------------
+Importing forms...            
+  F_CreateForm.bas
+  F_Info.bas
+  F_InfoTmp.bas
+  F_Test.bas
+[4] forms processed.
+-------------------------------------
+No macros source files found.
+-------------------------------------
+No reports source files found.
+-------------------------------------
+Importing table data...       
+  T_Info.xml
+  T_Test.xml
+[2] table data processed.
+-------------------------------------
+Importing modules...          
+  MD_Utilitaires.bas
+  MD_VbComp.bas
+  CCreateFormContinu.cls
+  CsordFormColumn.cls
+  CUtilitaires.cls
+[5] modules processed.
+-------------------------------------
+No table data macros source files found.
+-------------------------------------
+No relations source files found.
+-------------------------------------
+Importing doc properties...   
+  documents.json
+[1] doc properties processed.
+-------------------------------------
+Importing nav pane groups...  
+  nav-pane-groups.json
+[1] nav pane groups processed.
+-------------------------------------
+Importing hidden attributes...
+  hidden-attributes.json
+[1] hidden attributes processed.
+Initializing forms...
+-------------------------------------
+Done. (1,07 seconds)
+
+--------------------------------------------------
+                PERFORMANCE REPORTS
+--------------------------------------------------
+Object Type                   Count     Seconds
+--------------------------------------------------
+Project                       1         0,02
+VB Project                    1         0,01
+VBE References                1         0,01
+Proj Properties               1         0,00
+DB Properties                 1         0,04
+Themes                        1         0,04
+Tables                        2         0,08
+Forms                         4         0,23
+Table Data                    2         0,05
+Modules                       5         0,15
+Doc Properties                1         0,00
+Nav Pane Groups               1         0,01
+Hidden Attributes             1         0,01
+--------------------------------------------------
+TOTALS:                       22        0,66
+--------------------------------------------------
+
+--------------------------------------------------
+Operations                    Count     Seconds
+--------------------------------------------------
+Console Updates               2         0,02
+Create new database           1         0,20
+Read File                     15        0,06
+Parse JSON                    10        0,01
+Clear References              1         0,01
+Convert to JSON               20        0,01
+Compute SHA256                29        0,00
+Get Modified Date             18        0,00
+Get File Property Hash        18        0,00
+Add GUID References           2         0,00
+Create MSysResources Table    1         0,01
+Write Binary File             1         0,00
+Verify Path                   14        0,00
+Delete File                   15        0,01
+App.SaveAsText()              1         0,00
+Read File Bytes               5         0,03
+Enc. utf-8 as utf-16          4         0,01
+App.LoadFromText()            4         0,16
+Get VBA Hash                  9         0,01
+Parse VBA Module              5         0,01
+Write File                    5         0,00
+Import VBE Module             5         0,05
+Initialize Forms              4         0,05
+--------------------------------------------------
+Other Operations                        0,42
+--------------------------------------------------
+
+

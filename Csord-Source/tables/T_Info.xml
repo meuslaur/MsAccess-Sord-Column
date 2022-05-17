@@ -1,0 +1,239 @@
+﻿<dataroot xmlns:od="urn:schemas-microsoft-com:officedata">
+<T_Info>
+<ID_Info>CodeCls</ID_Info>
+<ID_Lang>1036</ID_Lang>
+<ID_Res>0</ID_Res>
+</T_Info>
+<T_Info>
+<ID_Info>CodeFrm</ID_Info>
+<ID_Lang>1036</ID_Lang>
+<Code>
+Private VARCLS As CsordFormColumn
+Private Function FUNCNAME(Optional eActiveImage As T_OnOff = OptionOff, _
+                            Optional eActiveTexte As T_OnOff = OptionOn, _
+                            Optional sPicAsc As String = vbNullString, _
+                            Optional sPicDesc As String = vbNullString, _
+                            Optional sFieldName As String = vbNullString) As Boolean
+    Dim bRet As Boolean
+    &amp;apos;// Initialisation de la classe, on peut indiquer, si besoin, le préfixe et/ou le suffixe (nb de car).
+    &amp;apos;// Init class and defined suffix (the class cuts automatically the button name for extact field name)
+    If (VARCLS Is Nothing) Then
+        Set VARCLS = New CsordFormColumn
+        With VARCLS
+            .FieldPrefixLen = LENPREF
+            .FieldSuffixLen = LENSUFF
+            &amp;apos;// Aplique images défini lors de la création du form.
+            .PicturePath = &amp;quot;PICFOLDER&amp;quot;
+            .PictureASC = &amp;quot;PICIMGASC&amp;quot;
+            .PictureDESC = &amp;quot;PICIMGDESC&amp;quot;
+        End With
+    End If
+    With VARCLS
+        .TexteOn = eActiveTexte     &amp;apos;// Optional (Default On)
+        &amp;apos;.TexteColor = 2366701       &amp;apos;// Optional (Default see Const &amp;apos;TXT_COULSORD&amp;apos; in class CSordFormColumn)
+        .PictureOn = eActiveImage   &amp;apos;// Optional (Default Off).
+        .PictureASC = sPicAsc       &amp;apos;// Optional (ex : sPicAsc = &amp;apos;otherPicAsc.png&amp;apos;, doit se trouver dans le dossier &amp;apos;.PicturePath&amp;apos;.
+        .PictureDESC = sPicDesc     &amp;apos;// Optional            idem pour l&amp;apos;image DESC
+        bRet = .SordNow(sFieldName)     &amp;apos;// Execute le tri, retour TRUE if ok,
+                                        &amp;apos;// &amp;apos;sFieldName&amp;apos; is optional, a utiliser si le nom du control ne correspond pas au nom du champ à trier.
+    End With
+    Me.CTRFOCUS.SetFocus
+    If (bRet = False) Then
+        &amp;apos;// Your code here
+        &amp;apos;// Your code here
+    End If
+End Function
+Private Sub Form_Close()
+    Set VARCLS = Nothing   &amp;apos;// Recommended, clean mem.
+End Sub</Code>
+<ID_Res>0</ID_Res>
+</T_Info>
+<T_Info>
+<ID_Info>F_infsvBdD</ID_Info>
+<ID_Lang>1036</ID_Lang>
+<InfoTitre>Sauvegarde de la base…</InfoTitre>
+<InfoTexte>Avant l&amp;apos;exécution la base %bdo%
+seras sauvegardée
+sous le nom %bdb%
+dans le dossier %fold%</InfoTexte>
+<Code></Code>
+<ID_Res>0</ID_Res>
+</T_Info>
+<T_Info>
+<ID_Info>lbl_BdBack</ID_Info>
+<ID_Lang>1036</ID_Lang>
+<InfoTitre>E:\Access365\_Encours\BaseTemp_BackUp(00).accdb</InfoTitre>
+<ID_Res>2</ID_Res>
+</T_Info>
+<T_Info>
+<ID_Info>lbl_BdOrg</ID_Info>
+<ID_Lang>1036</ID_Lang>
+<InfoTitre>E:\Access365\_Encours\BaseTemp.accdb</InfoTitre>
+<ID_Res>1</ID_Res>
+</T_Info>
+<T_Info>
+<ID_Info>lbl_Champs</ID_Info>
+<ID_Lang>1036</ID_Lang>
+<ID_Res>5</ID_Res>
+</T_Info>
+<T_Info>
+<ID_Info>lbl_CmbPref</ID_Info>
+<ID_Lang>1036</ID_Lang>
+<ID_Res>10</ID_Res>
+</T_Info>
+<T_Info>
+<ID_Info>lbl_CmbSuff</ID_Info>
+<ID_Lang>1036</ID_Lang>
+<ID_Res>11</ID_Res>
+</T_Info>
+<T_Info>
+<ID_Info>lbl_CodeFunc</ID_Info>
+<ID_Lang>1036</ID_Lang>
+<ID_Res>7</ID_Res>
+</T_Info>
+<T_Info>
+<ID_Info>lbl_CodeVar</ID_Info>
+<ID_Lang>1036</ID_Lang>
+<ID_Res>6</ID_Res>
+</T_Info>
+<T_Info>
+<ID_Info>lbl_FrmNom</ID_Info>
+<ID_Lang>1036</ID_Lang>
+<ID_Res>3</ID_Res>
+</T_Info>
+<T_Info>
+<ID_Info>lbl_FrmSource</ID_Info>
+<ID_Lang>1036</ID_Lang>
+<ID_Res>4</ID_Res>
+</T_Info>
+<T_Info>
+<ID_Info>lbl_PicAsc</ID_Info>
+<ID_Lang>1036</ID_Lang>
+<ID_Res>13</ID_Res>
+</T_Info>
+<T_Info>
+<ID_Info>lbl_PicDesc</ID_Info>
+<ID_Lang>1036</ID_Lang>
+<ID_Res>14</ID_Res>
+</T_Info>
+<T_Info>
+<ID_Info>lbl_PicFold</ID_Info>
+<ID_Lang>1036</ID_Lang>
+<ID_Res>12</ID_Res>
+</T_Info>
+<T_Info>
+<ID_Info>lbl_TxtPref</ID_Info>
+<ID_Lang>1036</ID_Lang>
+<ID_Res>8</ID_Res>
+</T_Info>
+<T_Info>
+<ID_Info>lbl_TxtSuff</ID_Info>
+<ID_Lang>1036</ID_Lang>
+<ID_Res>9</ID_Res>
+</T_Info>
+<T_Info>
+<ID_Info>lstFields</ID_Info>
+<ID_Lang>1036</ID_Lang>
+<InfoTitre>Liste contenant les champs de la table / requêtes sélectionnée.</InfoTitre>
+<InfoTexte>Liste a sélection multiple, sélectionnez tous les champs que vous voulez intégrer dans le formulaire.
+La classe &amp;apos;CCreateFormContinu&amp;apos; se serviras de ses noms pour créer les TextBox, CommandButton, le code du formulaire et automatiser l&amp;apos;utilisation de la classe &amp;apos;CsordFormColumn&amp;apos;.</InfoTexte>
+<Code></Code>
+<ID_Res>0</ID_Res>
+</T_Info>
+<T_Info>
+<ID_Info>lstObjets</ID_Info>
+<ID_Lang>1036</ID_Lang>
+<InfoTitre>Liste des tables / requêtes trouvées dans la base.</InfoTitre>
+<InfoTexte>Permet de définir la source du formulaire.
+Sélectionnez une table / requêtes, elle serviras de source(RecordSource) pour le formulaire.</InfoTexte>
+<Code></Code>
+<ID_Res>0</ID_Res>
+</T_Info>
+<T_Info>
+<ID_Info>txtBdd</ID_Info>
+<ID_Lang>1036</ID_Lang>
+<InfoTitre>Base de données à utiliser.</InfoTitre>
+<InfoTexte>Sélection de la base dans laquelle créer le formulaire.
+Après sélection la liste des tables/requêtes seras remplie,</InfoTexte>
+<Code></Code>
+<ID_Res>0</ID_Res>
+</T_Info>
+<T_Info>
+<ID_Info>txtClasseName</ID_Info>
+<ID_Lang>1036</ID_Lang>
+<InfoTitre>Nom de la variable créer dans le formulaire (Champ obligatoire)</InfoTitre>
+<InfoTexte>La classe &amp;apos;CsordFormContinu&amp;apos; seras déclarée en entête du formulaire avec ce nom de variable :
+Dim CSordForm as CsordFormContinu
+Utiliser ce nom par défaut ou saisissez un nouveau nom.</InfoTexte>
+<Code></Code>
+<ID_Res>0</ID_Res>
+</T_Info>
+<T_Info>
+<ID_Info>txtCmb</ID_Info>
+<ID_Lang>1036</ID_Lang>
+<InfoTitre>Préfixe / Suffixe pour la création des CommandButton (Champ obligatoire).</InfoTitre>
+<InfoTexte>Saisie obligatoire, vous pouvez saisie soit l&amp;apos;un soit l&amp;apos;autre soit les deux, mais au moins un des deux (pour éviter des confis de noms) :
+&amp;apos;ID_Customer_cmb&amp;apos; par défaut.
+Lors de la création des boutons, la classe utilise le nom des champs sélectionnés dans la liste, pour définir le nom des CommandButton.
+Cela permet d&amp;apos;automatisé le processus, et vous évite d&amp;apos;avoir a saisir le nom de chaque champs avant le tri.</InfoTexte>
+<Code></Code>
+<ID_Res>0</ID_Res>
+</T_Info>
+<T_Info>
+<ID_Info>txtFormName</ID_Info>
+<ID_Lang>1036</ID_Lang>
+<InfoTitre>Nom du formulaire à créer. (Champ obligatoire)</InfoTitre>
+<InfoTexte>La classe utiliseras ce nom &amp;apos;pour créer le formulaire dans la base.
+Par défaut, prend le nom de la source préfixé &amp;apos;F_&amp;apos;.</InfoTexte>
+<Code></Code>
+<ID_Res>0</ID_Res>
+</T_Info>
+<T_Info>
+<ID_Info>txtFormSource</ID_Info>
+<ID_Lang>1036</ID_Lang>
+<InfoTitre>Source du formulaire</InfoTitre>
+<InfoTexte>Table ou requête source pour le formulaire.
+La sélection se fait dans la liste a gauche (Objets de ma base),</InfoTexte>
+<Code></Code>
+<ID_Res>0</ID_Res>
+</T_Info>
+<T_Info>
+<ID_Info>txtFunctionName</ID_Info>
+<ID_Lang>1036</ID_Lang>
+<InfoTitre>Nom de la &amp;apos;Function&amp;apos; du formulaire (Champ obligatoire)</InfoTitre>
+<InfoTexte>Fonction intégrée dans le formulaire, et qui utilise la classe &amp;apos;CsordFormContinu&amp;apos; :
+Private Function SordColumn( …..
+Utiliser ce nom par défaut ou saisissez un nouveau nom.
+Les évènements &amp;apos;_Click&amp;apos; sur les CommandButton, sont créer automatique et appel cette fonction.</InfoTexte>
+<Code></Code>
+<ID_Res>0</ID_Res>
+</T_Info>
+<T_Info>
+<ID_Info>txtPic</ID_Info>
+<ID_Lang>1036</ID_Lang>
+<InfoTitre>Images utiliser pour le tri ASC/DESC (Non obligatoire).</InfoTitre>
+<InfoTexte>Utilisez des images 16x16 en .png, et placer les dans le dossier choisi.
+Saisie non obligatoire, si vous indiquer quelque chose de non valide, la classe géreras l&amp;apos;erreur et vous avertiras.</InfoTexte>
+<Code></Code>
+<ID_Res>0</ID_Res>
+</T_Info>
+<T_Info>
+<ID_Info>txtPicFolder</ID_Info>
+<ID_Lang>1036</ID_Lang>
+<InfoTitre>Nom du dossier contenant les images (Non obligatoire).</InfoTitre>
+<InfoTexte>Ce doissier DOIT être un sous-dossier de l&amp;apos;application,
+Les images seront affichées dans les CommandButton lors du tri (par ex une flèche vers le bas/haut).</InfoTexte>
+<Code></Code>
+<ID_Res>0</ID_Res>
+</T_Info>
+<T_Info>
+<ID_Info>txtTb</ID_Info>
+<ID_Lang>1036</ID_Lang>
+<InfoTitre>Préfixe / Suffixe à utiliser pour la création des TextBox (Champ obligatoire).</InfoTitre>
+<InfoTexte>Saisie obligatoire, vous pouvez saisie soit l&amp;apos;un soit l&amp;apos;autre soit les deux, mais au moins un des deux (pour éviter des confis de noms)
+&amp;apos;ID_Customer_txt&amp;apos; par défaut.
+Cela n&amp;apos;as aucune importance pour la classe, elle utilise le nom de la source(ControlSource) de la TextBox pour le tri.</InfoTexte>
+<Code></Code>
+<ID_Res>0</ID_Res>
+</T_Info>
+</dataroot>
