@@ -1,7 +1,8 @@
 ﻿CREATE TABLE [T_Info] (
   [ID_Info] VARCHAR (15) CONSTRAINT [PrimaryKey] PRIMARY KEY UNIQUE NOT NULL,
-  [InfoTitre] VARCHAR (100),
-  [InfoTexte] LONGTEXT ,
   [ID_Lang] LONG ,
-  [Code] LONGTEXT 
+  [InfoTitre] VARCHAR (255),
+  [InfoTexte] LONGTEXT ,
+  [Code] LONGTEXT ,
+  [ID_Res] SHORT 
 )

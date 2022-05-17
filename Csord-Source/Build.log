@@ -2,10 +2,10 @@
 Beginning Build from Source
 CSord.accdb
 VCS Version 3.4.21
-13/05/2022 10:27:37
+17/05/2022 06:37:59
 -------------------------------------
 Saving backup of original database...
-Saved as CSord_VCSBackup1.accdb.
+Saved as CSord_VCSBackup.accdb.
 Created blank database for import. (v12)
 Removing non built-in references...
   Removed DAO
@@ -45,16 +45,17 @@ Importing themes...
 No imex specs source files found.
 -------------------------------------
 Importing tables...           
-  Customers.xml
-[1] tables processed.
+  T_Info.xml
+  T_Test.xml
+[2] tables processed.
 -------------------------------------
 No queries source files found.
 -------------------------------------
 Importing forms...            
   F_CreateForm.bas
+  F_Info.bas
+  F_InfoTmp.bas
   F_Test.bas
-  ~F_Info.bas
-  ~F_InfoTmp.bas
 [4] forms processed.
 -------------------------------------
 No macros source files found.
@@ -62,9 +63,8 @@ No macros source files found.
 No reports source files found.
 -------------------------------------
 Importing table data...       
-  Customers.xml
-  ~T_Info.xml
-WARNING: Table definition does not exist for '~T_Info'. This must be created before importing table data.
+  T_Info.xml
+  T_Test.xml
 [2] table data processed.
 -------------------------------------
 Importing modules...          
@@ -92,7 +92,7 @@ Importing hidden attributes...
 [1] hidden attributes processed.
 Initializing forms...
 -------------------------------------
-Done. (13,98 seconds)
+Done. (1,07 seconds)
 
 --------------------------------------------------
                 PERFORMANCE REPORTS
@@ -105,46 +105,45 @@ VBE References                1         0,01
 Proj Properties               1         0,00
 DB Properties                 1         0,04
 Themes                        1         0,04
-Tables                        1         0,08
-Forms                         4         0,21
-Table Data                    2         12,96
+Tables                        2         0,08
+Forms                         4         0,23
+Table Data                    2         0,05
 Modules                       5         0,15
 Doc Properties                1         0,00
-Nav Pane Groups               1         0,02
-Hidden Attributes             1         0,00
+Nav Pane Groups               1         0,01
+Hidden Attributes             1         0,01
 --------------------------------------------------
-TOTALS:                       21        13,55
+TOTALS:                       22        0,66
 --------------------------------------------------
 
 --------------------------------------------------
 Operations                    Count     Seconds
 --------------------------------------------------
-Console Updates               3         0,04
-Create new database           1         0,21
+Console Updates               2         0,02
+Create new database           1         0,20
 Read File                     15        0,06
 Parse JSON                    10        0,01
 Clear References              1         0,01
 Convert to JSON               20        0,01
-Compute SHA256                28        0,00
-Get Modified Date             17        0,00
-Get File Property Hash        17        0,00
+Compute SHA256                29        0,00
+Get Modified Date             18        0,00
+Get File Property Hash        18        0,00
 Add GUID References           2         0,00
 Create MSysResources Table    1         0,01
 Write Binary File             1         0,00
 Verify Path                   14        0,00
 Delete File                   15        0,01
 App.SaveAsText()              1         0,00
-Read File Bytes               5         0,04
-Enc. utf-8 as utf-16          4         0,00
-App.LoadFromText()            4         0,15
+Read File Bytes               5         0,03
+Enc. utf-8 as utf-16          4         0,01
+App.LoadFromText()            4         0,16
 Get VBA Hash                  9         0,01
-Wait for MsgBox Response      1         12,90
-Parse VBA Module              5         0,00
+Parse VBA Module              5         0,01
 Write File                    5         0,00
 Import VBE Module             5         0,05
 Initialize Forms              4         0,05
 --------------------------------------------------
-Other Operations                        0,40
+Other Operations                        0,42
 --------------------------------------------------
 
 

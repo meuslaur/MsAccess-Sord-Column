@@ -557,7 +557,7 @@ Private Function CreateFormColumn() As Boolean
     Set oDb = m_oMsApp.CurrentDb
     Set oRst = oDb.OpenRecordset(Me.OptFormSource, dbOpenDynaset, dbReadOnly + dbForwardOnly)
 
-    lLeft = 566 '// point de depart position left pour des boutons/Textebox.
+    lLeft = 0   '// point de depart position left pour des boutons/Textebox.
 
     For Each oRstField In oRst.Fields
         '// Le champs fait partie de ceux sélectionnés ?
@@ -677,6 +677,10 @@ Private Function ExtraireCode(sID As String, Optional sCtrName As String) As Str
             sRemp = Replace(sCode, "PICFOLDER", Me.OptPictureFolder): sCode = sRemp
             sRemp = Replace(sCode, "PICIMGASC", Me.OptPictureAsc): sCode = sRemp
             sRemp = Replace(sCode, "PICIMGDESC", Me.OptPictureDesc): sCode = sRemp
+        Else
+            sRemp = Replace(sCode, "PICFOLDER", vbNullString): sCode = sRemp
+            sRemp = Replace(sCode, "PICIMGASC", vbNullString): sCode = sRemp
+            sRemp = Replace(sCode, "PICIMGDESC", vbNullString): sCode = sRemp
         End If
         sRemp = Replace(sCode, "CTRFOCUS", sCtrName): sCode = sRemp
     End If
@@ -732,19 +736,6 @@ Public Function RemplaceCode(ByVal sFile As String, Optional sCtrFocus As String
             oStreamOut.WriteLine sLigne
         Loop
     End If
-
-'    If InStr(sFile, CODE_CLASS) Then
-'
-'        '// Module de classe : PICDEFFOLDER PICDEFIMGASC PICDEFIMGDESC
-'        Do While Not oStreamIn.AtEndOfStream
-'            sLigne = oStreamIn.ReadLine
-'
-'            sRemp = Replace(sLigne, "PICDEFFOLDER", Me.OptPictureFolder): sLigne = sRemp
-'            sRemp = Replace(sLigne, "PICDEFIMGASC", Me.OptPictureAsc): sLigne = sRemp
-'            sRemp = Replace(sLigne, "PICDEFIMGDESC", Me.OptPictureDesc): sLigne = sRemp
-'            oStreamOut.WriteLine sLigne
-'        Loop
-'    End If
 
     oStreamIn.Close
     oStreamOut.Close
