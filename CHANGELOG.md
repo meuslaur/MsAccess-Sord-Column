@@ -1,4 +1,23 @@
 # Changelog
+## 0.40 2022/05/21
+- Ignore les requêtes non Select (`ListObjects` MD_Utilitaires)
+```VB
+            Do While Not .EOF
+                If (![Type] = QueriesType) And (![Flags] <> 0) Then     '// Ne tient compte que des requêtes SELECT.
+                Else
+                    sSql = sSql & ![Type] & ";" & ![ObjectName] & ";" & ObjectTypeName(![Type]) & ";"
+                End If
+                .MoveNext
+            Loop
+```
+- Ajout test NewPath = vbNullString sur la propriété Let PicturePath(NewPath As String) de la classe CSordFormColumn
+- Déplace le code juste après l'ouverture de la base, propriété `OpenMsBase` (évite clignotement ecran).
+```VB
+    '// Ouverture de la base (sBaseName).
+    m_oMsApp.OpenCurrentDatabase sBaseFullName, True
+    m_oMsApp.Visible = False
+    DoEvents
+```
 
 ## 0.30
 
