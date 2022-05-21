@@ -1,6 +1,6 @@
 # Création automatique d'un formulaire en continu
 
-![Formulaire de démarrage](Doc/Frm_img3.gif)
+![Formulaire de démarrage](Doc/Frm_img.gif)
 
 <!--![Sélection de la base](Doc/Frm_img2.png) !-->
 
@@ -10,9 +10,7 @@
 
 ## Création des CommandButton et des TextBox
 
-![Image tri ASC](Doc/Col_Tri1.png)
-
-![Image tri DESC](Doc/Col_Tri2.png)
+![Image tri ASC](Doc/ColTri_Img.gif)
 
 ### Code sur les CommandButton pour le tri des colonnes
 
