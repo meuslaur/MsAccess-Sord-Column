@@ -13,7 +13,7 @@
       "Type": 1
     },
     "AllowDatasheetSchema": {
-      "Value": true,
+      "Value": false,
       "Type": 1
     },
     "AllowFullMenus": {
@@ -69,12 +69,16 @@
       "Type": 15
     },
     "DesignWithData": {
-      "Value": true,
+      "Value": false,
       "Type": 1
     },
     "HasOfflineLists": {
       "Value": 70,
       "Type": 3
+    },
+    "Log Name AutoCorrect Changes": {
+      "Value": 1,
+      "Type": 4
     },
     "Name": {
       "Value": "rel:CSord.accdb",
@@ -111,6 +115,10 @@
     "ProjVer": {
       "Value": 142,
       "Type": 3
+    },
+    "Property Sheet Label Width": {
+      "Value": 3420,
+      "Type": 4
     },
     "QueryTimeout": {
       "Value": 60,

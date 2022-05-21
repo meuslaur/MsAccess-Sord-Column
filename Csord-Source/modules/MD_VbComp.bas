@@ -1,4 +1,5 @@
 ﻿Attribute VB_Name = "MD_VbComp"
+'@Folder("Outils")
 ' ------------------------------------------------------
 ' Name:    MD_VbComp
 ' Kind:    Module
@@ -9,7 +10,6 @@
 ' ------------------------------------------------------
 Option Compare Database
 Option Explicit
-
 
 '//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&     EVENTS        &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 '//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& END EVENTS &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
@@ -53,50 +53,7 @@ ErrH:
     LockWindowUpdate 0&
 End Sub
 
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-' This function exports the code module of a VBComponent to a text
-' file. If FileName is missing, the code will be exported to
-' a file with the same name as the VBComponent followed by the
-' appropriate extension.
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-Public Function ExportVBComponent(VBComp As VBIDE.VBComponent, _
-                                  FolderName As String, _
-                                  Optional FileName As String, _
-                                  Optional OverwriteExisting As Boolean = True) As Boolean
-    Dim Extension   As String
-    Dim FName       As String
-
-    Extension = GetFileExtension(VBComp:=VBComp)
-
-    If Trim(FileName) = vbNullString Then
-        FName = VBComp.Name & Extension
-    Else
-        FName = FileName
-        If InStr(1, FName, ".", vbBinaryCompare) = 0 Then
-            FName = FName & Extension
-        End If
-    End If
-    
-    If StrComp(Right(FolderName, 1), "\", vbBinaryCompare) = 0 Then
-        FName = FolderName & FName
-    Else
-        FName = FolderName & "\" & FName
-    End If
-    
-    If Dir(FName, vbNormal + vbHidden + vbSystem) <> vbNullString Then
-        If OverwriteExisting = True Then
-            Kill FName
-        Else
-            ExportVBComponent = False
-            Exit Function
-        End If
-    End If
-    
-    VBComp.Export FileName:=FName
-    ExportVBComponent = True
-    
-End Function
-    
+   
 '   Il n’existe aucun moyen direct de copier un module d’un projet à un autre. Pour accomplir cette tâche, vous devez exporter le module à partir du VBProject source,
 '   puis importer ce fichier dans le VBProject de destination. Le code ci-dessous le fera. La déclaration de fonction est la suivante :
 '
@@ -166,7 +123,7 @@ Public Function CopyModule(ModuleName As String, _
         Exit Function
     End If
     
-    If Trim(ModuleName) = vbNullString Then
+    If Trim$(ModuleName) = vbNullString Then
         CopyModule = "Valeur de ModuleName est Null."
         Exit Function
     End If
@@ -197,7 +154,7 @@ Public Function CopyModule(ModuleName As String, _
     ' FName is the name of the temporary file to be
     ' used in the Export/Import code.
     ''''''''''''''''''''''''''''''''''''''''''''''''''''
-    FName = Environ("Temp") & "\" & ModuleName & ".bas"
+    FName = Environ$("Temp") & "\" & ModuleName & ".bas"
     If OverwriteExisting = True Then
         ''''''''''''''''''''''''''''''''''''''
         ' If OverwriteExisting is True, Kill
@@ -250,7 +207,7 @@ Public Function CopyModule(ModuleName As String, _
     '''''''''''''''''''''''''''''''''''''
     SlashPos = InStrRev(FName, "\")
     ExtPos = InStrRev(FName, ".")
-    CompName = Mid(FName, SlashPos + 1, ExtPos - SlashPos - 1)
+    CompName = Mid$(FName, SlashPos + 1, ExtPos - SlashPos - 1)
     
     ''''''''''''''''''''''''''''''''''''''''''''''
     ' Document modules (SheetX and ThisWorkbook)
@@ -283,118 +240,8 @@ Public Function CopyModule(ModuleName As String, _
     End If
 
     Kill FName
-    CopyModule = ""
+    CopyModule = vbNullString
 
-End Function
-
-Public Function ImporteFileToModule(sFileName As String, _
-                    sModuleName As String, _
-                    ToVBProject As VBIDE.VBProject, _
-                    Optional OverwriteExisting As Boolean = False) As String
-On Error GoTo ERR_ImporteFileToModule
-
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-    ' CopyModule
-    ' This function import a module from one VBProject to
-    ' file. It returns null string if successful or text
-    ' if an error occurs.
-    '
-    ' Parameters:
-    ' --------------------------------
-    '
-    ' ToVBProject           The VBProject into which the module is
-    '                       to be copied.
-    '
-    ' sFileName             The name of full path file to import.
-    '
-    ' sModuleName           Nom du module à créer.
-    '
-    ' OverwriteExisting     If True, the VBComponent named ModuleName
-    '                       in ToVBProject will be removed before
-    '                       importing the module. If False and
-    '                       a VBComponent named ModuleName exists
-    '                       in ToVBProject, the code will return
-    '                       error.
-    '
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-    Dim oVBComp As VBIDE.VBComponent
-    Dim sMsg    As String   '// MsgBox.
-    Dim lRep    As Long     '// MsgBox.
-
-    '''''''''''''''''''''''''''''''''''''''''''''
-    ' Do some housekeeping validation.
-    '''''''''''''''''''''''''''''''''''''''''''''
-    If (CheckFileExist(sFileName) = False) Then
-        ImporteFileToModule = "Fichier " & sFileName & " non trouver."
-        Exit Function
-    End If
-
-    If ToVBProject Is Nothing Then
-        ImporteFileToModule = "VBIDE.VBProject destination non initialisé."
-        Exit Function
-    End If
-
-    If ToVBProject.Protection = vbext_pp_locked Then
-        ImporteFileToModule = "Le projet destination est vérouillé pour l'affichage."
-        Exit Function
-    End If
-    
-    On Error Resume Next
-    
-    If (OverwriteExisting = True) Then
-        ''''''''''''''''''''''''''''''''''''''
-        ' If OverwriteExisting is True, remove
-        ' the existing VBComponent from the
-        ' ToVBProject.
-        ''''''''''''''''''''''''''''''''''''''
-        '// Supprime le module.
-        With ToVBProject.VBComponents
-            .Remove .Item(sModuleName)
-        End With
-    Else
-        '''''''''''''''''''''''''''''''''''''''''
-        ' OverwriteExisting is False. If there is
-        ' already a VBComponent named ModuleName,
-        ' exit with a return code of False.
-        ''''''''''''''''''''''''''''''''''''''''''
-        Err.Clear
-        Set oVBComp = ToVBProject.VBComponents(sModuleName)
-        If (Err.Number <> 0) Then
-            If (Err.Number <> 9) Then
-                ' other error. get out with return value of False
-                ImporteFileToModule = "Erreur :" & Err.Description & vbCrLf & "N°:" & Err.Number
-                Exit Function
-            End If
-        Else
-            '// Le module existe, et OverwriteExisting False.
-            sMsg = "Le module " & sModuleName & " existe déjà dans le projet source." & vbNewLine & vbNewLine & "Voulez-vous le remplacer ?"
-            lRep = MsgBox(sMsg, vbDefaultButton2 + vbYesNo, "Remplacer le module")
-            If lRep = vbYes Then
-                With ToVBProject.VBComponents
-                    .Remove .Item(sModuleName)
-                End With
-                Set oVBComp = Nothing
-            Else
-                Exit Function
-            End If
-        End If
-    End If
-
-    '// Le module n'existe pas on importe le fichier.
-    If oVBComp Is Nothing Then
-        ToVBProject.VBComponents.Import FileName:=sFileName
-    End If
-
-    ImporteFileToModule = ""
-    
-SORTIE_ImporteFileToModule:
-    Exit Function
-
-ERR_ImporteFileToModule:
-    MsgBox "Erreur " & Err.Number & vbCrLf & _
-            " (" & Err.Description & ")" & vbCrLf & _
-            "Dans  CSord.MD_VbComp.ImporteModule, ligne " & Erl & "."
-    Resume SORTIE_ImporteFileToModule
 End Function
 
 ' ----------------------------------------------------------------
@@ -424,24 +271,5 @@ Public Function ModuleExiste(sModuleName As String, oVBProjet As VBIDE.VBProject
     Set oVBComp = Nothing
 End Function
 
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-' This returns the appropriate file extension based on the Type of
-' the VBComponent.
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-Public Function GetFileExtension(VBComp As VBIDE.VBComponent) As String
-    Select Case VBComp.Type
-        Case vbext_ct_ClassModule
-            GetFileExtension = ".cls"
-        Case vbext_ct_Document
-            GetFileExtension = ".cls"
-        Case vbext_ct_MSForm
-            GetFileExtension = ".frm"
-        Case vbext_ct_StdModule
-            GetFileExtension = ".bas"
-        Case Else
-            GetFileExtension = ".bas"
-    End Select
-        
-End Function
 '// \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ END PUB. SUB/FUNC \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 

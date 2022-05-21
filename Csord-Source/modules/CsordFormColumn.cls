@@ -7,6 +7,7 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
+'@Folder("Utilisation")
 ' ------------------------------------------------------
 ' Name:     CSordFormColumn
 ' Kind:     Module de classe
@@ -216,6 +217,7 @@ Public Property Let PicturePath(NewPath As String)
 
     '// Evite les messages redondants.
     If (m_bCheckOk = False) Then Exit Property
+    If (NewPath = vbNullString) Then Exit Property
 
     '// Le dossier existe ?
     If (CheckFolderExists(NewPath) = False) Then
@@ -576,7 +578,7 @@ ERR_CheckFieldName:
     If ((Err.Number = 3265) Or (Err.Number = 2471)) Then
         MsgBox "Le champ '" & sField & "' n'existe pas dans la source de donnée, vérifier la valeur de .FieldName", vbExclamation, "Classe SordFormColumn"
     Else
-        MsgBox "Erreur " & Err.Number & " (" & Err.Description & ") Dans CheckFieldName." & Switch(Erl = 0, "", Erl <> 0, vbCrLf & "Ligne No: " & Erl)
+        MsgBox "Erreur " & Err.Number & " (" & Err.Description & ") Dans CheckFieldName." & Switch(Erl = 0, vbNullString, Erl <> 0, vbCrLf & "Ligne No: " & Erl)
     End If
 
     m_bCheckOk = False

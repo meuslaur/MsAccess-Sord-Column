@@ -3,7 +3,6 @@ VersionRequired =20
 Begin Form
     AutoCenter = NotDefault
     DividingLines = NotDefault
-    OrderByOn = NotDefault
     AllowDesignChanges = NotDefault
     ScrollBars =2
     ViewsAllowed =1
@@ -14,8 +13,8 @@ Begin Form
     Width =10772
     DatasheetFontHeight =11
     ItemSuffix =28
-    Right =25575
-    Bottom =12135
+    Right =25140
+    Bottom =11880
     OrderBy ="Job_Title"
     RecSrcDt = Begin
         0xa6063788ced2e540
@@ -492,6 +491,7 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = True
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+'@Folder("Demo")
 Option Compare Database
 Option Explicit
 

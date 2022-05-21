@@ -6,9 +6,6 @@
   "Items": {
     "Forms": [
       "F_InfoTmp"
-    ],
-    "Tables": [
-      "T_Info"
     ]
   }
 }

@@ -1,4 +1,5 @@
 ﻿Attribute VB_Name = "MD_Utilitaires"
+'@Folder("Utilitaires")
 ' ------------------------------------------------------
 ' Name:    MD_Utilitaires
 ' Kind:    Module
@@ -19,10 +20,10 @@ Public Enum T_ObjectType
     Tables_Linked_ODBC = 4
     Tables_Linked = 6
     QueriesType = 5
-    FormsType = -32768
-    ReportsType = -32764
-    MacrosType = -32766
-    ModulesType = -32761
+'    FormsType = -32768
+'    ReportsType = -32764
+'    MacrosType = -32766
+'    ModulesType = -32761
 End Enum
 
 '// FileDialog type
@@ -84,7 +85,7 @@ On Error GoTo ERR_ListObjects
     Dim sSql    As String
  
     '// Création de la chaine SQL.
-    sSql = "SELECT MsysObjects.Type, MsysObjects.Name AS ObjectName FROM MsysObjects " & _
+    sSql = "SELECT MsysObjects.Type, MsysObjects.Flags, MsysObjects.Name AS ObjectName FROM MsysObjects " & _
            "WHERE (((MsysObjects.Flags)>=0) AND ((MsysObjects.Type)=" & eObjectType1
            
     If (eObjectType2) Then sSql = sSql & " Or (MsysObjects.Type)=" & eObjectType2
@@ -111,7 +112,10 @@ On Error GoTo ERR_ListObjects
     With oRst
         If .RecordCount <> 0 Then
             Do While Not .EOF
-                sSql = sSql & ![Type] & ";" & ![ObjectName] & ";" & ObjectTypeName(![Type]) & ";"
+                If (![Type] = QueriesType) And (![Flags] <> 0) Then     '// Ne tient compte que des requêtes SELECT.
+                Else
+                    sSql = sSql & ![Type] & ";" & ![ObjectName] & ";" & ObjectTypeName(![Type]) & ";"
+                End If
                 .MoveNext
             Loop
         End If
@@ -134,7 +138,7 @@ ERR_ListObjects:
            "Erreur N°: " & Err.Number & vbCrLf & _
            "Source : ListObjects" & vbCrLf & _
            "Description: " & Err.Description & _
-           Switch(Erl = 0, "", Erl <> 0, vbCrLf & "Line No: " & Erl), _
+           Switch(Erl = 0, vbNullString, Erl <> 0, vbCrLf & "Line No: " & Erl), _
            vbOKOnly + vbCritical, "Erreur survenue !"
     Resume SORTIE_ListObjects
 End Function
@@ -180,10 +184,10 @@ Public Function ObjectFieldsToListVal(sObjectName As String, lType As T_ObjectTy
             For Each oField In oQrDef.Fields
                 sLstVal = sLstVal & oField.Name & ";"
             Next
-        Case FormsType
-        Case ReportsType
-        Case MacrosType
-        Case ModulesType
+'        Case FormsType
+'        Case ReportsType
+'        Case MacrosType
+'        Case ModulesType
     End Select
 
     '// Retourne la liste de valeurs.
@@ -219,34 +223,6 @@ Public Function CheckFolderExists(ByVal PathToFolder As String) As Boolean
     CheckFolderExists = bRes
     Set oFSO = Nothing
 
-End Function
-
-Public Function CreateNewFolder(ByVal sPathToFolder As String) As Boolean
-    On Error GoTo ERR_CreateNewFolder
-
-    Dim oFSO As Object
-    Dim bRes As Boolean
-
-    Set oFSO = m_cUtil.GetoFSO
-    bRes = oFSO.FolderExists(sPathToFolder)
-
-    If (bRes = False) Then
-        oFSO.CreateFolder (sPathToFolder)
-        bRes = True
-    End If
-
-    Set oFSO = Nothing
-    CreateNewFolder = bRes
-    Set oFSO = Nothing
-    
-SORTIE_CreateNewFolder:
-    Exit Function
-
-ERR_CreateNewFolder:
-    MsgBox "Erreur " & Err.Number & vbCrLf & _
-            " (" & Err.Description & ")" & vbCrLf & _
-            "Dans  TriSurFormContinu.MD_Utilitaires.CreateNewFolder, ligne " & Erl & "."
-    Resume SORTIE_CreateNewFolder
 End Function
 
 'Convenience function to avoid creating a File System Object
@@ -306,7 +282,7 @@ Public Function CheckFileExist(ByVal sFullPathFile As String, Optional ByVal sEx
         sBase = oFSO.GetBaseName(sFile)
     
         '// Ajoute le '.' si besoin
-        If (Left(sExtFile, 1) <> ".") Then sExtFile = "." & sExtFile
+        If (Left$(sExtFile, 1) <> ".") Then sExtFile = "." & sExtFile
         
         sFullPathFile = sFolder & sBase & sExtFile
     End If
@@ -353,14 +329,8 @@ On Error GoTo ERR_OuvreBoite
 
     Set oFd = Application.FileDialog(eDialogType)
 
-    '// Defini le sous-dossier de départ, se place sur le dossier de l'app, ou sur la valeur indiquer.
-    If (sInitialPath = vbNullString) Then
-        lTmp = Len(CurrentProject.Path)
-        sTmp = Left$(oFd.InitialFileName, lTmp)
-        If (sTmp <> CurrentProject.Path) Then oFd.InitialFileName = sTmp
-    Else
-        oFd.InitialFileName = sInitialPath
-    End If
+    '// Se place sur le dossier de la valeur indiquer.
+    If (sInitialPath <> vbNullString) Then oFd.InitialFileName = sInitialPath
     
     If (sTitre = vbNullString) Then sTitre = "Sélectionnez un dossier /  fichier"
 
@@ -488,97 +458,6 @@ CopyFile_Error:
     Exit Function
 End Function
 
-' ----------------------------------------------------------------
-' Procedure Nom:    ExtrairePiecesJointes
-' Sujet:            Extraction de pieces jointes d'une table.
-' Procedure Kind:   Function
-' Procedure Access: Public
-'
-'=== Paramètres ===
-' sNomTable (String):       Table à utiliser.
-' sNomChampPJ (String):     Nom du champ contenant la pj.
-' sDossier (String):        Dossier ou extraire les pj, si non indiquer utilise le dossier Temp de l'user.
-' bCreateFolder (Boolean):  Flag déterminant si on peux créer le dossier si il n'existe pas.
-'==================
-'
-' Return Type: Boolean TRUE si pas de problème.
-'
-' Author:  Laurent
-' Date:    05/05/2022-05:52
-' DateMod: 06/05/2022-05:59
-'
-' ----------------------------------------------------------------
-Public Function ExtrairePiecesJointes(sNomTable As String, _
-                                      sNomChampPJ As String, _
-                                      Optional sDossier As String, _
-                                      Optional bCreateFolder As Boolean = False) As Boolean
-On Error GoTo ERR_ExtrairePiecesJointes
-    
-    Dim oDb         As DAO.Database
-    Dim oRst        As DAO.Recordset
-    Dim oRstPJ      As DAO.Recordset    '// variable recordset pour faire référence au jeu d'enregistrements du champ de type pièce jointe
-    Dim sFichier    As String           '// chemin complet du fichier sur le disque
-    Dim bRep        As Boolean
-
-    '// Utiliser le dossier Temp ?
-    If (sDossier = vbNullString) Then sDossier = Environ("Temp")
-    If (Right(sDossier, 1) <> "\") Then sDossier = sDossier & "\"
-
-    '// Vérification dossier, création si besoin.
-    bRep = CheckFolderExists(sDossier)
-    If (bRep = False And bCreateFolder = True) Then bRep = CreateNewFolder(sDossier)      '// Si le dossier n'existe pas on le crée.
-
-    If (bRep = False) Then
-        MsgBox "Le dossier " & sDossier & vbNewLine & "n'existe pas ou n'as pas pu être créer."
-        Exit Function
-    End If
-
-    Set oDb = CurrentDb()
-
-    ' ouverture du recordset basé sur la table contenant les pièces jointes
-    Set oRst = oDb.OpenRecordset(sNomTable)
-
-    Do Until oRst.EOF                                   ' on parcourt les enregistrements de la table
- 
-        ' on récupère le recordset lié au champ pièce jointe de l'enregistrement courant
-        Set oRstPJ = oRst(sNomChampPJ).Value
- 
-        ' on parcourt les pièces jointes du champ pièce jointe de l'enregistrement
-        Do Until oRstPJ.EOF
- 
-            sFichier = sDossier & oRstPJ("FileName")    ' on compose le chemin complet du fichier sur le disque
- 
-            ' on s'assure que le fichier n'existe pas déjà avant de le sauvegarder
-            If Dir(sFichier) <> "" Then Kill (sFichier) ' s'il existe déjà, on le supprime
- 
-            oRstPJ("FileData").SaveToFile sFichier      ' on enregistre le fichier à l'emplacement spécifié
-            oRstPJ.MoveNext
- 
-        Loop
- 
-        oRst.MoveNext
- 
-    Loop
- 
-    If (Not oRst Is Nothing) Then oRst.Close
-    oDb.Close
-    ExtrairePiecesJointes = True
- 
-SORTIE_ExtrairePiecesJointes:
-    On Error Resume Next
-    Set oRstPJ = Nothing
-    Set oRst = Nothing
-    Set oDb = Nothing
-
-    Exit Function
- 
-ERR_ExtrairePiecesJointes:
-    MsgBox "Erreur " & Err.Number & vbCrLf & _
-            " (" & Err.Description & ")" & vbCrLf & _
-            "Dans  TriSurFormContinu.MD_Utilitaires.ExtrairePiecesJointes, ligne " & Erl & "."
-    Resume SORTIE_ExtrairePiecesJointes
-End Function
-
 Public Function HasAutoexec(ByRef MsBase As DAO.Database) As Boolean
     Dim oRst As DAO.Recordset
     Dim sSql As String
@@ -641,14 +520,14 @@ Private Function ObjectTypeName(eType As T_ObjectType) As String
             sType = "Table liée"
         Case QueriesType
             sType = "Requête"
-        Case FormsType
-            sType = "Formulaire"
-        Case ReportsType
-            sType = "Etat"
-        Case MacrosType
-            sType = "Macro"
-        Case ModulesType
-            sType = "Module"
+'        Case FormsType
+'            sType = "Formulaire"
+'        Case ReportsType
+'            sType = "Etat"
+'        Case MacrosType
+'            sType = "Macro"
+'        Case ModulesType
+'            sType = "Module"
         Case Else
             sType = "???"   'TODO: stype ="???"
     End Select
@@ -657,4 +536,3 @@ Private Function ObjectTypeName(eType As T_ObjectType) As String
 
 End Function
 '// ################################# END PRIV. SUB/FUNC #################################
-

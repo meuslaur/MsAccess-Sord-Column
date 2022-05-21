@@ -11,6 +11,17 @@
         "Subject": "Uitlitaire",
         "Title": "CSordColumn"
       }
+    },
+    "Modules": {
+      "CCreateFormContinu": {
+        "Description": "Classe de création automatique d'un formulaire pour utilisation de la classe CSordFormColumn."
+      },
+      "CsordFormColumn": {
+        "Description": "Classe pour le tri des colonnes d'un formulaire en continu."
+      },
+      "MD_VbComp": {
+        "Description": "Module pour gestion VBE."
+      }
     }
   }
 }

@@ -22,12 +22,11 @@ Begin Form
     GridY =10
     Width =9651
     DatasheetFontHeight =11
-    ItemSuffix =50
+    ItemSuffix =51
     Left =2400
     Top =1185
     Right =12045
     Bottom =9735
-    DatasheetGridlinesColor =15132391
     RecSrcDt = Begin
         0x4a3e621c3cd1e540
     End
@@ -177,9 +176,7 @@ Begin Form
         End
         Begin Section
             Height =8560
-            BackColor =15921906
             Name ="Détail"
-            AlternateBackColor =15921906
             AlternateBackThemeColorIndex =1
             AlternateBackShade =95.0
             BackThemeColorIndex =1
@@ -236,17 +233,26 @@ Begin Form
                     LayoutCachedTop =8050
                     LayoutCachedWidth =4204
                     LayoutCachedHeight =8455
-                    UseTheme =0
-                    BackColor =14461583
-                    BorderColor =14461583
-                    HoverColor =15189940
-                    PressedColor =9917743
-                    HoverForeColor =4210752
-                    PressedForeColor =4210752
+                    Gradient =0
+                    BackThemeColorIndex =6
+                    BackTint =100.0
+                    OldBorderStyle =0
+                    BorderThemeColorIndex =-1
+                    BorderTint =100.0
+                    HoverThemeColorIndex =6
+                    HoverTint =100.0
+                    HoverShade =75.0
+                    PressedThemeColorIndex =0
+                    PressedTint =85.0
+                    PressedShade =100.0
+                    HoverForeThemeColorIndex =-1
+                    HoverForeTint =100.0
+                    PressedForeThemeColorIndex =-1
+                    PressedForeTint =100.0
                     WebImagePaddingLeft =2
                     WebImagePaddingTop =2
-                    WebImagePaddingRight =1
-                    WebImagePaddingBottom =1
+                    WebImagePaddingRight =2
+                    WebImagePaddingBottom =2
                     Overlaps =1
                 End
                 Begin Label
@@ -424,7 +430,6 @@ Begin Form
                     Top =8050
                     Width =1710
                     Height =405
-                    ForeColor =4210752
                     Name ="cmbAnnuler"
                     Caption ="Annuler"
                     OnClick ="[Event Procedure]"
@@ -434,17 +439,27 @@ Begin Form
                     LayoutCachedTop =8050
                     LayoutCachedWidth =7095
                     LayoutCachedHeight =8455
-                    UseTheme =0
-                    BackColor =14461583
-                    BorderColor =14461583
-                    HoverColor =15189940
-                    PressedColor =9917743
-                    HoverForeColor =4210752
-                    PressedForeColor =4210752
+                    ForeTint =100.0
+                    Gradient =0
+                    BackThemeColorIndex =6
+                    BackTint =100.0
+                    OldBorderStyle =0
+                    BorderThemeColorIndex =-1
+                    BorderTint =100.0
+                    HoverThemeColorIndex =6
+                    HoverTint =100.0
+                    HoverShade =75.0
+                    PressedThemeColorIndex =0
+                    PressedTint =85.0
+                    PressedShade =100.0
+                    HoverForeThemeColorIndex =-1
+                    HoverForeTint =100.0
+                    PressedForeThemeColorIndex =-1
+                    PressedForeTint =100.0
                     WebImagePaddingLeft =2
                     WebImagePaddingTop =2
-                    WebImagePaddingRight =1
-                    WebImagePaddingBottom =1
+                    WebImagePaddingRight =2
+                    WebImagePaddingBottom =2
                     Overlaps =1
                 End
                 Begin Label
@@ -982,23 +997,6 @@ Begin Form
                     LayoutCachedWidth =4810
                     LayoutCachedHeight =5303
                 End
-                Begin Label
-                    OverlapFlags =215
-                    TextAlign =3
-                    Left =737
-                    Top =7766
-                    Width =680
-                    Height =341
-                    BorderColor =8355711
-                    ForeColor =6710886
-                    Name ="Étiquette46"
-                    Caption ="j"
-                    GridlineColor =10921638
-                    LayoutCachedLeft =737
-                    LayoutCachedTop =7766
-                    LayoutCachedWidth =1417
-                    LayoutCachedHeight =8107
-                End
             End
         End
     End
@@ -1008,6 +1006,7 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = True
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+'@Folder("Creation")
 Option Compare Database
 Option Explicit
 
@@ -1016,26 +1015,27 @@ Private Sub Form_Load()
     If IsNull(Me.OpenArgs) Then Exit Sub
 
     With Forms.Item("F_CreateForm")
-        txtBdd = .Controls("txtBdd").Value
-        txtBddSauve = .Controls("txtBddSauve").Value
-        txtFrmNom = .Controls("txtFormName").Value
-        txtFrmSource = .Controls("txtFormSource").Value
-        lbl_Champs.Caption = .Controls("txtCacheFields").Value
-        txtCodeVar = .Controls("txtClasseName").Value
-        txtCodeFunc = .Controls("txtFunctionName").Value
-        txtTbPrefixe = Nz(.Controls("txtTbPrefix").Value, "")
-        txtTbSuffixe = Nz(.Controls("txtTbSuffix").Value, "")
-        txtCmbPrefixe = Nz(.Controls("txtCmbPrefix").Value, "")
-        txtCmbSuffixe = Nz(.Controls("txtCmbSuffix").Value, "")
-        txtPicFold = Nz(.Controls("txtPicFolder").Value, "")
-        txtPicAsc = Nz(.Controls("txtPicAsc").Value, "")
-        txtPicDesc = Nz(.Controls("txtPicDesc").Value, "")
+        Me.txtBdd = .Controls.Item("txtBdd").Value
+        Me.txtBddSauve = .Controls.Item("txtBddSauve").Value
+        Me.txtFrmNom = .Controls.Item("txtFormName").Value
+        Me.txtFrmSource = .Controls.Item("txtFormSource").Value
+        Me.lbl_Champs.Caption = .Controls.Item("txtCacheFields").Value
+        Me.txtCodeVar = .Controls.Item("txtClasseName").Value
+        Me.txtCodeFunc = .Controls.Item("txtFunctionName").Value
+        Me.txtTbPrefixe = Nz(.Controls.Item("txtTbPrefix").Value, vbNullString)
+        Me.txtTbSuffixe = Nz(.Controls.Item("txtTbSuffix").Value, vbNullString)
+        Me.txtCmbPrefixe = Nz(.Controls.Item("txtCmbPrefix").Value, vbNullString)
+        Me.txtCmbSuffixe = Nz(.Controls.Item("txtCmbSuffix").Value, vbNullString)
+        Me.txtPicFold = Nz(.Controls.Item("txtPicFolder").Value, vbNullString)
+        Me.txtPicAsc = Nz(.Controls.Item("txtPicAsc").Value, vbNullString)
+        Me.txtPicDesc = Nz(.Controls.Item("txtPicDesc").Value, vbNullString)
     End With
 
 End Sub
 
 Private Sub cmbAnnuler_Click()
-    Forms.Item("F_CreateForm").Controls("txtCacheFields") = "ANNULER"
+    On Error Resume Next
+    Forms.Item("F_CreateForm").Controls.Item("txtCacheFields") = "ANNULER"
     DoCmd.Close
 End Sub
 

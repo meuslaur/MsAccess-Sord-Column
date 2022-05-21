@@ -1876,7 +1876,6 @@ Begin Form
                     ForeTint =75.0
                 End
                 Begin TextBox
-                    Enabled = NotDefault
                     Locked = NotDefault
                     TabStop = NotDefault
                     OverlapFlags =215
@@ -1957,6 +1956,7 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = True
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+'@Folder("Creation")
 ' ------------------------------------------------------
 ' Name:     Form_F_CreateForm
 ' Kind:     Document VBA
@@ -1973,7 +1973,6 @@ Option Explicit
     Private Const LBL_COLOR As Long = 6710886       '// ForeColor label, 'Texte 1, Plus clair 40%.
 
     Private m_cCreate       As CCreateFormContinu
-    Private m_cUtil         As CUtilitaires
 
     Private m_bErrSaisie    As Boolean  '// Indique erreur de saisie.
 
@@ -1992,7 +1991,6 @@ Private Sub Form_Load()
 
     '// Initialisation de la classe.
     Set m_cCreate = New CCreateFormContinu
-    Set m_cUtil = New CUtilitaires
 
     '// Table info controles.
     Set m_oRst = CurrentDb.OpenRecordset(TAB_INFO, dbOpenSnapshot, dbReadOnly)
@@ -2051,7 +2049,7 @@ Private Sub cmbSelectBdd_Click()
     Me.lbl_InfoBaseNonSelect.Visible = False
     
     '// Séléction de la base à utiliser.
-    sBaseSel = OuvreBoite("MS Access", "*.accdb", , CurrentProject.Path, FD_TypeFilePicker)
+    sBaseSel = OuvreBoite("MS Access", "*.accdb", , , FD_TypeFilePicker)
     If (sBaseSel = vbNullString) Then GoTo SORTIE_cmbSelectBdd
 
     DoCmd.Echo False
@@ -2069,7 +2067,7 @@ Private Sub cmbSelectBdd_Click()
 
     If (bRet = False) Then
         '// Problème détecter, on ferme tout, RaZ et on sort.
-        m_cCreate.CloseMsBase True
+        bRet = m_cCreate.CloseMsBase(True)
         RazForm
         GoTo SORTIE_cmbSelectBdd
     End If
@@ -2077,9 +2075,10 @@ Private Sub cmbSelectBdd_Click()
     RazForm True                        '// Reset les valeurs...
 
     Me.txtBdd.Enabled = True
-    txtBdd = sBaseSel
+    Me.txtBdd = sBaseSel
     Me.txtBdd.SetFocus
     Me.cmbOuvreBase.Visible = False
+
     MaJlisteObjets                      '// Rempli la liste des objets ...
     
     '// Détermine le nonm du fichier de la prochaine sauvegarde...
@@ -2150,7 +2149,7 @@ Private Sub lstObjets_AfterUpdate()
 End Sub
 
 Private Sub BoxOptImages_AfterUpdate()
-    Select Case BoxOptImages
+    Select Case Me.BoxOptImages
         Case 1
             Me.boxCacheCtrImgCmb.Visible = False
             Me.txtPicFolder.TabStop = True
@@ -2231,7 +2230,6 @@ End Sub
 Private Sub cmbLanceCreation_Click()
 
     Dim bRet    As Boolean
-    Dim sArg    As String
 
     bRet = VerifSaisie()                                        '// Contrôle des saisies...
     If (bRet = True) Then Exit Sub
@@ -2328,11 +2326,6 @@ End Sub
 '// Stock les options pour la création du formulaire.
 Private Function ActualiseOptionsClass() As Boolean
 
-    Dim sVerif  As String
-    Dim vItem   As Variant
-
-    sVerif = Nz(Me.lstObjets, vbNullString)
-    
     With m_cCreate
         .OptFormName = Me.txtFormName
         .OptFormSource = Me.lstObjets
@@ -2360,7 +2353,7 @@ End Function
 '//
 '// AfficheInfo est défini sur OnGotFocus du controle avec =AfficheInfo("")
 '//
-Private Function AfficheInfo(Optional sID As String = vbNullString)
+Private Function AfficheInfo(Optional sID As String = vbNullString) As Boolean
 
     If m_bErrSaisie Then Exit Function      '// Erreur de saisie, laisse les infos erreur afficher.
 
@@ -2377,8 +2370,8 @@ Private Function AfficheInfo(Optional sID As String = vbNullString)
     m_oRst.FindFirst sFind
     If (m_oRst.NoMatch) Then Exit Function
 
-    txtInfoTitre = m_oRst.Fields("InfoTitre")
-    txtInfoTxt = m_oRst.Fields("InfoTexte")
+    Me.txtInfoTitre = m_oRst.Fields.Item("InfoTitre")
+    Me.txtInfoTxt = m_oRst.Fields.Item("InfoTexte")
 
 End Function
 
@@ -2409,7 +2402,7 @@ Private Function VerifSaisie() As Boolean
         '// Controle la saisie des ListBox.
         If (oCtr.ControlType = acListBox) Then
 
-            oCtr.Controls(0).ForeColor = LBL_COLOR
+            oCtr.Controls.Item(0).ForeColor = LBL_COLOR
             '// Max 10 CommandButton de créer, sinon form trop petit.
             If ((oCtr.ItemsSelected.Count = 0) Or (oCtr.ItemsSelected.Count > 11)) Then bErrChk = True
 
@@ -2484,8 +2477,8 @@ Private Function ExtraireFieldsList(Optional bRetourList As Boolean = False) As 
     Dim vItem       As Variant
 
     '// Stock les champs sélectionés de la liste lstFields.
-    For Each vItem In lstFields.ItemsSelected
-        m_cCreate.AddField = lstFields.ItemData(vItem)
+    For Each vItem In Me.lstFields.ItemsSelected
+        m_cCreate.AddField = Me.lstFields.ItemData(vItem)
     Next vItem
 
     '// Retourne la liste des champs sélectionnés.
@@ -2501,11 +2494,11 @@ Private Function ExtraireFieldsList(Optional bRetourList As Boolean = False) As 
 End Function
 
 '// Affiche le message aucune bd select(2sec), ou Efface le message d'erreur au bout de 10 sec.
-Private Function Raz_bErr()
+Private Function Raz_bErr() As Boolean
 
     '// Msg pas de Bd ouverte, ce msg est afficher qu'à l'ouverture du form.
     If (IsNull(Me.txtBdd)) Then
-        lbl_InfoBaseNonSelect.Visible = Not Me.lbl_InfoBaseNonSelect.Visible
+        Me.lbl_InfoBaseNonSelect.Visible = Not Me.lbl_InfoBaseNonSelect.Visible
         Exit Function
     End If
 
@@ -2519,18 +2512,18 @@ Private Function Raz_bErr()
 
 End Function
 
-Private Function RestaureLabelTxt()
+Private Function RestaureLabelTxt() As Boolean
     With Me.ActiveControl
         If Not IsNull(.Value) Then
-            .Controls(0).ForeColor = LBL_COLOR
+            .Controls.Item(0).ForeColor = LBL_COLOR
         End If
     End With
 End Function
 
-Private Function RestaureLabelLst()
+Private Function RestaureLabelLst() As Boolean
     With Me.ActiveControl
         If ((.ItemsSelected.Count > 0) Or (.ItemsSelected.Count < 11)) Then
-            .Controls(0).ForeColor = LBL_COLOR
+            .Controls.Item(0).ForeColor = LBL_COLOR
         End If
     End With
 End Function
