@@ -13,12 +13,8 @@
 ## Objets insérés
 
 ![Objets insérés](Doc/Lst_Obj1.png)
-
-### Code exporter avec l'outil de : [@joyfullservice](https://github.com/joyfullservice)
-
-- [msaccess-vcs-integration](https://github.com/joyfullservice/msaccess-vcs-integration)
-
-- Créez une base vide et utilisez `msaccess-vcs-integration` pour réimporter le code.
+- Le formulaire créer.
+- Le module de classe `CSordFormColumn`.
 
 ## Description
 
@@ -73,3 +69,9 @@ Cet outil permet de créer automatiquement des formulaires en continu avec un bo
 |   Catégorie|   MsAccess|
 |   Type|   Utilitaire|
 |   Langage|   VBA|
+
+## Outils :
+
+### Code exporter avec l'outil de : [@joyfullservice](https://github.com/joyfullservice) - [msaccess-vcs-integration](https://github.com/joyfullservice/msaccess-vcs-integration)
+
+- Créez une base vide et utilisez `msaccess-vcs-integration` pour réimporter le code.
