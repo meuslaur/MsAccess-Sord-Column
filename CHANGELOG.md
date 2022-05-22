@@ -1,4 +1,10 @@
 # Changelog
+
+## 0.50 2022/05/22
+- Correction bug minuer
+- Contrôle des champs contenant une espace.
+- Modification ui du form `F_CreateForm`.
+
 ## 0.40 2022/05/21
 - Ignore les requêtes non Select (`ListObjects` MD_Utilitaires)
 ```VB
