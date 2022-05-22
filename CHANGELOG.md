@@ -1,7 +1,7 @@
 # Changelog
 
 ## 0.50 2022/05/22
-- Correction bug minuer
+- Correction bug mineur
 - Contrôle des champs contenant une espace.
 - Modification ui du form `F_CreateForm`.
 
