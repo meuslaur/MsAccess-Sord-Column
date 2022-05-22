@@ -158,7 +158,8 @@ End Function
 '
 ' Return Type:  String
 ' Author:       Laurent
-' Date:         28/04/2022 - 16:49
+' Date:         28/04/2022 16:49
+' DateMod:      22/05/2022 20:21
 ' ----------------------------------------------------------------
 Public Function ObjectFieldsToListVal(sObjectName As String, lType As T_ObjectType, Optional ByRef oAutreBd As DAO.Database) As String
     On Error GoTo ERR_ObjectFieldsToListVal
@@ -167,7 +168,9 @@ Public Function ObjectFieldsToListVal(sObjectName As String, lType As T_ObjectTy
     Dim oTbDef  As DAO.TableDef
     Dim oQrDef  As DAO.QueryDef
     Dim oField  As Field
-    Dim sLstVal As String
+    Dim sLstVal As String           '// Liste des nom de champs.
+    Dim sFldNom As String           '// Nom du champ.
+    Dim lPos    As Long             '// Test si espace dans le nom.
  
     Set oBd = IIf(oAutreBd Is Nothing, CurrentDb, oAutreBd)
 
@@ -176,12 +179,26 @@ Public Function ObjectFieldsToListVal(sObjectName As String, lType As T_ObjectTy
             '// Boucle sur les champs de la table.
             Set oTbDef = oBd.TableDefs(sObjectName)
             For Each oField In oTbDef.Fields
+                sFldNom = oField.Name
+                lPos = InStr(sFldNom, " ")      '// Ignore les champ avec un espace dans leur nom.
+                If lPos > 0 Then
+                    MsgBox "Le champ " & sFldNom & " de la table " & sObjectName & " Contient un espace dans son nom", vbCritical, "Nom de champ inutilisable"
+                    sLstVal = vbNullString
+                    Exit For
+                End If
                 sLstVal = sLstVal & oField.Name & ";"
             Next
         Case QueriesType
             '// Boucle sur les champs de la requête.
             Set oQrDef = oBd.QueryDefs(sObjectName)
             For Each oField In oQrDef.Fields
+                sFldNom = oField.Name
+                lPos = InStr(sFldNom, " ")      '// Ignore les champ avec un espace dans leur nom.
+                If lPos > 0 Then
+                    MsgBox "Le champ " & sFldNom & " de la requête " & sObjectName & " Contient un espace dans son nom", vbCritical, "Nom de champ inutilisable"
+                    sLstVal = vbNullString
+                    Exit For
+                End If
                 sLstVal = sLstVal & oField.Name & ";"
             Next
 '        Case FormsType

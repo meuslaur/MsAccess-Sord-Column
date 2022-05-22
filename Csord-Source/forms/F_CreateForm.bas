@@ -1053,8 +1053,8 @@ Begin Form
                     TabIndex =29
                 End
                 Begin Image
-                    Left =13097
-                    Top =3627
+                    Left =13096
+                    Top =3798
                     Width =450
                     Height =360
                     BorderColor =10921638
@@ -1075,10 +1075,10 @@ Begin Form
                         0x454e44ae426082
                     End
 
-                    LayoutCachedLeft =13097
-                    LayoutCachedTop =3627
-                    LayoutCachedWidth =13547
-                    LayoutCachedHeight =3987
+                    LayoutCachedLeft =13096
+                    LayoutCachedTop =3798
+                    LayoutCachedWidth =13546
+                    LayoutCachedHeight =4158
                     TabIndex =27
                 End
                 Begin Image
