@@ -24,7 +24,9 @@ Cet outil permet de créer automatiquement des formulaires en continu avec un bo
 
 > - Permet de sélectionner la base source.
 > - De choisir la source du formulaire et de définir son nom.
+> - - Note : Seule les requête sélection sont affichées dans la liste, les requêtes ajout, MàJ., suppression, création sont ignorées.
 > - De choisir les champs à utiliser.
+> - - Note : Les champs contenant un/des espaces dans leur nom sont ignorées.
 > - De définir le nom de la variable de la classe et de la fonction de tri.
 > - De définir un préfixe et/ou suffixe pour le nom des CommandButton et les TextBox.
 > - De choisir (ou non) le dossier et les images utilisées pour les CommandButton.
