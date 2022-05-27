@@ -521,6 +521,37 @@ ERR_NavigationPane:
     Resume SORTIE_ErrHandler
 End Function
 
+' ----------------------------------------------------------------
+' Procedure Nom:    VerifSiCommenceParLettre
+' Sujet:            Verifie si la chanie passée commence bien par une lettre.
+' Procedure Kind:   Function
+' Procedure Access: Public
+' Références:       Verifie si la chanie passée commence bien par une lettre.
+'
+'=== Paramètres ===
+' sVal (String): Chaine à vérifier.
+'==================
+'
+' Return Type: Boolean True si commence bien par une lettre.
+'
+' Author:  Laurent
+' Date:    22/05/2022 - 21:44
+' DateMod:
+' ----------------------------------------------------------------
+Public Function VerifSiCommenceParLettre(sVal As String) As Boolean
+    Dim sTmp As String
+    Dim lRep As Long
+    
+    If (sVal = vbNullString) Then
+        lRep = 65           '// Ignore les valeurs null, retourne TRUE.
+    Else
+        sTmp = UCase$(sVal)
+        lRep = AscW(sTmp)
+    End If
+
+    If (lRep > 64 And lRep < 91) Then VerifSiCommenceParLettre = True
+
+End Function
 '// \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ END PUB. SUB/FUNC \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
 '// ################################ PRIVATE SUB/FUNC ####################################

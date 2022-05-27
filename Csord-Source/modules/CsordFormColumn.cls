@@ -497,7 +497,12 @@ Private Sub CheckForm()
     '// Initialise le form sur lequel appliquer le tri,
     '// Sauvegarde des filtres en cours.
     If (m_objForm Is Nothing) Then
-        Set m_objForm = Screen.ActiveForm
+        'TODO: Test si le form est un SF.
+        If (Screen.ActiveControl.Parent.FormName <> Screen.ActiveForm.Name) Then
+            Set m_objForm = Screen.ActiveForm.ActiveControl.Form  ' Application.Forms.Item(Screen.ActiveControl.Parent.FormName)
+        Else
+            Set m_objForm = Screen.ActiveForm
+        End If
         m_sSvFrmSord = m_objForm.OrderBy
         m_bSvFrmSortOn = m_objForm.OrderByOn
     End If

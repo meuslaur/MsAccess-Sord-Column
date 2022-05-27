@@ -16,7 +16,7 @@
       "CCreateFormContinu": {
         "Description": "Classe de création automatique d'un formulaire pour utilisation de la classe CSordFormColumn."
       },
-      "CsordFormColumn": {
+      "CSordFormColumn": {
         "Description": "Classe pour le tri des colonnes d'un formulaire en continu."
       },
       "MD_VbComp": {

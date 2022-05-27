@@ -13,7 +13,7 @@ Begin Form
     Width =10772
     DatasheetFontHeight =11
     ItemSuffix =28
-    Right =25140
+    Right =22320
     Bottom =11880
     OrderBy ="Job_Title"
     RecSrcDt = Begin

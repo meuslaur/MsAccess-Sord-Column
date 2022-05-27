@@ -17,9 +17,9 @@ Begin Form
     Width =14173
     DatasheetFontHeight =11
     ItemSuffix =104
-    Left =5610
+    Left =4200
     Top =225
-    Right =19785
+    Right =18375
     Bottom =11655
     DatasheetGridlinesColor =15132391
     RecSrcDt = Begin
@@ -461,51 +461,11 @@ Begin Form
                     AllowAutoCorrect = NotDefault
                     OverlapFlags =223
                     IMESentenceMode =3
-                    Left =8857
-                    Top =7654
-                    Width =861
-                    Height =315
-                    TabIndex =15
-                    BorderColor =10921638
-                    ForeColor =4210752
-                    Name ="txtTbSuffix"
-                    AfterUpdate ="=RestaureLabelTxt()"
-                    OnGotFocus ="=AfficheInfo(\"txtTb\")"
-                    GridlineColor =10921638
-
-                    LayoutCachedLeft =8857
-                    LayoutCachedTop =7654
-                    LayoutCachedWidth =9718
-                    LayoutCachedHeight =7969
-                    Begin
-                        Begin Label
-                            OverlapFlags =223
-                            TextAlign =3
-                            Left =7710
-                            Top =7654
-                            Width =1080
-                            Height =315
-                            BorderColor =8355711
-                            ForeColor =6710886
-                            Name ="lbl_txtTbSuffix"
-                            Caption ="Suffix :"
-                            GridlineColor =10921638
-                            LayoutCachedLeft =7710
-                            LayoutCachedTop =7654
-                            LayoutCachedWidth =8790
-                            LayoutCachedHeight =7969
-                        End
-                    End
-                End
-                Begin TextBox
-                    AllowAutoCorrect = NotDefault
-                    OverlapFlags =223
-                    IMESentenceMode =3
                     Left =8861
                     Top =8449
                     Width =846
                     Height =345
-                    TabIndex =16
+                    TabIndex =15
                     BorderColor =10921638
                     ForeColor =4210752
                     Name ="txtCmbPrefix"
@@ -538,46 +498,6 @@ Begin Form
                     End
                 End
                 Begin TextBox
-                    AllowAutoCorrect = NotDefault
-                    OverlapFlags =223
-                    IMESentenceMode =3
-                    Left =8861
-                    Top =8845
-                    Width =846
-                    Height =345
-                    TabIndex =17
-                    BorderColor =10921638
-                    ForeColor =4210752
-                    Name ="txtCmbSuffix"
-                    AfterUpdate ="=RestaureLabelTxt()"
-                    OnGotFocus ="=AfficheInfo(\"txtCmb\")"
-                    GridlineColor =10921638
-
-                    LayoutCachedLeft =8861
-                    LayoutCachedTop =8845
-                    LayoutCachedWidth =9707
-                    LayoutCachedHeight =9190
-                    Begin
-                        Begin Label
-                            OverlapFlags =223
-                            TextAlign =3
-                            Left =7710
-                            Top =8845
-                            Width =1080
-                            Height =315
-                            BorderColor =8355711
-                            ForeColor =6710886
-                            Name ="lbl_txtCmbSuffix"
-                            Caption ="Suffix  :"
-                            GridlineColor =10921638
-                            LayoutCachedLeft =7710
-                            LayoutCachedTop =8845
-                            LayoutCachedWidth =8790
-                            LayoutCachedHeight =9160
-                        End
-                    End
-                End
-                Begin TextBox
                     Locked = NotDefault
                     TabStop = NotDefault
                     AllowAutoCorrect = NotDefault
@@ -588,7 +508,7 @@ Begin Form
                     Top =10205
                     Width =2901
                     Height =345
-                    TabIndex =19
+                    TabIndex =17
                     BorderColor =10921638
                     ForeColor =4210752
                     Name ="txtPicAsc"
@@ -630,7 +550,7 @@ Begin Form
                     Top =10659
                     Width =2901
                     Height =345
-                    TabIndex =20
+                    TabIndex =18
                     BorderColor =10921638
                     ForeColor =4210752
                     Name ="txtPicDesc"
@@ -827,7 +747,7 @@ Begin Form
                     Top =9752
                     Width =3501
                     Height =345
-                    TabIndex =18
+                    TabIndex =16
                     BorderColor =10921638
                     ForeColor =4210752
                     Name ="txtPicFolder"
@@ -899,7 +819,7 @@ Begin Form
                     Top =9808
                     Width =345
                     Height =285
-                    TabIndex =22
+                    TabIndex =20
                     ForeColor =4210752
                     Name ="cmbSelectPicFolder"
                     Caption =",,,"
@@ -932,7 +852,7 @@ Begin Form
                     Top =10715
                     Width =345
                     Height =285
-                    TabIndex =24
+                    TabIndex =22
                     ForeColor =4210752
                     Name ="cmbSelectPicDesc"
                     Caption =",,,"
@@ -965,7 +885,7 @@ Begin Form
                     Top =10261
                     Width =345
                     Height =285
-                    TabIndex =23
+                    TabIndex =21
                     ForeColor =4210752
                     Name ="cmbSelectPicAsc"
                     Caption =",,,"
@@ -1722,7 +1642,7 @@ Begin Form
                     Top =9242
                     Width =954
                     Height =433
-                    TabIndex =21
+                    TabIndex =19
                     BorderColor =10921638
                     Name ="BoxOptImages"
                     AfterUpdate ="[Event Procedure]"
@@ -1929,7 +1849,7 @@ Begin Form
                     Top =5045
                     Width =231
                     Height =315
-                    TabIndex =25
+                    TabIndex =23
                     BorderColor =10921638
                     ForeColor =4210752
                     Name ="txtCacheFields"
@@ -1939,6 +1859,86 @@ Begin Form
                     LayoutCachedTop =5045
                     LayoutCachedWidth =13606
                     LayoutCachedHeight =5360
+                End
+                Begin TextBox
+                    AllowAutoCorrect = NotDefault
+                    OverlapFlags =247
+                    IMESentenceMode =3
+                    Left =8860
+                    Top =7693
+                    Width =861
+                    Height =315
+                    TabIndex =24
+                    BorderColor =10921638
+                    ForeColor =4210752
+                    Name ="txtTbSuffix"
+                    AfterUpdate ="=RestaureLabelTxt()"
+                    OnGotFocus ="=AfficheInfo(\"txtTb\")"
+                    GridlineColor =10921638
+
+                    LayoutCachedLeft =8860
+                    LayoutCachedTop =7693
+                    LayoutCachedWidth =9721
+                    LayoutCachedHeight =8008
+                    Begin
+                        Begin Label
+                            OverlapFlags =247
+                            TextAlign =3
+                            Left =7713
+                            Top =7693
+                            Width =1080
+                            Height =315
+                            BorderColor =8355711
+                            ForeColor =6710886
+                            Name ="lbl_txtTbSuffix"
+                            Caption ="Suffix :"
+                            GridlineColor =10921638
+                            LayoutCachedLeft =7713
+                            LayoutCachedTop =7693
+                            LayoutCachedWidth =8793
+                            LayoutCachedHeight =8008
+                        End
+                    End
+                End
+                Begin TextBox
+                    AllowAutoCorrect = NotDefault
+                    OverlapFlags =247
+                    IMESentenceMode =3
+                    Left =8861
+                    Top =8914
+                    Width =846
+                    Height =345
+                    TabIndex =25
+                    BorderColor =10921638
+                    ForeColor =4210752
+                    Name ="txtCmbSuffix"
+                    AfterUpdate ="=RestaureLabelTxt()"
+                    OnGotFocus ="=AfficheInfo(\"txtCmb\")"
+                    GridlineColor =10921638
+
+                    LayoutCachedLeft =8861
+                    LayoutCachedTop =8914
+                    LayoutCachedWidth =9707
+                    LayoutCachedHeight =9259
+                    Begin
+                        Begin Label
+                            OverlapFlags =247
+                            TextAlign =3
+                            Left =7710
+                            Top =8914
+                            Width =1080
+                            Height =315
+                            BorderColor =8355711
+                            ForeColor =6710886
+                            Name ="lbl_txtCmbSuffix"
+                            Caption ="Suffix  :"
+                            GridlineColor =10921638
+                            LayoutCachedLeft =7710
+                            LayoutCachedTop =8914
+                            LayoutCachedWidth =8790
+                            LayoutCachedHeight =9229
+                        End
+                    End
                 End
             End
         End
@@ -2390,7 +2390,8 @@ Private Function VerifSaisie() As Boolean
 
     Dim oCtr    As Control
     Dim sName   As String   '// Nom du control.
-    Dim bErrChk As Boolean  '// True si erreur saisie
+    Dim bErrChk As Boolean  '// True si erreur saisie.
+    Dim sTmp    As String
 
     m_bErrSaisie = False
 
@@ -2410,6 +2411,12 @@ Private Function VerifSaisie() As Boolean
 
         '// Controle la saisie des TextBox
         If (oCtr.ControlType = acTextBox) Then
+
+            '// On vérifie que la valeur commence bien par une lettre (sauf les suffixe).
+            If (sName <> Me.txtTbSuffix.Name And sName <> Me.txtCmbSuffix.Name) Then
+                sTmp = Nz(oCtr.Value, vbNullString)
+                If (VerifSiCommenceParLettre(sTmp) = False) Then bErrChk = True     '// bErrChk = Not VerifSiCommenceParLettre(sName)
+            End If
 
             If (oCtr <> vbNullString) Then sName = "*"  '// Remet le label avec la couleur normal.
 
@@ -2454,7 +2461,7 @@ Private Function VerifSaisie() As Boolean
         Me.txtInfoTitre.BorderStyle = 1
         Me.txtInfoTitre.BorderColor = 2366701   '// Rouge
         Me.txtInfoTitre = "Erreurs de saisie :"
-        Me.txtInfoTxt = "Les champs indiquer en rouge doivent obligatoirement contenir une valeur."
+        Me.txtInfoTxt = "Les champs indiquer en rouge doivent obligatoirement contenir une valeur." & vbNewLine & "Certain doit obligatoirement commencer par une lettre."
         Me.TimerInterval = 10000                '// Affiche l'erreur 10 secondes.
     Else
         Me.txtInfoTitre.BorderColor = 10921638  '// Arrière-plan 1, Plus sombre 35%.
