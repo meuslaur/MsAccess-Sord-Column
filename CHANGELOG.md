@@ -1,4 +1,7 @@
 # Changelog
+## 1.00 2022/05/27
+- Correction de bug nineur
+- Permet l'utilisation en tand que sous formulaire
 
 ## 0.50 2022/05/22
 - Correction bug mineur
