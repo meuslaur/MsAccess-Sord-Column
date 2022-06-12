@@ -13,7 +13,7 @@
 ## Objets insérés
 
 ![Objets insérés](Doc/Lst_Obj1.png)
-- Le formulaire créer.
+- Le formulaire crée.
 - Le module de classe `CSordFormColumn`.
 
 ## Description
@@ -22,11 +22,11 @@ Cet outil permet de créer automatiquement des formulaires en continu avec un bo
 
 ### Le formulaire `F_CreateForm`
 
-> - Permet de sélectionner la base source.
+> - Permets de sélectionner la base source.
 > - De choisir la source du formulaire et de définir son nom.
-> - - Note : Seule les requête sélection sont affichées dans la liste, les requêtes ajout, MàJ., suppression, création sont ignorées.
+> - - Note : Seule les requêtes sélection sont affichées dans la liste, les requêtes ajout, MàJ., suppression, création sont ignorées.
 > - De choisir les champs à utiliser.
-> - - Note : Les champs contenant un/des espaces dans leur nom sont ignorées.
+> - - Note : Les champs contenant un/des espaces dans leur nom sont ignorés.
 > - De définir le nom de la variable de la classe et de la fonction de tri.
 > - De définir un préfixe et/ou suffixe pour le nom des CommandButton et les TextBox.
 > - De choisir (ou non) le dossier et les images utilisées pour les CommandButton.
@@ -57,7 +57,7 @@ Cet outil permet de créer automatiquement des formulaires en continu avec un bo
 
   - Pour cela, indiquez le dossier des images et les images à utiliser.
   - une pour le tri ASC et une pour le tri DESC (idéalement utilisez des images en 16x16 pixel).
-- Une fois tout les choix fait, lancer la création avec le bouton.
+- Une fois les options défnies, lancer la création avec le bouton.
 
     ![Lance création](Doc/Utile-03.png)
 - Un résumé des opérations s'ouvre, confirmez ou annulez
@@ -74,6 +74,6 @@ Cet outil permet de créer automatiquement des formulaires en continu avec un bo
 
 ## Outils :
 
-### Code exporter avec l'outil de : [@joyfullservice](https://github.com/joyfullservice) - [msaccess-vcs-integration](https://github.com/joyfullservice/msaccess-vcs-integration)
+### Code exporté avec l'outil de : [@joyfullservice](https://github.com/joyfullservice) - [msaccess-vcs-integration](https://github.com/joyfullservice/msaccess-vcs-integration)
 
 - Créez une base vide et utilisez `msaccess-vcs-integration` pour réimporter le code.
